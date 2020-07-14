@@ -8,12 +8,15 @@ import { openUploadWidget } from "../CloudinaryService";
 
 // let cloudinaryPostURL = process.env.CLOUDINARY_CLOUD_NAME;
 
+const GOOGLE_SEARCH_API = process.env.REACT_APP_APIKEY;
+
 function Register(props) {
+  console.log(GOOGLE_SEARCH_API);
   // let state = useSelector((state) => state);
   // let currentUser = state.currentUser;
   let history = useHistory();
   let [images, setImages] = useState([]);
-  let [publicID, setPublicID] = useState(null);
+  let [publicID, setPublicID] = useState("");
 
   const beginUpload = (tag) => {
     const uploadOptions = {
@@ -34,7 +37,7 @@ function Register(props) {
         "instagram",
         "shutterstock",
       ],
-      googleApiKey: "AIzaSyBVW2xLfWGe5dUl_vMEml2OtZmWCYeGF-s",
+      googleApiKey: GOOGLE_SEARCH_API,
       styles: {
         palette: {
           window: "#000000",
@@ -76,17 +79,17 @@ function Register(props) {
     });
   };
 
-  let [name, setName] = useState(null);
-  let [email, setEmail] = useState(null);
-  let [password, setPassword] = useState(null);
-  let [avatar, setAvatar] = useState(null);
+  let [name, setName] = useState("");
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
+  let [avatar, setAvatar] = useState("");
   const [validated, setValidated] = useState(false);
 
   const clearForm = () => {
-    setName(null);
-    setEmail(null);
-    setPassword(null);
-    setAvatar(null);
+    setName("");
+    setEmail("");
+    setPassword("");
+    setAvatar("");
   };
 
   const handleSubmit = (event) => {
@@ -150,27 +153,26 @@ function Register(props) {
             </Form.Group>
           </Col>
         </Form.Row>
-        <Form inline>
-          <Form.Group>
-            <Form.Label htmlFor="inputPassword6">Password</Form.Label>
-            <Form.Control
-              required
-              type="password"
-              id="inputPassword6"
-              className="mx-sm-4 my-3"
-              aria-describedby="passwordHelpInline"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Form.Text id="passwordHelpBlock" muted>
-              Must be 8-10 characters long.
-            </Form.Text>
-            <Form.Control.Feedback type="invalid">
-              Please put a password
-            </Form.Control.Feedback>
-          </Form.Group>
-        </Form>
-
+        <Form.Row>
+          <Col xs="auto" md="4">
+            <Form.Group controlId="formGridPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                required
+                type="password"
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Form.Text id="passwordHelpBlock" muted>
+                Must be 8-10 characters long.
+              </Form.Text>
+              <Form.Control.Feedback type="invalid">
+                Please put a password
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+        </Form.Row>
         <Form.Row>
           <Col xs="auto" md="3">
             <Button onClick={() => beginUpload()}>Upload Avatar Image</Button>
