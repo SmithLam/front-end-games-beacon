@@ -165,33 +165,42 @@ function App() {
           setEmail={setEmail}
           setPassword={setPassword}
         ></LoginModal>
-        <Switch>
-          <ProtectedRoute
-            path="/profile/update"
-            render={(props) => <Profile {...props} />}
-          />
-          <ProtectedRoute
-            path="/profile"
-            render={(props) => <Profile {...props} />}
-          />
-          <ProtectedRoute
-            path="/checkout"
-            render={(props) => <Checkout {...props} />}
-          />
-          <Route exact={true} path="/checkout" component={Checkout} />
-          <Route exact={true} path="/cart" component={Cart} />
-          <Route exact={true} path="/games/:id" component={Detail} />
-          <Route exact={true} path="/explore" component={Explore} />
-          <Route
-            exact={true}
-            path="/profile/update"
-            component={ProfileUpdate}
-          />
-          <Route exact={true} path="/profile" component={Profile} />
-          <Route exact={true} path="/register" component={Register} />
-          <Route exact={true} path="/" component={MainPage} />
-          <Route path="*" component={FourOhFourPage} />
-        </Switch>
+        <div id="section">
+          <Switch>
+            <ProtectedRoute
+              path="/profile/update"
+              render={(props) => <Profile {...props} />}
+            />
+            <ProtectedRoute
+              path="/profile"
+              render={(props) => <Profile {...props} />}
+            />
+            <ProtectedRoute
+              path="/checkout"
+              render={(props) => <Checkout {...props} />}
+            />
+            <Route exact={true} path="/checkout" component={Checkout} />
+            <Route exact={true} path="/cart" component={Cart} />
+            <Route exact={true} path="/games/:id" component={Detail} />
+            <Route exact={true} path="/explore" component={Explore} />
+            <Route
+              exact={true}
+              path="/profile/update"
+              component={ProfileUpdate}
+            />
+            <Route exact={true} path="/profile" component={Profile} />
+            <Route
+              exact={true}
+              path="/register"
+              loginEmail={loginEmail}
+              setEmail={setEmail}
+              setPassword={setPassword}
+              component={Register}
+            />
+            <Route exact={true} path="/" component={MainPage} />
+            <Route path="*" component={FourOhFourPage} />
+          </Switch>
+        </div>
         <Footer></Footer>
       </div>
     );

@@ -77,7 +77,13 @@ function NavBar(props) {
             </LinkContainer>
           )}
           {currentUser ? (
-            <img id="avatar-image" src={currentUser.avatar} />
+            <img
+              id="avatar-image"
+              src={
+                currentUser.avatar ||
+                "https://res.cloudinary.com/smithlam/image/upload/a_0,c_scale,h_100/c9gsnzmd52jlcuprq6nz"
+              }
+            />
           ) : (
             ""
           )}
