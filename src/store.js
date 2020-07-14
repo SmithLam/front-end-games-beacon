@@ -1,16 +1,18 @@
 import { createStore } from "redux";
 
 const initialstate = {
-  user: null
+  currentUser: null,
 };
 
 function reducer(state = initialstate, action) {
   if (action.type === "LOGIN") {
-    state.user.isAuthenticated = true;
+    state.currentUser = { ...action.payload };
+    console.log("this is state user", state.currentUser);
   }
   if (action.type === "LOGOUT") {
-    state.user = null
+    state.currentUser = null;
   }
+  return { ...state };
 }
 const store = createStore(reducer);
 

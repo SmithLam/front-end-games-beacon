@@ -1,15 +1,44 @@
 import React from "react";
-import { Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Nav, Navbar, NavDropdown, Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 
 function NavBar(props) {
+  let state = useSelector((state) => state);
+  let history = useHistory();
+  let currentUser = state.currentUser;
+
+  const goProfile = (e) => {
+    e.preventDefault();
+    history.push("/profile");
+  };
+
+  // const goRegister = (e) => {
+  //   e.preventDefault();
+  //   history.push("/register");
+  // };
+
+  // const goHome = (e) => {
+  //   e.preventDefault();
+  //   history.push("/");
+  // };
+
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+      <LinkContainer to="/">
+        <Navbar.Brand>Games Beacon</Navbar.Brand>
+      </LinkContainer>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
+          <LinkContainer to={`/`}>
+            <Nav.Link>Home</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to={`/explore`}>
+            <Nav.Link>Explore</Nav.Link>
+          </LinkContainer>
+          <Nav.Link>Search</Nav.Link>
           <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.2">
@@ -21,8 +50,37 @@ function NavBar(props) {
           </NavDropdown>
         </Nav>
         <Nav>
-          <Nav.Link onClick={(e) => props.handleShow()}>Login</Nav.Link>
-          <Nav.Link>Register</Nav.Link>
+          {currentUser ? (
+            <Nav.Link variant="secondary" onClick={(e) => props.logOut()}>
+              Logout
+            </Nav.Link>
+          ) : (
+            <Nav.Link variant="secondary" onClick={(e) => props.handleShow()}>
+              Login
+            </Nav.Link>
+          )}
+          {currentUser ? (
+            // <LinkContainer to={"/profile"}>
+            //   <Nav.Link>Profile</Nav.Link>
+            // </LinkContainer>
+            <NavDropdown title={currentUser.name} id="basic-nav-dropdown">
+              <NavDropdown.Item onClick={(e) => goProfile(e)}>
+                Profile
+              </NavDropdown.Item>
+              {/* <NavDropdown.Item onClick={props.logOut()}>
+                Logout
+              </NavDropdown.Item> */}
+            </NavDropdown>
+          ) : (
+            <LinkContainer to={"/register"}>
+              <Nav.Link>Register</Nav.Link>
+            </LinkContainer>
+          )}
+          {currentUser ? (
+            <img id="avatar-image" src={currentUser.avatar} />
+          ) : (
+            ""
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

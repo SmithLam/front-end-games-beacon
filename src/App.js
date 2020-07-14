@@ -10,12 +10,15 @@ import Footer from "./components/Footer";
 import MainPage from "./components/MainPage";
 import NavBar from "./components/NavBar";
 import Profile from "./components/Profile";
+import ProfileUpdate from "./components/ProfileUpdate";
 import LoginModal from "./components/LoginModal";
+import Register from "./components/Register";
 import axios from "axios";
 
 function App() {
-  let dispatch = useDispatch;
+  let dispatch = useDispatch();
   let state = useSelector((state) => state);
+  let currentUser = state.currentUser;
 
   const [show, setShow] = useState(false);
 
@@ -25,10 +28,10 @@ function App() {
   const ProtectedRoute = (props) => {
     //if user is login, then show the detail page
     //if user is not login then show the login page
-    if (state.user.isAuthenticated === true) {
+    if (currentUser) {
       return <Route {...props} />;
     } else {
-      return <Redirect to="/login" />;
+      return <Redirect to="/" />;
     }
   };
 
@@ -42,7 +45,6 @@ function App() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
   const loginFacebook = async (data) => {
@@ -55,9 +57,8 @@ function App() {
         const dt = await res.json();
         console.log(dt);
         const user = dt.data;
-        const token = dt.token;
-        setUser(user);
-        console.log(user);
+        // const token = dt.token;
+        dispatch({ type: "LOGIN", payload: user });
         localStorage.setItem("token", dt.token);
       } else {
         console.log(res);
@@ -77,8 +78,7 @@ function App() {
         console.log(dt);
         const user = dt.data;
         let token = dt.token;
-        setUser(user);
-        console.log(user);
+        dispatch({ type: "LOGIN", payload: user });
         localStorage.setItem("token", dt.token);
       } else {
         console.log(res);
@@ -100,7 +100,7 @@ function App() {
           const token = res.data.data.token;
           console.log(user);
           console.log(token);
-          setUser(user);
+          dispatch({ type: "LOGIN", payload: user });
           localStorage.setItem("token", token);
         })
         .catch((err) => console.log(err));
@@ -116,7 +116,7 @@ function App() {
     });
     if (res.ok) {
       localStorage.removeItem("token");
-      setUser(null);
+      dispatch({ type: "LOGOUT" });
     } else {
       console.log("You are messing with my code somehow");
     }
@@ -135,7 +135,9 @@ function App() {
     });
     if (res.ok) {
       const dt = await res.json();
-      setUser(dt.data);
+      const user = dt.data;
+      console.log("this is fetch user dt", user);
+      dispatch({ type: "LOGIN", payload: user });
     } else {
       localStorage.removeItem("token");
     }
@@ -151,7 +153,7 @@ function App() {
   else
     return (
       <div>
-        <NavBar handleShow={handleShow}></NavBar>
+        <NavBar handleShow={handleShow} logOut={logOut}></NavBar>
         <LoginModal
           show={show}
           loginEmail={loginEmail}
@@ -162,10 +164,12 @@ function App() {
           password={password}
           setEmail={setEmail}
           setPassword={setPassword}
-          user={user}
-          logOut={logOut}
         ></LoginModal>
         <Switch>
+          <ProtectedRoute
+            path="/profile/update"
+            render={(props) => <Profile {...props} />}
+          />
           <ProtectedRoute
             path="/profile"
             render={(props) => <Profile {...props} />}
@@ -178,7 +182,13 @@ function App() {
           <Route exact={true} path="/cart" component={Cart} />
           <Route exact={true} path="/games/:id" component={Detail} />
           <Route exact={true} path="/explore" component={Explore} />
+          <Route
+            exact={true}
+            path="/profile/update"
+            component={ProfileUpdate}
+          />
           <Route exact={true} path="/profile" component={Profile} />
+          <Route exact={true} path="/register" component={Register} />
           <Route exact={true} path="/" component={MainPage} />
           <Route path="*" component={FourOhFourPage} />
         </Switch>

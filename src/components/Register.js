@@ -1,13 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-function Checkout() {
+function Register() {
   let state = useSelector((state) => state);
+  let currentUser = state.currentUser;
   return (
     <div>
-      <h1>This is Checkout Page</h1>
+      <h1>This is Register Page</h1>
     </div>
   );
 }
 
-export default Checkout;
+export default Register;
