@@ -23,6 +23,7 @@ function LoginModal(props) {
                         appId="1751990751605847"
                         autoLoad={false}
                         fields="name,email,picture"
+                        callback={props.loginFacebook}
                         render={(renderProps) => (
                           <img
                             id="login-icon"

@@ -12,7 +12,7 @@ function MainPage() {
 
   const getGames = async () => {
     try {
-      let url = `https://api.rawg.io/api/games?page=1&page_size=5&platform=4`;
+      let url = `https://api.rawg.io/api/games?page=1&page_size=5&platforms=4`;
       let data = await fetch(url);
       let result = await data.json();
       console.log(result.results);
@@ -89,12 +89,10 @@ function MainPage() {
                 </Card.Text>
               </Card.Body>
               <ListGroup className="list-group-flush">
-                <ListGroupItem>
-                  Release date: {game.platforms[0].released_at}
-                </ListGroupItem>
+                <ListGroupItem>Release date: {game.released}</ListGroupItem>
                 <ListGroupItem>
                   Best price:{" "}
-                  {game.price ? `$${game.price}` : `Now not available`}
+                  {game.price ? `$${game.price}` : `Not Available Now`}
                 </ListGroupItem>
               </ListGroup>
               <Button variant="danger">More detail</Button>
