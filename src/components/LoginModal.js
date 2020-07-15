@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Button, Form, Col } from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GoogleLogin } from "react-google-login";
 import { IconContext } from "react-icons";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  loginFacebook,
+  loginGoogle,
+  loginEmail,
+} from "../redux/actions/userAction";
 
 function LoginModal(props) {
+  const dispatch = useDispatch();
+  let { currentUser } = useSelector((state) => state.user);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <div>
       <IconContext.Provider value={{ className: "react-icons" }}>
@@ -23,7 +34,7 @@ function LoginModal(props) {
                         appId="1751990751605847"
                         autoLoad={false}
                         fields="name,email,picture"
-                        callback={props.loginFacebook}
+                        callback={(data) => dispatch(loginFacebook(data))}
                         render={(renderProps) => (
                           <img
                             id="login-icon"
@@ -51,8 +62,8 @@ function LoginModal(props) {
                             disabled={renderProps.disabled}
                           ></img>
                         )}
-                        onSuccess={props.loginGoogle}
-                        onFailure={props.loginGoogle}
+                        onSuccess={(data) => dispatch(loginGoogle(data))}
+                        onFailure={(data) => dispatch(loginGoogle(data))}
                         cookiePolicy={"single_host_origin"}
                       />
                     </Form.Text>
@@ -62,14 +73,14 @@ function LoginModal(props) {
             </Form>
           </Modal.Body>
           <Modal.Body>
-            <Form onSubmit={props.loginEmail}>
+            <Form onSubmit={(e) => dispatch(loginEmail(email, password, e))}>
               <Form.Label>Or if you want to sign in via Email</Form.Label>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   type="email"
-                  value={props.email}
-                  onChange={(e) => props.setEmail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter email"
                 />
                 <Form.Text className="text-muted">
@@ -81,8 +92,8 @@ function LoginModal(props) {
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="text"
-                  value={props.password}
-                  onChange={(e) => props.setPassword(e.target.value)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
                 />
               </Form.Group>

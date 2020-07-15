@@ -2,44 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, ListGroup, ListGroupItem, Button, Badge } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import axios from "axios";
+import { getGames } from "../redux/actions/gameAction";
 
 function MainPage() {
-  let state = useSelector((state) => state);
   let dispatch = useDispatch();
-  let currentUser = state.currentUser;
-  let currentGameList = state.currentGameList;
-
-  const getGames = async () => {
-    try {
-      let url = `https://api.rawg.io/api/games?page=1&page_size=5&platforms=4`;
-      let data = await fetch(url);
-      let result = await data.json();
-      console.log(result.results);
-      let gameList = result.results;
-      let gamePrices = gameList.map(async (game) => {
-        let price = await getPrice(game.name.replace(/ *\([^)]*\) */g, "")); //remove spaces between parantheses
-        game["price"] = price === null ? null : price * 1;
-        return game;
-      });
-      gameList = await Promise.all(gamePrices);
-      console.log(gameList);
-      dispatch({ type: "LOAD-GAMES", payload: gameList });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getPrice = async (name) => {
-    let url = `https://www.cheapshark.com/api/1.0/games?title=${name}`;
-    let datas = await fetch(url);
-    let price = await datas.json();
-    return price[0] ? price[0].cheapest : null;
-  };
+  let { currentGameList } = useSelector((state) => state.game);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    getGames();
+    dispatch(getGames());
   }, []);
 
   //loading

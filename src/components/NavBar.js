@@ -1,13 +1,16 @@
 import React from "react";
 import { Nav, Navbar, NavDropdown, Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
+import { logOut } from "../redux/actions/userAction";
 
 function NavBar(props) {
-  let state = useSelector((state) => state);
+  // let state = useSelector((state) => state);
   let history = useHistory();
-  let currentUser = state.currentUser;
+  let dispatch = useDispatch();
+  // let currentUser = state.currentUser;
+  let { currentUser } = useSelector((state) => state.user);
 
   const goProfile = (e) => {
     e.preventDefault();
@@ -51,7 +54,7 @@ function NavBar(props) {
         </Nav>
         <Nav>
           {currentUser ? (
-            <Nav.Link variant="secondary" onClick={(e) => props.logOut()}>
+            <Nav.Link variant="secondary" onClick={(e) => dispatch(logOut(e))}>
               Logout
             </Nav.Link>
           ) : (
@@ -79,6 +82,7 @@ function NavBar(props) {
           {currentUser ? (
             <img
               id="avatar-image"
+              alt="avatar"
               src={
                 currentUser.avatar ||
                 "https://res.cloudinary.com/smithlam/image/upload/a_0,c_scale,h_100/c9gsnzmd52jlcuprq6nz"

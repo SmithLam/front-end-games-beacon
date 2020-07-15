@@ -5,7 +5,8 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "./store";
+// import store from "./store";
+import store from "./redux/store";
 
 ReactDOM.render(
   // better to wrap the Provider around router to give all state to all pages in router

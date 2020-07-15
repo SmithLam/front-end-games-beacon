@@ -13,12 +13,13 @@ import Profile from "./components/Profile";
 import ProfileUpdate from "./components/ProfileUpdate";
 import LoginModal from "./components/LoginModal";
 import Register from "./components/Register";
-import axios from "axios";
+// import axios from "axios";
+import { fetchUser } from "./redux/actions/userAction";
 
 function App() {
   let dispatch = useDispatch();
-  let state = useSelector((state) => state);
-  let currentUser = state.currentUser;
+  let { currentUser } = useSelector((state) => state.user);
+  let loaded = useSelector((state) => state.app);
 
   const [show, setShow] = useState(false);
 
@@ -43,128 +44,17 @@ function App() {
     );
   };
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loaded, setLoaded] = useState(false);
-
-  const loginFacebook = async (data) => {
-    if (data && data.accessToken) {
-      console.log(data.accessToken);
-      const res = await fetch(
-        `http://localhost:5000/auth/login/facebook?token=${data.accessToken}`
-      );
-      if (res.ok) {
-        const dt = await res.json();
-        console.log(dt);
-        const user = dt.data;
-        // const token = dt.token;
-        dispatch({ type: "LOGIN", payload: user });
-        localStorage.setItem("token", dt.token);
-      } else {
-        console.log(res);
-      }
-    }
-  };
-
-  const loginGoogle = async (data) => {
-    if (data && data.accessToken) {
-      console.log(data.accessToken);
-      let token = data.accessToken;
-      const res = await fetch(
-        `http://localhost:5000/auth/login/google?token=${token}`
-      );
-      if (res.ok) {
-        const dt = await res.json();
-        console.log(dt);
-        const user = dt.data;
-        let token = dt.token;
-        dispatch({ type: "LOGIN", payload: user });
-        localStorage.setItem("token", dt.token);
-      } else {
-        console.log(res);
-      }
-    }
-  };
-
-  const loginEmail = async (event) => {
-    event.preventDefault();
-    if (email && password) {
-      console.log(email, password);
-      let loginData = { email: email, password: password };
-      await axios
-        .post("http://localhost:5000/auth/login/", loginData)
-        .then((res) => {
-          console.log(res);
-          console.log("This is the data here", res.data.data);
-          const user = res.data.data.user;
-          const token = res.data.data.token;
-          console.log(user);
-          console.log(token);
-          dispatch({ type: "LOGIN", payload: user });
-          localStorage.setItem("token", token);
-        })
-        .catch((err) => console.log(err));
-    }
-  };
-
-  const logOut = async () => {
-    const res = await fetch(`http://localhost:5000/auth/logout`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.ok) {
-      localStorage.removeItem("token");
-      dispatch({ type: "LOGOUT" });
-    } else {
-      console.log("You are messing with my code somehow");
-    }
-  };
-
-  const fetchUser = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      return setLoaded(true);
-    }
-    const res = await fetch(`http://localhost:5000/user/profile`, {
-      headers: {
-        authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.ok) {
-      const dt = await res.json();
-      const user = dt.data;
-      console.log("this is fetch user dt", user);
-      dispatch({ type: "LOGIN", payload: user });
-    } else {
-      localStorage.removeItem("token");
-    }
-    setLoaded(true);
-  };
-
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchUser();
+    dispatch(fetchUser());
   }, []);
 
   if (!loaded) return <h1>Loading...</h1>;
   else
     return (
       <div>
-        <NavBar handleShow={handleShow} logOut={logOut}></NavBar>
-        <LoginModal
-          show={show}
-          loginEmail={loginEmail}
-          loginFacebook={loginFacebook}
-          loginGoogle={loginGoogle}
-          handleClose={handleClose}
-          email={email}
-          password={password}
-          setEmail={setEmail}
-          setPassword={setPassword}
-        ></LoginModal>
+        <NavBar handleShow={handleShow}></NavBar>
+        <LoginModal show={show} handleClose={handleClose}></LoginModal>
         <div id="section">
           <Switch>
             <ProtectedRoute
@@ -189,14 +79,7 @@ function App() {
               component={ProfileUpdate}
             />
             <Route exact={true} path="/profile" component={Profile} />
-            <Route
-              exact={true}
-              path="/register"
-              loginEmail={loginEmail}
-              setEmail={setEmail}
-              setPassword={setPassword}
-              component={Register}
-            />
+            <Route exact={true} path="/register" component={Register} />
             <Route exact={true} path="/" component={MainPage} />
             <Route path="*" component={FourOhFourPage} />
           </Switch>
