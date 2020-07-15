@@ -10,21 +10,31 @@ function MainPage() {
   let currentUser = state.currentUser;
   let currentGameList = state.currentGameList;
 
-  // let [gameList, setGameList] = useState([]);
-
   const getGames = async () => {
-    await axios
-      .get("https://api.rawg.io/api/games?page=1&page_size=5&platform=4")
-      .then((res) => {
-        console.log(res);
-        console.log("this is res data", res.data.results);
-        let gameList = res.data.results;
-        console.log(gameList);
-        dispatch({ type: "LOAD-GAMES", payload: gameList });
-      })
-      .catch((err) => {
-        console.log(err);
+    try {
+      let url = `https://api.rawg.io/api/games?page=1&page_size=5&platform=4`;
+      let data = await fetch(url);
+      let result = await data.json();
+      console.log(result.results);
+      let gameList = result.results;
+      let gamePrices = gameList.map(async (game) => {
+        let price = await getPrice(game.name.replace(/ *\([^)]*\) */g, "")); //remove spaces between parantheses
+        game["price"] = price === null ? null : price * 1;
+        return game;
       });
+      gameList = await Promise.all(gamePrices);
+      console.log(gameList);
+      dispatch({ type: "LOAD-GAMES", payload: gameList });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getPrice = async (name) => {
+    let url = `https://www.cheapshark.com/api/1.0/games?title=${name}`;
+    let datas = await fetch(url);
+    let price = await datas.json();
+    return price[0] ? price[0].cheapest : null;
   };
 
   useEffect(() => {
@@ -63,7 +73,7 @@ function MainPage() {
         <div className="Row"></div>
         <div className="col-md-12 d-flex flex-wrap justify-content-around">
           {currentGameList.map((game) => (
-            <Card style={{ width: "18rem" }}>
+            <Card key={game.id} className="mb-3" style={{ width: "18rem" }}>
               <Card.Img variant="top" src={game.background_image} />
               <Card.Body>
                 <Card.Title>{game.name}</Card.Title>
@@ -71,7 +81,7 @@ function MainPage() {
                   Available on
                   {game.platforms.map((item) => {
                     return (
-                      <Badge pill variant="danger">
+                      <Badge key={item.platform.name} pill variant="danger">
                         {item.platform.name}
                       </Badge>
                     );
@@ -82,7 +92,10 @@ function MainPage() {
                 <ListGroupItem>
                   Release date: {game.platforms[0].released_at}
                 </ListGroupItem>
-                <ListGroupItem>Best price: </ListGroupItem>
+                <ListGroupItem>
+                  Best price:{" "}
+                  {game.price ? `$${game.price}` : `Now not available`}
+                </ListGroupItem>
               </ListGroup>
               <Button variant="danger">More detail</Button>
             </Card>
