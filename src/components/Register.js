@@ -11,7 +11,6 @@ import { openUploadWidget } from "../CloudinaryService";
 const GOOGLE_SEARCH_API = process.env.REACT_APP_APIKEY;
 
 function Register(props) {
-  console.log(GOOGLE_SEARCH_API);
   // let state = useSelector((state) => state);
   // let currentUser = state.currentUser;
   let history = useHistory();
