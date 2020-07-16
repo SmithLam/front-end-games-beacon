@@ -90,10 +90,9 @@ export const fetchUser = () => async (dispatch) => {
   if (findUser.ok) {
     const dt = await findUser.json();
     const user = dt.data;
-    const wl = dt.wl;
-    const k = wl.map((e) => e.gameId.rawgId);
-    user.wishlist = wl;
-    user.k = k;
+    const wishlist = dt.wishlist;
+    const wishlistRawgId = wishlist.map((e) => e.rawgId);
+    user.wishlistRawgId = wishlistRawgId;
     console.log("this is fetch user dt", user);
     dispatch({ type: "LOGIN", payload: user });
   } else {

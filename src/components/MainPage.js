@@ -8,7 +8,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 function MainPage() {
   let dispatch = useDispatch();
   let { currentGameList } = useSelector((state) => state.game);
-  const user = useSelector((s) => s.user.currentUser);
+  let { currentUser } = useSelector((s) => s.user);
   let [liked, setLiked] = useState(false);
 
   const submitGame = async (rawgId, cheapId, rawgName, rawgCover) => {
@@ -21,11 +21,8 @@ function MainPage() {
           "Content-Type": "application/json",
         },
       });
-      const gameFound = await findGame.json();
-      console.log("this is found game", gameFound.data);
-      console.log("this is found game id", gameFound.data._id);
-      let gameLocalId = gameFound.data._id;
-      if (!gameFound) {
+      let game = await findGame.json();
+      if (!game.data) {
         let gameData = {
           rawgId: rawgId,
           cheapId: cheapId,
@@ -41,12 +38,14 @@ function MainPage() {
           },
           body: JSON.stringify(gameData),
         });
-        const gameCreated = await createGame.json();
-        console.log("this is game created", gameCreated.data);
-        console.log("this is game created id", gameCreated.data._id);
-        gameLocalId = gameCreated.data._id;
+        game = await createGame.json();
       }
+      console.log("this is found game", game.data);
+      console.log("this is found game id", game.data._id);
+      let gameLocalId = game.data._id;
+
       console.log(gameLocalId);
+      let wishlistData = { rawgId: rawgId };
       const createWishlist = await fetch(
         `http://localhost:5000/wishlist/${gameLocalId}`,
         {
@@ -55,6 +54,7 @@ function MainPage() {
             authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
+          body: JSON.stringify(wishlistData),
         }
       );
       const wishList = await createWishlist.json();
@@ -115,7 +115,10 @@ function MainPage() {
               <Card.Img variant="top" src={game.background_image} />
               <Card.Body>
                 <Card.Title>
-                  {game.name} {user.k.includes(game.id) ? "roi" : "chua"}
+                  {game.name}{" "}
+                  {currentUser.wishlistRawgId.includes(game.id)
+                    ? "Wishlisted"
+                    : "Not"}
                   <AiOutlineHeart
                     id="heart-icon"
                     onClick={() =>
