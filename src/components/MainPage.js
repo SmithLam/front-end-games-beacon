@@ -8,8 +8,64 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 function MainPage() {
   let dispatch = useDispatch();
   let { currentGameList } = useSelector((state) => state.game);
-
+  const user = useSelector((s) => s.user.currentUser);
   let [liked, setLiked] = useState(false);
+
+  const submitGame = async (rawgId, cheapId, rawgName, rawgCover) => {
+    try {
+      console.log(rawgId, cheapId, rawgName, rawgCover);
+      const findGame = await fetch(`http://localhost:5000/game/${rawgId}`, {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const gameFound = await findGame.json();
+      console.log("this is found game", gameFound.data);
+      console.log("this is found game id", gameFound.data._id);
+      let gameLocalId = gameFound.data._id;
+      if (!gameFound) {
+        let gameData = {
+          rawgId: rawgId,
+          cheapId: cheapId,
+          rawgName: rawgName,
+          rawgCover: rawgCover,
+        };
+        console.log(gameData);
+        const createGame = await fetch(`http://localhost:5000/game/create`, {
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(gameData),
+        });
+        const gameCreated = await createGame.json();
+        console.log("this is game created", gameCreated.data);
+        console.log("this is game created id", gameCreated.data._id);
+        gameLocalId = gameCreated.data._id;
+      }
+      console.log(gameLocalId);
+      const createWishlist = await fetch(
+        `http://localhost:5000/wishlist/${gameLocalId}`,
+        {
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const wishList = await createWishlist.json();
+      if (!wishList.data) {
+        return console.log("this wishlist is already created");
+      }
+      console.log(wishList.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,11 +92,12 @@ function MainPage() {
         <Card.Body>
           <Card.Title>
             Cyberpunk 2077
-            {liked === true ? (
+            {/* {liked === true ? (
               <AiFillHeart onClick={() => setLiked(false)}></AiFillHeart>
             ) : (
               <AiOutlineHeart onClick={() => setLiked(true)}></AiOutlineHeart>
-            )}
+            )} */}
+            <AiOutlineHeart></AiOutlineHeart>
           </Card.Title>
           <Card.Text>Available on PC, PS4, Xbox One</Card.Text>
         </Card.Body>
@@ -57,7 +114,20 @@ function MainPage() {
             <Card key={game.id} className="mb-3" style={{ width: "18rem" }}>
               <Card.Img variant="top" src={game.background_image} />
               <Card.Body>
-                <Card.Title>{game.name}</Card.Title>
+                <Card.Title>
+                  {game.name} {user.k.includes(game.id) ? "roi" : "chua"}
+                  <AiOutlineHeart
+                    id="heart-icon"
+                    onClick={() =>
+                      submitGame(
+                        game.id,
+                        game.cheapId,
+                        game.name,
+                        game.background_image
+                      )
+                    }
+                  ></AiOutlineHeart>
+                </Card.Title>
                 <Card.Text>
                   Available on
                   {game.platforms.map((item) => {

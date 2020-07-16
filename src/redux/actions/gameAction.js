@@ -7,7 +7,8 @@ export const getGames = () => async (dispatch) => {
     let gameList = result.results;
     let gamePrices = gameList.map(async (game) => {
       let price = await getPrice(game.name.replace(/ *\([^)]*\) */g, "")); //remove spaces between parantheses
-      game["price"] = price === null ? null : price * 1;
+      game["price"] = price.price === null ? null : price.price * 1;
+      game["cheapId"] = price.gameId === null ? null : price.gameId * 1;
       return game;
     });
     gameList = await Promise.all(gamePrices);
@@ -22,5 +23,9 @@ const getPrice = async (name) => {
   let url = `https://www.cheapshark.com/api/1.0/games?title=${name}`;
   let datas = await fetch(url);
   let price = await datas.json();
-  return price[0] ? price[0].cheapest : null;
+  return {
+    price: price[0] ? price[0].cheapest : null,
+    gameId: price[0] ? price[0].gameID : null,
+  };
 };
+

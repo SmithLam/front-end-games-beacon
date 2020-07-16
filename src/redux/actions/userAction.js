@@ -75,44 +75,25 @@ export const logOut = () => async (dispatch) => {
   }
 };
 
-// export const getUserProfile = () => async (dispatch) => {
-//   const res = await fetch(`http://localhost:5000/auth/logout`, {
-//     headers: {
-//       authorization: `Bearer ${localStorage.getItem("token")}`,
-//       "Content-Type": "application/json",
-//     },
-//   });
-//   if (res.ok) {
-//     localStorage.removeItem("token");
-//     dispatch({ type: "LOGOUT" });
-//   } else {
-//     console.log("You are messing with my code somehow");
-//   }
-// };
-
-
-
-
-
-
-
-
-
 export const fetchUser = () => async (dispatch) => {
   const token = localStorage.getItem("token");
   if (!token) {
     dispatch({ type: "LOADED" });
     return;
   }
-  const res = await fetch(`http://localhost:5000/user/profile`, {
+  const findUser = await fetch(`http://localhost:5000/user/profile`, {
     headers: {
       authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
   });
-  if (res.ok) {
-    const dt = await res.json();
+  if (findUser.ok) {
+    const dt = await findUser.json();
     const user = dt.data;
+    const wl = dt.wl;
+    const k = wl.map((e) => e.gameId.rawgId);
+    user.wishlist = wl;
+    user.k = k;
     console.log("this is fetch user dt", user);
     dispatch({ type: "LOGIN", payload: user });
   } else {
@@ -121,43 +102,11 @@ export const fetchUser = () => async (dispatch) => {
   dispatch({ type: "LOADED" });
 };
 
-// export const loginWithFacebook = (data) => async (dispatch) => {
-//   if (data && data.accessToken) {
-//     console.log(data.accessToken);
-//     const res = await fetch(
-//       `http://localhost:5000/auth/login/facebook?token=${data.accessToken}`
-//     );
-//     if (res.ok) {
-//       const dt = await res.json();
-//       console.log(dt);
-//       const user = dt.data;
-//       const token = dt.token;
-//       dispatch({ type: "LOGIN", payload: user });
-//       // setUser(user);
-//       localStorage.setItem("token", token);
-//     } else {
-//       console.log(res);
-//     }
-//   }
-// };
-
-// export const fetchUser = () => async (dispatch) => {
-//   const token = localStorage.getItem("token");
-//   if (!token) {
-//     dispatch({ type: "LOADED" });
-//     return;
-//   }
-//   const res = await fetch(`http://localhost:5000/users/me`, {
-//     headers: {
-//       authorization: `Bearer ${token}`,
-//       "Content-Type": "application/json",
-//     },
-//   });
-//   if (res.ok) {
-//     const dt = await res.json();
-//     dispatch({ type: "LOGIN", payload: dt.data });
-//   } else {
-//     localStorage.removeItem("token");
-//   }
-//   dispatch({ type: "LOADED" });
-// };
+// const findWishlist = await fetch(`http://localhost:5000/wishlist`, {
+//   headers: {
+//     authorization: `Bearer ${token}`,
+//     "Content-Type": "application/json",
+//   },
+// });
+// const wishlist = await findWishlist.json();
+// console.log(wishlist.data);

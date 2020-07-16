@@ -19,9 +19,9 @@ body {
   border-radius: 100%;
 }
 
-/* #heart-icon {
-  height: 30px;
-} */
+#heart-icon:hover {
+  cursor: pointer;
+}
 
 .google-facebook-login {
   display: flex;
