@@ -11,7 +11,7 @@ function MainPage() {
   let { currentUser } = useSelector((s) => s.user);
   let [liked, setLiked] = useState(false);
 
-  const submitGame = async (rawgId, cheapId, rawgName, rawgCover) => {
+  const wishlistGame = async (rawgId, cheapId, rawgName, rawgCover) => {
     try {
       console.log(rawgId, cheapId, rawgName, rawgCover);
       const findGame = await fetch(`http://localhost:5000/game/${rawgId}`, {
@@ -43,7 +43,6 @@ function MainPage() {
       console.log("this is found game", game.data);
       console.log("this is found game id", game.data._id);
       let gameLocalId = game.data._id;
-
       console.log(gameLocalId);
       let wishlistData = { rawgId: rawgId };
       const createWishlist = await fetch(
@@ -61,7 +60,30 @@ function MainPage() {
       if (!wishList.data) {
         return console.log("this wishlist is already created");
       }
-      console.log(wishList.data);
+      console.log("this is new wishlist", wishList.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const unWishlistGame = async (rawgId) => {
+    try {
+      console.log(rawgId);
+      const deleteWishlist = await fetch(
+        `http://localhost:5000/wishlist/${rawgId}`,
+        {
+          method: "DELETE",
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const wishlistDeleted = await deleteWishlist.json();
+      if (!wishlistDeleted.data) {
+        return console.log("There is a problem in deleting wishlist");
+      }
+      console.log(wishlistDeleted);
     } catch (err) {
       console.log(err.message);
     }
@@ -118,11 +140,11 @@ function MainPage() {
                   {game.name}{" "}
                   {currentUser.wishlistRawgId.includes(game.id)
                     ? "Wishlisted"
-                    : "Not"}
+                    : "Not Wishlisted"}
                   <AiOutlineHeart
                     id="heart-icon"
                     onClick={() =>
-                      submitGame(
+                      wishlistGame(
                         game.id,
                         game.cheapId,
                         game.name,
@@ -130,6 +152,10 @@ function MainPage() {
                       )
                     }
                   ></AiOutlineHeart>
+                  <AiFillHeart
+                    id="heart-icon"
+                    onClick={() => unWishlistGame(game.id)}
+                  ></AiFillHeart>
                 </Card.Title>
                 <Card.Text>
                   Available on
