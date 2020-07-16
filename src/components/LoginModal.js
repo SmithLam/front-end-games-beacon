@@ -13,13 +13,17 @@ import {
 function LoginModal(props) {
   const dispatch = useDispatch();
   let { currentUser } = useSelector((state) => state.user);
+  let { showModal } = useSelector((state) => state.modal);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <div>
       <IconContext.Provider value={{ className: "react-icons" }}>
-        <Modal show={props.show} onHide={props.handleClose}>
+        <Modal
+          show={showModal}
+          onHide={(e) => dispatch({ type: "CLOSE-LOGIN-MODAL" })}
+        >
           <Modal.Header closeButton>
             <Modal.Title>Login</Modal.Title>
           </Modal.Header>

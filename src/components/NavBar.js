@@ -6,10 +6,8 @@ import { LinkContainer } from "react-router-bootstrap";
 import { logOut } from "../redux/actions/userAction";
 
 function NavBar(props) {
-  // let state = useSelector((state) => state);
   let history = useHistory();
   let dispatch = useDispatch();
-  // let currentUser = state.currentUser;
   let { currentUser } = useSelector((state) => state.user);
 
   const goProfile = (e) => {
@@ -58,7 +56,7 @@ function NavBar(props) {
               Logout
             </Nav.Link>
           ) : (
-            <Nav.Link variant="secondary" onClick={(e) => props.handleShow()}>
+              <Nav.Link variant="secondary" onClick={(e) => dispatch({ type: "SHOW-LOGIN-MODAL" })}>
               Login
             </Nav.Link>
           )}

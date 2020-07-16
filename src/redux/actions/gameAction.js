@@ -29,3 +29,90 @@ const getPrice = async (name) => {
   };
 };
 
+export const wishlistGame = (rawgId, cheapId, rawgName, rawgCover) => async (
+  dispatch
+) => {
+  try {
+    console.log(rawgId, cheapId, rawgName, rawgCover);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("You need to register/log in to add wishlist!");
+    }
+    const findGame = await fetch(`http://localhost:5000/game/${rawgId}`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    let game = await findGame.json();
+    if (!game.data) {
+      let gameData = {
+        rawgId: rawgId,
+        cheapId: cheapId,
+        rawgName: rawgName,
+        rawgCover: rawgCover,
+      };
+      console.log(gameData);
+      const createGame = await fetch(`http://localhost:5000/game/create`, {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(gameData),
+      });
+      game = await createGame.json();
+    }
+    console.log("this is found game", game.data);
+    console.log("this is found game id", game.data._id);
+    let gameLocalId = game.data._id;
+    console.log(gameLocalId);
+    let wishlistData = { rawgId: rawgId };
+    const createWishlist = await fetch(
+      `http://localhost:5000/wishlist/${gameLocalId}`,
+      {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(wishlistData),
+      }
+    );
+    const wishList = await createWishlist.json();
+    if (!wishList.data) {
+      return console.log("this wishlist is already created");
+    }
+    console.log("this is new wishlist", wishList.data);
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export const unWishlistGame = (rawgId) => async (dispatch) => {
+  try {
+    console.log(rawgId);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("You need to register/log in to add wishlist!");
+    }
+    const deleteWishlist = await fetch(
+      `http://localhost:5000/wishlist/${rawgId}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const wishlistDeleted = await deleteWishlist.json();
+    if (!wishlistDeleted.data) {
+      return console.log("There is a problem in deleting wishlist");
+    }
+    console.log(wishlistDeleted);
+  } catch (err) {
+    console.log(err.message);
+  }
+};

@@ -21,7 +21,9 @@ function Profile() {
       </div>
       <div>
         This is the list of our Wishslist:{" "}
-        {currentUser.wishlist.length === 0 ? "Nothing" : currentUser.wishlist}
+        {currentUser.wishlistRawgId.length === 0
+          ? "Nothing"
+          : currentUser.wishlistRawgId}
       </div>
       <div>
         This is the list of our Owned Games:{" "}

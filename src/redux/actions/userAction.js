@@ -6,10 +6,13 @@ export const loginFacebook = (data) => async (dispatch) => {
     );
     if (res.ok) {
       const dt = await res.json();
-      console.log(dt);
       const user = dt.data;
+      const wishlist = dt.wishlist;
+      const wishlistRawgId = wishlist.map((e) => e.rawgId);
+      user.wishlistRawgId = wishlistRawgId;
       dispatch({ type: "LOGIN", payload: user });
       localStorage.setItem("token", dt.token);
+      dispatch({ type: "CLOSE-LOGIN-MODAL" });
     } else {
       console.log(res);
     }
@@ -27,8 +30,12 @@ export const loginGoogle = (data) => async (dispatch) => {
       const dt = await res.json();
       console.log(dt);
       const user = dt.data;
+      const wishlist = dt.wishlist;
+      const wishlistRawgId = wishlist.map((e) => e.rawgId);
+      user.wishlistRawgId = wishlistRawgId;
       dispatch({ type: "LOGIN", payload: user });
       localStorage.setItem("token", dt.token);
+      dispatch({ type: "CLOSE-LOGIN-MODAL" });
     } else {
       console.log(res);
     }
@@ -47,14 +54,16 @@ export const loginEmail = (email, password, event) => async (dispatch) => {
     },
     body: JSON.stringify(loginData),
   });
-
   if (res.ok) {
     const dt = await res.json();
     console.log(dt);
-    const user = dt.data.user;
-    const token = dt.data.token;
+    const user = dt.data;
+    const wishlist = dt.wishlist;
+    const wishlistRawgId = wishlist.map((e) => e.rawgId);
+    user.wishlistRawgId = wishlistRawgId;
     dispatch({ type: "LOGIN", payload: user });
-    localStorage.setItem("token", token);
+    localStorage.setItem("token", dt.token);
+    dispatch({ type: "CLOSE-LOGIN-MODAL" });
   } else {
     console.log(res);
   }

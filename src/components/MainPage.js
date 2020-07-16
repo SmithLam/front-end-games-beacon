@@ -2,92 +2,96 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, ListGroup, ListGroupItem, Button, Badge } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { getGames } from "../redux/actions/gameAction";
+import {
+  getGames,
+  wishlistGame,
+  unWishlistGame,
+} from "../redux/actions/gameAction";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 function MainPage() {
   let dispatch = useDispatch();
   let { currentGameList } = useSelector((state) => state.game);
-  let { currentUser } = useSelector((s) => s.user);
+  let { currentUser } = useSelector((state) => state.user);
   let [liked, setLiked] = useState(false);
 
-  const wishlistGame = async (rawgId, cheapId, rawgName, rawgCover) => {
-    try {
-      console.log(rawgId, cheapId, rawgName, rawgCover);
-      const findGame = await fetch(`http://localhost:5000/game/${rawgId}`, {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-      });
-      let game = await findGame.json();
-      if (!game.data) {
-        let gameData = {
-          rawgId: rawgId,
-          cheapId: cheapId,
-          rawgName: rawgName,
-          rawgCover: rawgCover,
-        };
-        console.log(gameData);
-        const createGame = await fetch(`http://localhost:5000/game/create`, {
-          method: "POST",
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(gameData),
-        });
-        game = await createGame.json();
-      }
-      console.log("this is found game", game.data);
-      console.log("this is found game id", game.data._id);
-      let gameLocalId = game.data._id;
-      console.log(gameLocalId);
-      let wishlistData = { rawgId: rawgId };
-      const createWishlist = await fetch(
-        `http://localhost:5000/wishlist/${gameLocalId}`,
-        {
-          method: "POST",
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(wishlistData),
-        }
-      );
-      const wishList = await createWishlist.json();
-      if (!wishList.data) {
-        return console.log("this wishlist is already created");
-      }
-      console.log("this is new wishlist", wishList.data);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
+  // const wishlistGame = async (rawgId, cheapId, rawgName, rawgCover) => {
+  //   try {
+  //     console.log(rawgId, cheapId, rawgName, rawgCover);
+  //     const findGame = await fetch(`http://localhost:5000/game/${rawgId}`, {
+  //       method: "GET",
+  //       headers: {
+  //         authorization: `Bearer ${localStorage.getItem("token")}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     let game = await findGame.json();
+  //     if (!game.data) {
+  //       let gameData = {
+  //         rawgId: rawgId,
+  //         cheapId: cheapId,
+  //         rawgName: rawgName,
+  //         rawgCover: rawgCover,
+  //       };
+  //       console.log(gameData);
+  //       const createGame = await fetch(`http://localhost:5000/game/create`, {
+  //         method: "POST",
+  //         headers: {
+  //           authorization: `Bearer ${localStorage.getItem("token")}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(gameData),
+  //       });
+  //       game = await createGame.json();
+  //     }
+  //     console.log("this is found game", game.data);
+  //     console.log("this is found game id", game.data._id);
+  //     let gameLocalId = game.data._id;
+  //     console.log(gameLocalId);
+  //     let wishlistData = { rawgId: rawgId };
+  //     const createWishlist = await fetch(
+  //       `http://localhost:5000/wishlist/${gameLocalId}`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           authorization: `Bearer ${localStorage.getItem("token")}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(wishlistData),
+  //       }
+  //     );
+  //     const wishList = await createWishlist.json();
+  //     if (!wishList.data) {
+  //       return console.log("this wishlist is already created");
+  //     }
+  //     console.log("this is new wishlist", wishList.data);
+  //   } catch (err) {
+  //     console.log(err.message);
+  //   }
+  // };
 
-  const unWishlistGame = async (rawgId) => {
-    try {
-      console.log(rawgId);
-      const deleteWishlist = await fetch(
-        `http://localhost:5000/wishlist/${rawgId}`,
-        {
-          method: "DELETE",
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const wishlistDeleted = await deleteWishlist.json();
-      if (!wishlistDeleted.data) {
-        return console.log("There is a problem in deleting wishlist");
-      }
-      console.log(wishlistDeleted);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
+  // const unWishlistGame = async (rawgId) => {
+  //   try {
+  //     console.log(rawgId);
+  //     const deleteWishlist = await fetch(
+  //       `http://localhost:5000/wishlist/${rawgId}`,
+  //       {
+  //         method: "DELETE",
+  //         headers: {
+  //           authorization: `Bearer ${localStorage.getItem("token")}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     const wishlistDeleted = await deleteWishlist.json();
+  //     if (!wishlistDeleted.data) {
+  //       return console.log("There is a problem in deleting wishlist");
+  //     }
+  //     console.log(wishlistDeleted);
+  //   } catch (err) {
+  //     console.log(err.message);
+  //   }
+  // };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -138,24 +142,15 @@ function MainPage() {
               <Card.Body>
                 <Card.Title>
                   {game.name}{" "}
-                  {currentUser.wishlistRawgId.includes(game.id)
-                    ? "Wishlisted"
-                    : "Not Wishlisted"}
-                  <AiOutlineHeart
-                    id="heart-icon"
-                    onClick={() =>
-                      wishlistGame(
-                        game.id,
-                        game.cheapId,
-                        game.name,
-                        game.background_image
-                      )
-                    }
-                  ></AiOutlineHeart>
-                  <AiFillHeart
-                    id="heart-icon"
-                    onClick={() => unWishlistGame(game.id)}
-                  ></AiFillHeart>
+                  {currentUser ? (
+                    currentUser.wishlistRawgId.includes(game.id) ? (
+                      <AiFillHeart id="heart-icon"></AiFillHeart>
+                    ) : (
+                      <AiOutlineHeart id="heart-icon"></AiOutlineHeart>
+                    )
+                  ) : (
+                    ""
+                  )}
                 </Card.Title>
                 <Card.Text>
                   Available on
@@ -169,6 +164,30 @@ function MainPage() {
                 </Card.Text>
               </Card.Body>
               <ListGroup className="list-group-flush">
+                <ListGroupItem>
+                  {" "}
+                  <Button
+                    variant="primary"
+                    onClick={(e) =>
+                      dispatch(
+                        wishlistGame(
+                          game.id,
+                          game.cheapId,
+                          game.name,
+                          game.background_image
+                        )
+                      )
+                    }
+                  >
+                    Add to Wishlist
+                  </Button>
+                  <Button
+                    variant="danger"
+                    onClick={(e) => dispatch(unWishlistGame(game.id))}
+                  >
+                    Remove from Wishlist
+                  </Button>
+                </ListGroupItem>
                 <ListGroupItem>Release date: {game.released}</ListGroupItem>
                 <ListGroupItem>
                   Best price:{" "}
