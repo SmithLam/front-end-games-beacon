@@ -14,6 +14,15 @@ body {
   border-radius: 100%;
 }
 
+#avatar-big {
+  height: 200px;
+  border-radius: 100%;
+}
+
+/* #heart-icon {
+  height: 30px;
+} */
+
 .google-facebook-login {
   display: flex;
   justify-content: space-around;
@@ -38,15 +47,6 @@ body {
 #login-icon:hover {
   cursor: pointer;
 }
-
-/* #facebook-button {
-  height: 50px;
-  color: blue;
-}
-
-#facebook-button:hover {
-  cursor: pointer;
-} */
 
 /* footer */
 .footer {

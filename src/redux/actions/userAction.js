@@ -75,6 +75,29 @@ export const logOut = () => async (dispatch) => {
   }
 };
 
+// export const getUserProfile = () => async (dispatch) => {
+//   const res = await fetch(`http://localhost:5000/auth/logout`, {
+//     headers: {
+//       authorization: `Bearer ${localStorage.getItem("token")}`,
+//       "Content-Type": "application/json",
+//     },
+//   });
+//   if (res.ok) {
+//     localStorage.removeItem("token");
+//     dispatch({ type: "LOGOUT" });
+//   } else {
+//     console.log("You are messing with my code somehow");
+//   }
+// };
+
+
+
+
+
+
+
+
+
 export const fetchUser = () => async (dispatch) => {
   const token = localStorage.getItem("token");
   if (!token) {

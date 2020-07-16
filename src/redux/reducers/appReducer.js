@@ -5,7 +5,7 @@ const initialstate = {
 export default function reducer(state = initialstate, action) {
   if (action.type === "LOADED") {
     state.loaded = true;
-    console.log("this is loading state", state.loaded);
+    console.log("this is site status", state.loaded);
   }
   return { ...state };
 }

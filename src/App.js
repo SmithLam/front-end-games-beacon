@@ -13,8 +13,9 @@ import Profile from "./components/Profile";
 import ProfileUpdate from "./components/ProfileUpdate";
 import LoginModal from "./components/LoginModal";
 import Register from "./components/Register";
-// import axios from "axios";
 import { fetchUser } from "./redux/actions/userAction";
+import ProtectedRoute from "./utils/ProtectedRoute";
+
 
 function App() {
   let dispatch = useDispatch();
@@ -26,15 +27,15 @@ function App() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const ProtectedRoute = (props) => {
-    //if user is login, then show the detail page
-    //if user is not login then show the login page
-    if (currentUser) {
-      return <Route {...props} />;
-    } else {
-      return <Redirect to="/" />;
-    }
-  };
+  // const ProtectedRoute = (props) => {
+  //   //if user is login, then show the detail page
+  //   //if user is not login then show the login page
+  //   if (currentUser) {
+  //     return <Route {...props} />;
+  //   } else {
+  //     return <Redirect to="/" />;
+  //   }
+  // };
 
   const FourOhFourPage = () => {
     return (
@@ -58,27 +59,19 @@ function App() {
         <div id="section">
           <Switch>
             <ProtectedRoute
-              path="/profile/update"
-              render={(props) => <Profile {...props} />}
-            />
-            <ProtectedRoute
-              path="/profile"
-              render={(props) => <Profile {...props} />}
-            />
-            <ProtectedRoute
+              exact={true}
               path="/checkout"
-              render={(props) => <Checkout {...props} />}
+              component={Checkout}
             />
-            <Route exact={true} path="/checkout" component={Checkout} />
             <Route exact={true} path="/cart" component={Cart} />
             <Route exact={true} path="/games/:id" component={Detail} />
             <Route exact={true} path="/explore" component={Explore} />
-            <Route
+            <ProtectedRoute
               exact={true}
               path="/profile/update"
               component={ProfileUpdate}
             />
-            <Route exact={true} path="/profile" component={Profile} />
+            <ProtectedRoute exact={true} path="/profile" component={Profile} />
             <Route exact={true} path="/register" component={Register} />
             <Route exact={true} path="/" component={MainPage} />
             <Route path="*" component={FourOhFourPage} />

@@ -3,10 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { Card, ListGroup, ListGroupItem, Button, Badge } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { getGames } from "../redux/actions/gameAction";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 function MainPage() {
   let dispatch = useDispatch();
   let { currentGameList } = useSelector((state) => state.game);
+
+  let [liked, setLiked] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,7 +34,14 @@ function MainPage() {
           src="https://i.ytimg.com/vi/07w-ITS91_M/maxresdefault.jpg"
         />
         <Card.Body>
-          <Card.Title>Cyberpunk 2077</Card.Title>
+          <Card.Title>
+            Cyberpunk 2077
+            {liked === true ? (
+              <AiFillHeart onClick={() => setLiked(false)}></AiFillHeart>
+            ) : (
+              <AiOutlineHeart onClick={() => setLiked(true)}></AiOutlineHeart>
+            )}
+          </Card.Title>
           <Card.Text>Available on PC, PS4, Xbox One</Card.Text>
         </Card.Body>
         <ListGroup className="list-group-flush">
