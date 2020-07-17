@@ -28,8 +28,9 @@ function MainPage() {
     dispatch(getGames());
   }, []);
 
+
   //loading
-  if (!loaded && !currentGameList) {
+  if (!loaded || !currentGameList) {
     return (
       <div>
         <h1>Loading</h1>
@@ -65,8 +66,8 @@ function MainPage() {
       <div className="container-fluid">
         <div className="Row"></div>
         <div className="col-md-12 d-flex flex-wrap justify-content-around">
-          {currentGameList.map((game) => (
-            <Card key={game.id} className="mb-3" style={{ width: "18rem" }}>
+          {currentGameList.map((game, index) => (
+            <Card key={game.id} id={index} className="mb-3" style={{ width: "18rem" }}>
               <Card.Img variant="top" src={game.background_image} />
               <Card.Body>
                 <Card.Title>
@@ -103,7 +104,8 @@ function MainPage() {
                           game.id,
                           game.cheapId,
                           game.name,
-                          game.background_image
+                          game.background_image,
+                          index
                         )
                       )
                     }
@@ -112,7 +114,7 @@ function MainPage() {
                   </Button>
                   <Button
                     variant="danger"
-                    onClick={(e) => dispatch(unWishlistGame(game.id))}
+                    onClick={(e) => dispatch(unWishlistGame(game.id, index))}
                   >
                     Remove from Wishlist
                   </Button>

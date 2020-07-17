@@ -1,6 +1,7 @@
 const initialstate = {
   currentGameList: [],
   currentGame: {},
+  like: false,
 };
 
 export default function reducer(state = initialstate, action) {
@@ -12,5 +13,8 @@ export default function reducer(state = initialstate, action) {
     state.currentGame = action.payload;
     console.log("this is current game detail", state.currentGame);
   }
+  // if (action.type === "WISHLISTED") {
+  //   state.currentGameList[action.payload.index] = 
+  // }
   return { ...state };
 }

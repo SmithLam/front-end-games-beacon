@@ -25,7 +25,7 @@ function Detail() {
     dispatch(getGameDetail(gameId));
   }, []);
 
-  if (!loaded && !currentGame) {
+  if (!loaded || !currentGame) {
     return (
       <div>
         <h1>Loading</h1>
@@ -36,12 +36,12 @@ function Detail() {
       <>
         <h1>This is Detail Page for {currentGame.name}</h1>
         <img
-          alt="screenshot-1"
+          alt="screenshot"
           id="game-screenshot"
           src={currentGame.background_image}
         ></img>
         <img
-          alt="screenshot-2"
+          alt="screenshot"
           id="game-screenshot"
           src={currentGame.background_image_additional}
         ></img>
