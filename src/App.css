@@ -48,6 +48,12 @@ body {
   cursor: pointer;
 }
 
+/* detail page */
+#game-screenshot {
+  height: 400px;
+  width: 400px;
+}
+
 /* footer */
 .footer {
   position: relative;

@@ -19,6 +19,26 @@ export const getGames = () => async (dispatch) => {
   }
 };
 
+export const getGameDetail = (gameId) => async (dispatch) => {
+  console.log(gameId);
+  if (!gameId) {
+    return alert("there is no gameId");
+  }
+  dispatch({ type: "LOADING" });
+  let rawgURL = `https://api.rawg.io/api/games/${gameId}`;
+  let gameData = await fetch(rawgURL);
+  let gameResult = await gameData.json();
+  let game = gameResult;
+  console.log(game.name);
+  let price = await getPrice(game.name.replace(/ *\([^)]*\) */g, ""));
+  console.log(price);
+  game["price"] = price.price === null ? null : price.price * 1;
+  game["cheapId"] = price.gameId === null ? null : price.gameId * 1;
+  console.log(game);
+  dispatch({ type: "LOAD-DETAIL-GAMES", payload: game });
+  dispatch({ type: "LOADED" });
+};
+
 const getPrice = async (name) => {
   let url = `https://www.cheapshark.com/api/1.0/games?title=${name}`;
   let datas = await fetch(url);

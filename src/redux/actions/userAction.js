@@ -13,6 +13,7 @@ export const loginFacebook = (data) => async (dispatch) => {
       dispatch({ type: "LOGIN", payload: user });
       localStorage.setItem("token", dt.token);
       dispatch({ type: "CLOSE-LOGIN-MODAL" });
+      dispatch({ type: "LOADED" });
     } else {
       console.log(res);
     }
@@ -36,6 +37,7 @@ export const loginGoogle = (data) => async (dispatch) => {
       dispatch({ type: "LOGIN", payload: user });
       localStorage.setItem("token", dt.token);
       dispatch({ type: "CLOSE-LOGIN-MODAL" });
+      dispatch({ type: "LOADED" });
     } else {
       console.log(res);
     }
@@ -64,6 +66,7 @@ export const loginEmail = (email, password, event) => async (dispatch) => {
     dispatch({ type: "LOGIN", payload: user });
     localStorage.setItem("token", dt.token);
     dispatch({ type: "CLOSE-LOGIN-MODAL" });
+    dispatch({ type: "LOADED" });
   } else {
     console.log(res);
   }
@@ -79,6 +82,7 @@ export const logOut = () => async (dispatch) => {
   if (res.ok) {
     localStorage.removeItem("token");
     dispatch({ type: "LOGOUT" });
+    dispatch({ type: "LOADING" });
   } else {
     console.log("You are messing with my code somehow");
   }
@@ -104,10 +108,10 @@ export const fetchUser = () => async (dispatch) => {
     user.wishlistRawgId = wishlistRawgId;
     console.log("this is fetch user dt", user);
     dispatch({ type: "LOGIN", payload: user });
+    dispatch({ type: "LOADED" });
   } else {
     localStorage.removeItem("token");
   }
-  dispatch({ type: "LOADED" });
 };
 
 // const findWishlist = await fetch(`http://localhost:5000/wishlist`, {

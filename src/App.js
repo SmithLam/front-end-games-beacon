@@ -64,7 +64,7 @@ function App() {
               component={Checkout}
             />
             <Route exact={true} path="/cart" component={Cart} />
-            <Route exact={true} path="/games/:id" component={Detail} />
+            <Route exact={true} path="/games/:gameId" component={Detail} />
             <Route exact={true} path="/explore" component={Explore} />
             <ProtectedRoute
               exact={true}

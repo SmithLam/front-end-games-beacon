@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory, Link } from "react-router-dom";
 import { Card, ListGroup, ListGroupItem, Button, Badge } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import {
@@ -11,87 +12,16 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 function MainPage() {
   let dispatch = useDispatch();
+  let history = useHistory();
+  let { loaded } = useSelector((state) => state.app);
   let { currentGameList } = useSelector((state) => state.game);
   let { currentUser } = useSelector((state) => state.user);
   let [liked, setLiked] = useState(false);
 
-  // const wishlistGame = async (rawgId, cheapId, rawgName, rawgCover) => {
-  //   try {
-  //     console.log(rawgId, cheapId, rawgName, rawgCover);
-  //     const findGame = await fetch(`http://localhost:5000/game/${rawgId}`, {
-  //       method: "GET",
-  //       headers: {
-  //         authorization: `Bearer ${localStorage.getItem("token")}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     let game = await findGame.json();
-  //     if (!game.data) {
-  //       let gameData = {
-  //         rawgId: rawgId,
-  //         cheapId: cheapId,
-  //         rawgName: rawgName,
-  //         rawgCover: rawgCover,
-  //       };
-  //       console.log(gameData);
-  //       const createGame = await fetch(`http://localhost:5000/game/create`, {
-  //         method: "POST",
-  //         headers: {
-  //           authorization: `Bearer ${localStorage.getItem("token")}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(gameData),
-  //       });
-  //       game = await createGame.json();
-  //     }
-  //     console.log("this is found game", game.data);
-  //     console.log("this is found game id", game.data._id);
-  //     let gameLocalId = game.data._id;
-  //     console.log(gameLocalId);
-  //     let wishlistData = { rawgId: rawgId };
-  //     const createWishlist = await fetch(
-  //       `http://localhost:5000/wishlist/${gameLocalId}`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           authorization: `Bearer ${localStorage.getItem("token")}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(wishlistData),
-  //       }
-  //     );
-  //     const wishList = await createWishlist.json();
-  //     if (!wishList.data) {
-  //       return console.log("this wishlist is already created");
-  //     }
-  //     console.log("this is new wishlist", wishList.data);
-  //   } catch (err) {
-  //     console.log(err.message);
-  //   }
-  // };
-
-  // const unWishlistGame = async (rawgId) => {
-  //   try {
-  //     console.log(rawgId);
-  //     const deleteWishlist = await fetch(
-  //       `http://localhost:5000/wishlist/${rawgId}`,
-  //       {
-  //         method: "DELETE",
-  //         headers: {
-  //           authorization: `Bearer ${localStorage.getItem("token")}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     const wishlistDeleted = await deleteWishlist.json();
-  //     if (!wishlistDeleted.data) {
-  //       return console.log("There is a problem in deleting wishlist");
-  //     }
-  //     console.log(wishlistDeleted);
-  //   } catch (err) {
-  //     console.log(err.message);
-  //   }
-  // };
+  const goDetail = (e, gameId) => {
+    e.preventDefault();
+    history.push(`/games/${gameId}`);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -99,14 +29,13 @@ function MainPage() {
   }, []);
 
   //loading
-  if (!currentGameList) {
+  if (!loaded && !currentGameList) {
     return (
       <div>
         <h1>Loading</h1>
       </div>
     );
   }
-
   return (
     <div>
       <h1>This is Main Page</h1>
@@ -143,7 +72,7 @@ function MainPage() {
                 <Card.Title>
                   {game.name}{" "}
                   {currentUser ? (
-                    currentUser.wishlistRawgId.includes(game.id) ? (
+                    currentUser.wishlistRawgId.includes(game.id) || liked===true? (
                       <AiFillHeart id="heart-icon"></AiFillHeart>
                     ) : (
                       <AiOutlineHeart id="heart-icon"></AiOutlineHeart>
@@ -194,7 +123,9 @@ function MainPage() {
                   {game.price ? `$${game.price}` : `Not Available Now`}
                 </ListGroupItem>
               </ListGroup>
-              <Button variant="danger">More detail</Button>
+              <Button onClick={(e) => goDetail(e, game.id)} variant="danger">
+                More detail
+              </Button>
             </Card>
           ))}
         </div>

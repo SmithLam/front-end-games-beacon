@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useEffect } from "react";
 
 function Cart() {
-    return (
-      <div>
-        <h1>This is Cart Page</h1>
-      </div>
-    );
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
+  return (
+    <div>
+      <h1>This is Cart Page</h1>
+    </div>
+  );
 }
 
-export default Cart
+export default Cart;
