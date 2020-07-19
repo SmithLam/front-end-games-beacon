@@ -12,12 +12,56 @@ function Detail() {
   const { gameId } = useParams();
   let { currentGame } = useSelector((s) => s.game);
   let { loaded } = useSelector((s) => s.app);
+  let { currentUser } = useSelector((s) => s.user);
 
-  let [starValue, setStarValue] = useState(0);
+  const [starValue, setStarValue] = useState(0);
+  const [description, setDescription] = useState("");
 
   const handleClick = (rate) => {
     setStarValue(rate);
-    console.log("this is the star chosen", starValue);
+  };
+
+  const submitReview = async (e, rating, rawgId, description) => {
+    try {
+      e.preventDefault();
+      console.log(rating, rawgId, description);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("You need to register/log in to add wishlist!");
+      }
+      const findGame = await fetch(`http://localhost:5000/game/${rawgId}`, {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      let game = await findGame.json();
+      if (!game.data) {
+        let gameData = {
+          rawgId: rawgId,
+          cheapId: currentGame.cheapId,
+          rawgName: currentGame.name,
+          rawgCover: currentGame.background_image,
+        };
+        console.log(gameData);
+        const createGame = await fetch(`http://localhost:5000/game/create`, {
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(gameData),
+        });
+        game = await createGame.json();
+      }
+      console.log("this is found game", game.data);
+      console.log("this is found game id", game.data._id);
+      let gameLocalId = game.data._id;
+      console.log(gameLocalId);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   useEffect(() => {
@@ -51,17 +95,27 @@ function Detail() {
           <Form.Group controlId="formGroupEmail">
             <Form.Label>Rating</Form.Label>
             <Rating
-              emptySymbol={<GoThumbsdown></GoThumbsdown>}
-              fullSymbol={<GoThumbsup></GoThumbsup>}
+              stop={5}
+              emptySymbol={<GoThumbsdown size={20}></GoThumbsdown>}
+              fullSymbol={<GoThumbsup size={20}></GoThumbsup>}
               onChange={(rate) => handleClick(rate)}
-              initialRating="0"
             />
           </Form.Group>
           <Form.Group controlId="formGroupPassword">
             <Form.Label>Review</Form.Label>
-            <Form.Control type="text" placeholder="Enter your review" />
+            <Form.Control
+              type="text"
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Enter your review"
+            />
           </Form.Group>
-          <Button type="submit">Submit your review</Button>
+          <Button
+            onClick={(e) =>
+              submitReview(e, starValue, currentGame.id, description)
+            }
+          >
+            Submit your review
+          </Button>
         </Form>
       </>
     );

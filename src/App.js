@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import "./styles/cart_styles.css"
+import "./styles/cart_responsive.css"
+import "./styles/responsive.css"
 import { Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Cart from "./components/Cart";
