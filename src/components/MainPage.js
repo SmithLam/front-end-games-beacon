@@ -28,7 +28,6 @@ function MainPage() {
     dispatch(getGames());
   }, []);
 
-
   //loading
   if (!loaded || !currentGameList) {
     return (
@@ -67,13 +66,19 @@ function MainPage() {
         <div className="Row"></div>
         <div className="col-md-12 d-flex flex-wrap justify-content-around">
           {currentGameList.map((game, index) => (
-            <Card key={game.id} id={index} className="mb-3" style={{ width: "18rem" }}>
+            <Card
+              key={game.id}
+              id={index}
+              className="mb-3"
+              style={{ width: "18rem" }}
+            >
               <Card.Img variant="top" src={game.background_image} />
               <Card.Body>
                 <Card.Title>
                   {game.name}{" "}
                   {currentUser ? (
-                    currentUser.wishlistRawgId.includes(game.id) || liked===true? (
+                    currentUser.wishlistRawgId.includes(game.id) ||
+                    liked === true ? (
                       <AiFillHeart id="heart-icon"></AiFillHeart>
                     ) : (
                       <AiOutlineHeart id="heart-icon"></AiOutlineHeart>

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import "./styles/cart_styles.css"
-import "./styles/cart_responsive.css"
-import "./styles/responsive.css"
+import "./styles/cart_styles.css";
+import "./styles/cart_responsive.css";
+import "./styles/responsive.css";
+import "./styles/main_styles.css";
+import "./styles/product_styles.css";
+import "./styles/product_responsive.css";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Cart from "./components/Cart";
@@ -18,7 +21,6 @@ import LoginModal from "./components/LoginModal";
 import Register from "./components/Register";
 import { fetchUser } from "./redux/actions/userAction";
 import ProtectedRoute from "./utils/ProtectedRoute";
-
 
 function App() {
   let dispatch = useDispatch();
