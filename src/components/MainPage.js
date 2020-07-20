@@ -10,12 +10,15 @@ import {
 } from "../redux/actions/gameAction";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
-function MainPage() {
+function MainPage({ currentUser }) {
   let dispatch = useDispatch();
   let history = useHistory();
   let { loaded } = useSelector((state) => state.app);
+  currentUser = useSelector((state) => state.user.currentUser);
+
   let { currentGameList } = useSelector((state) => state.game);
-  let { currentUser } = useSelector((state) => state.user);
+  console.log("Main Page", currentUser);
+  // let wishlistRawgId = useSelector( (state) => state.user.wishlistRawgId)
   let [liked, setLiked] = useState(false);
 
   const goDetail = (e, gameId) => {
@@ -77,8 +80,8 @@ function MainPage() {
                 <Card.Title>
                   {game.name}{" "}
                   {currentUser ? (
-                    currentUser.wishlistRawgId.includes(game.id) ||
-                    liked === true ? (
+                    currentUser.wishlistRawgId &&
+                    currentUser.wishlistRawgId.includes(game.id) ? (
                       <AiFillHeart id="heart-icon"></AiFillHeart>
                     ) : (
                       <AiOutlineHeart id="heart-icon"></AiOutlineHeart>

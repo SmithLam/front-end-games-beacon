@@ -105,6 +105,7 @@ export const wishlistGame = (rawgId, cheapId, rawgName, rawgCover) => async (
       return console.log("this wishlist is already created");
     }
     console.log("this is new wishlist", wishList.data);
+    // dispatch({ type: "SET_WISH_LIST", payload: wishList.data });
   } catch (err) {
     console.log(err.message);
   }

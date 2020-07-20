@@ -3,8 +3,6 @@ import React from "react";
 function Footer() {
   return (
     <div className="footer">
-      <h3>This is Footer Page</h3>
-      <div>
         <footer className="footer">
           <div className="container">
             <div className="row">
@@ -139,29 +137,27 @@ function Footer() {
               <div className="col">
                 <div className="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
                   <div className="copyright_content">
-                    {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
-                    Copyright © All rights reserved
-                    {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
+                    Copyright 2020 © All rights reserved
                   </div>
                   <div className="logos ml-sm-auto">
                     <ul className="logos_list">
                       <li>
-                        <a href="#">
+                        <a href="">
                           <img src="images/logos_1.png" alt="" />
                         </a>
                       </li>
                       <li>
-                        <a href="#">
+                        <a href="">
                           <img src="images/logos_2.png" alt="" />
                         </a>
                       </li>
                       <li>
-                        <a href="#">
+                        <a href="">
                           <img src="images/logos_3.png" alt="" />
                         </a>
                       </li>
                       <li>
-                        <a href="#">
+                        <a href="">
                           <img src="images/logos_4.png" alt="" />
                         </a>
                       </li>
@@ -172,7 +168,6 @@ function Footer() {
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 }

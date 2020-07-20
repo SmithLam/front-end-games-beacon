@@ -82,7 +82,6 @@ export const logOut = () => async (dispatch) => {
   if (res.ok) {
     localStorage.removeItem("token");
     dispatch({ type: "LOGOUT" });
-    dispatch({ type: "LOADING" });
   } else {
     console.log("You are messing with my code somehow");
   }

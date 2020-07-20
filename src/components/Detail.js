@@ -64,6 +64,60 @@ function Detail() {
     }
   };
 
+  const addtoCart = async (e, rawgId) => {
+    try {
+      e.preventDefault();
+      console.log(rawgId);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("You need to register/log in to add wishlist!");
+      }
+      const findGame = await fetch(`http://localhost:5000/game/${rawgId}`, {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      let game = await findGame.json();
+      if (!game.data) {
+        let gameData = {
+          rawgId: rawgId,
+          cheapId: currentGame.cheapId,
+          rawgName: currentGame.name,
+          rawgCover: currentGame.background_image,
+        };
+        console.log(gameData);
+        const createGame = await fetch(`http://localhost:5000/game/create`, {
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(gameData),
+        });
+        game = await createGame.json();
+      }
+      console.log("this is found game", game.data);
+      console.log("this is found game id", game.data._id);
+      let gameLocalId = game.data._id;
+      console.log(gameLocalId);
+      let cartData = { price: currentGame.price };
+      const addCart = await fetch(`http://localhost:5000/cart/${gameLocalId}`, {
+        method: "PATCH",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cartData),
+      });
+      let cart = await addCart.json();
+      console.log(cart);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(getGameDetail(gameId));
@@ -90,6 +144,9 @@ function Detail() {
           src={currentGame.background_image_additional}
         ></img>
         <div>Description: {currentGame.description_raw}</div>
+        <Button id="btn" onClick={(e) => addtoCart(e, currentGame.id)}>
+          Add to Cart
+        </Button>
 
         <Form>
           <Form.Group controlId="formGroupEmail">
@@ -110,6 +167,7 @@ function Detail() {
             />
           </Form.Group>
           <Button
+            id="btn"
             onClick={(e) =>
               submitReview(e, starValue, currentGame.id, description)
             }

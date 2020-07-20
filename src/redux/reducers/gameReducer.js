@@ -5,16 +5,14 @@ const initialstate = {
 };
 
 export default function reducer(state = initialstate, action) {
-  if (action.type === "LOAD-GAMES") {
-    state.currentGameList = action.payload;
-    console.log("this is current games List", state.currentGameList);
+  switch (action.type) {
+    case "LOAD-GAMES":
+      console.log("this is current games List", state.currentGameList);
+      return Object.assign({}, state, { currentGameList: action.payload });
+    case "LOAD-DETAIL-GAMES":
+      console.log("this is current games List", state.currentGame);
+      return Object.assign({}, state, { currentGame: action.payload });
+    default:
+      return state;
   }
-  if (action.type === "LOAD-DETAIL-GAMES") {
-    state.currentGame = action.payload;
-    console.log("this is current game detail", state.currentGame);
-  }
-  // if (action.type === "WISHLISTED") {
-  //   state.currentGameList[action.payload.index] = 
-  // }
-  return { ...state };
 }

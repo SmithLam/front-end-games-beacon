@@ -3,12 +3,19 @@ const initialstate = {
 };
 
 export default function reducer(state = initialstate, action) {
-  if (action.type === "LOGIN") {
-    state.currentUser = action.payload;
-    console.log("this is state user", state.currentUser);
+  switch (action.type) {
+    case "LOGIN":
+      console.log("this is state user", state.currentUser);
+      return Object.assign({}, state, { currentUser: action.payload });
+    case "LOGOUT":
+      return Object.assign({}, state, initialstate);
+    // case "SET_WISH_LIST":
+    //   return Object.assign({}, state, {
+    //     currentUser: {
+    //       wishlistRawgId: action.payload,
+    //     },
+    //   });
+    default:
+      return state;
   }
-  if (action.type === "LOGOUT") {
-    state.currentUser = "";
-  }
-  return { ...state };
 }
