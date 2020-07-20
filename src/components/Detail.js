@@ -102,7 +102,7 @@ function Detail() {
       console.log("this is found game id", game.data._id);
       let gameLocalId = game.data._id;
       console.log(gameLocalId);
-      let cartData = { price: currentGame.price };
+      let cartData = { price: currentGame.price, name: currentGame.name, cover: currentGame.background_image };
       const addCart = await fetch(`http://localhost:5000/cart/${gameLocalId}`, {
         method: "PATCH",
         headers: {

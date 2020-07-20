@@ -160,16 +160,16 @@ function Checkout() {
               </span>
             </h4>
             <p>
-              <a href="#">Product 1</a> <span className="price">$15</span>
+              <a href="">Product 1</a> <span className="price">$15</span>
             </p>
             <p>
-              <a href="#">Product 2</a> <span className="price">$5</span>
+              <a href="">Product 2</a> <span className="price">$5</span>
             </p>
             <p>
-              <a href="#">Product 3</a> <span className="price">$8</span>
+              <a href="">Product 3</a> <span className="price">$8</span>
             </p>
             <p>
-              <a href="#">Product 4</a> <span className="price">$2</span>
+              <a href="">Product 4</a> <span className="price">$2</span>
             </p>
             <hr />
             <p>

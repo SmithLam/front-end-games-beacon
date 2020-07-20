@@ -88,7 +88,7 @@ export const wishlistGame = (rawgId, cheapId, rawgName, rawgCover) => async (
     console.log("this is found game id", game.data._id);
     let gameLocalId = game.data._id;
     console.log(gameLocalId);
-    let wishlistData = { rawgId: rawgId };
+    let wishlistData = { rawgId: rawgId, name: rawgName, cover: rawgCover };
     const createWishlist = await fetch(
       `http://localhost:5000/wishlist/${gameLocalId}`,
       {

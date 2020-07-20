@@ -15,6 +15,7 @@ function MainPage({ currentUser }) {
   let history = useHistory();
   let { loaded } = useSelector((state) => state.app);
   currentUser = useSelector((state) => state.user.currentUser);
+  let { currentWishlist, CurrentCart } = useSelector((state) => state.user);
 
   let { currentGameList } = useSelector((state) => state.game);
   console.log("Main Page", currentUser);

@@ -10,7 +10,13 @@ export const loginFacebook = (data) => async (dispatch) => {
       const wishlist = dt.wishlist;
       const wishlistRawgId = wishlist.map((e) => e.rawgId);
       user.wishlistRawgId = wishlistRawgId;
-      dispatch({ type: "LOGIN", payload: user });
+      const cart = dt.cart;
+      console.log("this is user Facebook dt", user);
+      dispatch({
+        type: "LOGIN",
+        payload: { user: user, wishlist: wishlist, cart: cart },
+      });
+      dispatch({ type: "LOADED" });
       localStorage.setItem("token", dt.token);
       dispatch({ type: "CLOSE-LOGIN-MODAL" });
       dispatch({ type: "LOADED" });
@@ -34,7 +40,13 @@ export const loginGoogle = (data) => async (dispatch) => {
       const wishlist = dt.wishlist;
       const wishlistRawgId = wishlist.map((e) => e.rawgId);
       user.wishlistRawgId = wishlistRawgId;
-      dispatch({ type: "LOGIN", payload: user });
+      const cart = dt.cart;
+      console.log("this is fetch google user dt", user);
+      dispatch({
+        type: "LOGIN",
+        payload: { user: user, wishlist: wishlist, cart: cart },
+      });
+      dispatch({ type: "LOADED" });
       localStorage.setItem("token", dt.token);
       dispatch({ type: "CLOSE-LOGIN-MODAL" });
       dispatch({ type: "LOADED" });
@@ -63,7 +75,13 @@ export const loginEmail = (email, password, event) => async (dispatch) => {
     const wishlist = dt.wishlist;
     const wishlistRawgId = wishlist.map((e) => e.rawgId);
     user.wishlistRawgId = wishlistRawgId;
-    dispatch({ type: "LOGIN", payload: user });
+    const cart = dt.cart;
+    console.log("this is normal email dt", user);
+    dispatch({
+      type: "LOGIN",
+      payload: { user: user, wishlist: wishlist, cart: cart },
+    });
+    dispatch({ type: "LOADED" });
     localStorage.setItem("token", dt.token);
     dispatch({ type: "CLOSE-LOGIN-MODAL" });
     dispatch({ type: "LOADED" });
@@ -105,8 +123,13 @@ export const fetchUser = () => async (dispatch) => {
     const wishlist = dt.wishlist;
     const wishlistRawgId = wishlist.map((e) => e.rawgId);
     user.wishlistRawgId = wishlistRawgId;
+    const cart = dt.cart;
+    user.cart = cart;
     console.log("this is fetch user dt", user);
-    dispatch({ type: "LOGIN", payload: user });
+    dispatch({
+      type: "LOGIN",
+      payload: { user: user, wishlist: wishlist, cart: cart },
+    });
     dispatch({ type: "LOADED" });
   } else {
     localStorage.removeItem("token");
