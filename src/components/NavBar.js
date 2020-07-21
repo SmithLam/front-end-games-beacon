@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { logOut } from "../redux/actions/userAction";
+import { GrCart } from "react-icons/gr";
 
 function NavBar(props) {
   let history = useHistory();
@@ -52,11 +53,23 @@ function NavBar(props) {
         </Nav>
         <Nav>
           {currentUser ? (
+            <LinkContainer to={`/cart`}>
+              <Nav.Link>
+                <GrCart className="cart-icon" size={20}></GrCart>
+              </Nav.Link>
+            </LinkContainer>
+          ) : (
+            ""
+          )}
+          {currentUser ? (
             <Nav.Link variant="secondary" onClick={(e) => dispatch(logOut(e))}>
               Logout
             </Nav.Link>
           ) : (
-              <Nav.Link variant="secondary" onClick={(e) => dispatch({ type: "SHOW-LOGIN-MODAL" })}>
+            <Nav.Link
+              variant="secondary"
+              onClick={(e) => dispatch({ type: "SHOW-LOGIN-MODAL" })}
+            >
               Login
             </Nav.Link>
           )}

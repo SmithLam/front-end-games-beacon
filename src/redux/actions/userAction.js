@@ -11,10 +11,19 @@ export const loginFacebook = (data) => async (dispatch) => {
       const wishlistRawgId = wishlist.map((e) => e.rawgId);
       user.wishlistRawgId = wishlistRawgId;
       const cart = dt.cart;
-      console.log("this is user Facebook dt", user);
+      const cartList = cart.items;
+      const cartPrices = cartList.map((e) => e.price);
+      const totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+      console.log(totalPrice);
+      console.log("this is fetch user dt", user);
       dispatch({
         type: "LOGIN",
-        payload: { user: user, wishlist: wishlist, cart: cart },
+        payload: {
+          user: user,
+          wishlist: wishlist,
+          cart: cart,
+          totalPrice: totalPrice,
+        },
       });
       dispatch({ type: "LOADED" });
       localStorage.setItem("token", dt.token);
@@ -41,10 +50,19 @@ export const loginGoogle = (data) => async (dispatch) => {
       const wishlistRawgId = wishlist.map((e) => e.rawgId);
       user.wishlistRawgId = wishlistRawgId;
       const cart = dt.cart;
-      console.log("this is fetch google user dt", user);
+      const cartList = cart.items;
+      const cartPrices = cartList.map((e) => e.price);
+      const totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+      console.log(totalPrice);
+      console.log("this is fetch user dt", user);
       dispatch({
         type: "LOGIN",
-        payload: { user: user, wishlist: wishlist, cart: cart },
+        payload: {
+          user: user,
+          wishlist: wishlist,
+          cart: cart,
+          totalPrice: totalPrice,
+        },
       });
       dispatch({ type: "LOADED" });
       localStorage.setItem("token", dt.token);
@@ -76,10 +94,19 @@ export const loginEmail = (email, password, event) => async (dispatch) => {
     const wishlistRawgId = wishlist.map((e) => e.rawgId);
     user.wishlistRawgId = wishlistRawgId;
     const cart = dt.cart;
-    console.log("this is normal email dt", user);
+    const cartList = cart.items;
+    const cartPrices = cartList.map((e) => e.price);
+    const totalPrice = cartPrices.reduce((a, b) => (a + b) * 1).toFixed(2);
+    console.log(totalPrice);
+    console.log("this is fetch user dt", user);
     dispatch({
       type: "LOGIN",
-      payload: { user: user, wishlist: wishlist, cart: cart },
+      payload: {
+        user: user,
+        wishlist: wishlist,
+        cart: cart,
+        totalPrice: totalPrice,
+      },
     });
     dispatch({ type: "LOADED" });
     localStorage.setItem("token", dt.token);
@@ -124,11 +151,19 @@ export const fetchUser = () => async (dispatch) => {
     const wishlistRawgId = wishlist.map((e) => e.rawgId);
     user.wishlistRawgId = wishlistRawgId;
     const cart = dt.cart;
-    user.cart = cart;
+    const cartList = cart.items;
+    const cartPrices = cartList.map((e) => e.price);
+    const totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+    console.log(totalPrice);
     console.log("this is fetch user dt", user);
     dispatch({
       type: "LOGIN",
-      payload: { user: user, wishlist: wishlist, cart: cart },
+      payload: {
+        user: user,
+        wishlist: wishlist,
+        cart: cart,
+        totalPrice: totalPrice,
+      },
     });
     dispatch({ type: "LOADED" });
   } else {
