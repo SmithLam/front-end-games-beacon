@@ -1,9 +1,12 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
+import { fetchWishlist } from "../redux/actions/gameAction";
+import GameCard from "./GameCard";
 
 function Profile() {
+  const dispatch = useDispatch();
   let history = useHistory();
   let { currentUser, currentWishlist } = useSelector((s) => s.user);
 
@@ -12,24 +15,49 @@ function Profile() {
     history.push("/profile/update");
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(fetchWishlist());
+  }, [dispatch]);
+
   return (
     <div>
-      <h3>This is Profile Page of {currentUser.name}</h3>
-      <div>
-        This is our current Avatar:{" "}
-        <img id="avatar-big" alt="avatar" src={currentUser.avatar}></img>
+      <div className="d-flex d-row justify-content-center mt-2 mb-2">
+        <Card style={{ width: "18rem" }} className="shadow">
+          <Card.Header>User Profile</Card.Header>
+          <Card.Img variant="top" src={currentUser.avatar} />
+          <Card.Body>
+            <Card.Title>{currentUser.name}</Card.Title>
+            <Card.Text>A player like Everybody else!</Card.Text>
+            <Button
+              variant="danger"
+              onClick={(e) => {
+                goUpdate(e);
+              }}
+            >
+              Update Your Profile!
+            </Button>
+          </Card.Body>
+        </Card>
       </div>
-      <div>
-        This is the list of our Wishslist:{" "}
-        {currentWishlist.length === 0 ? "Nothing" : currentWishlist}
+      <div className="d-flex mx-3 mt-2 mb-2">
+        <h3>Our Current Wishlist:</h3>
       </div>
-      {/* <div>
-        This is the list of our Owned Games:{" "}
-        {currentUser.owned.length === 0 ? "Nothing" : currentUser.owned}
-      </div> */}
-      {/* <Button variant="danger" onClick={(e) => goUpdate(e)}>
-        Update Profile
-      </Button> */}
+      <div className="row mx-3 my-2 d-flex flex-wrap justify-content-around">
+        {!currentWishlist
+          ? ""
+          : currentWishlist.map((game, index) => (
+              <div key={game.rawgId} className="col-xs-12 col-md-3 my-2">
+                <GameCard
+                  key={game.rawgId}
+                  id={game.rawgId}
+                  name={game.name}
+                  price={game.price}
+                  image={game.cover}
+                />
+              </div>
+            ))}
+      </div>
     </div>
   );
 }

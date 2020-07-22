@@ -6,7 +6,7 @@ import { openUploadWidget } from "../CloudinaryService";
 
 // let cloudinaryPostURL = process.env.CLOUDINARY_CLOUD_NAME;
 
-const GOOGLE_SEARCH_API = process.env.REACT_APP_APIKEY;
+const GOOGLE_SEARCH_API = process.env.REACT_APP_GOOGLE_SEARCH_API;
 
 function Register(props) {
   let [images, setImages] = useState([]);

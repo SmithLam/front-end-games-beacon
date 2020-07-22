@@ -137,7 +137,7 @@ function Detail() {
                           )
                         )
                       }
-                      variant="secondary"
+                      variant="warning"
                     >
                       <FiHeart size={20}> </FiHeart>
                       Wishlist it!
