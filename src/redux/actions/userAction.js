@@ -25,7 +25,6 @@ export const loginFacebook = (data) => async (dispatch) => {
           totalPrice: totalPrice,
         },
       });
-      dispatch({ type: "LOADED" });
       localStorage.setItem("token", dt.token);
       dispatch({ type: "CLOSE-LOGIN-MODAL" });
       dispatch({ type: "LOADED" });
@@ -64,7 +63,6 @@ export const loginGoogle = (data) => async (dispatch) => {
           totalPrice: totalPrice,
         },
       });
-      dispatch({ type: "LOADED" });
       localStorage.setItem("token", dt.token);
       dispatch({ type: "CLOSE-LOGIN-MODAL" });
       dispatch({ type: "LOADED" });
@@ -108,7 +106,6 @@ export const loginEmail = (email, password, event) => async (dispatch) => {
         totalPrice: totalPrice,
       },
     });
-    dispatch({ type: "LOADED" });
     localStorage.setItem("token", dt.token);
     dispatch({ type: "CLOSE-LOGIN-MODAL" });
     dispatch({ type: "LOADED" });

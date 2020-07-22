@@ -37,7 +37,7 @@ export default function GameCard(props) {
           </div>
           <div className="d-flex mb-2 justify-content-between">
             <Card.Title id="price-number" className="mr-2">
-              {props.price ? `At $${props.price}` : "Free"}
+              {props.price ? `At $${props.price}` : "Currently no sale"}
             </Card.Title>
             {props.price ? (
               <Button variant="success" className="px-2 py-1">

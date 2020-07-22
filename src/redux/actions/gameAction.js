@@ -1,7 +1,9 @@
 export const getGames = () => async (dispatch) => {
   try {
-      dispatch({ type: "LOADING" });
-    let url = `https://api.rawg.io/api/games?page=1&page_size=16&platforms=4`;
+    dispatch({ type: "LOADING" });
+    console.log(process.env.REACT_APP_RAWG_URL);
+    let url = `${process.env.REACT_APP_RAWG_URL}&dates=2020-06-01,2020-07-30&page=1`;
+    console.log(url);
     let data = await fetch(url);
     let result = await data.json();
     console.log(result.results);
@@ -14,8 +16,11 @@ export const getGames = () => async (dispatch) => {
     });
     gameList = await Promise.all(gamePrices);
     console.log(gameList);
-    dispatch({ type: "LOAD-GAMES", payload: gameList });
-      dispatch({ type: "LOADED" });
+    dispatch({
+      type: "LOAD-GAMES",
+      payload: { gameList: gameList, gameCount: result.count, page: 1 },
+    });
+    dispatch({ type: "LOADED" });
   } catch (err) {
     console.log(err);
   }

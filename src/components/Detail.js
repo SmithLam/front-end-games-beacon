@@ -200,7 +200,7 @@ function Detail() {
                     <h3>
                       {currentGame.price
                         ? `Best Price: $${currentGame.price}`
-                        : "Free"}
+                        : "Currently no sale"}
                     </h3>
                   </Card.Text>
                 </Card.Body>
