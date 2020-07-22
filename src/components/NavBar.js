@@ -10,26 +10,18 @@ function NavBar(props) {
   let history = useHistory();
   let dispatch = useDispatch();
   let { currentUser } = useSelector((state) => state.user);
-
-  const goProfile = (e) => {
-    e.preventDefault();
-    history.push("/profile");
-  };
+  let { currentSearch } = useSelector((state) => state.game);
 
   const goTo = (e, location) => {
     e.preventDefault();
     history.push(location);
   };
 
-  // const goRegister = (e) => {
-  //   e.preventDefault();
-  //   history.push("/register");
-  // };
-
-  // const goHome = (e) => {
-  //   e.preventDefault();
-  //   history.push("/");
-  // };
+  const searchGame = (e, searchTerm) => {
+    e.preventDefault();
+    dispatch({ type: "SEARCH-GAME", payload: searchTerm });
+    history.push("/explore");
+  };
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -49,25 +41,58 @@ function NavBar(props) {
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link onClick={(e) => goTo(e, "/")}>Home</Nav.Link>
-          <Nav.Link onClick={(e) => goTo(e, "/explore")}>Explore</Nav.Link>
+          <Nav.Link onClick={(e) => searchGame(e, "")}>Explore</Nav.Link>
           <NavDropdown title="Store" id="collasible-nav-dropdown">
-            <NavDropdown.Item>
-              Just Released
+            <NavDropdown.Item
+              onClick={(e) =>
+                searchGame(e, "&dates=2020-06-01,2020-07-24&ordering:-added")
+              }
+            >
+              Latest Released
             </NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.1">Top Upcoming</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.1">Top Rated</NavDropdown.Item>
+            <NavDropdown.Item
+              onClick={(e) =>
+                searchGame(e, "&dates=2020-07-31,2022-07-31&ordering:-added")
+              }
+            >
+              Top Upcoming
+            </NavDropdown.Item>
+            <NavDropdown.Item
+              onClick={(e) =>
+                searchGame(e, "&dates=1999-01-01,2020-12-31&ordering=-rating")
+              }
+            >
+              Top Rated
+            </NavDropdown.Item>
           </NavDropdown>
           <NavDropdown title="Genres" id="collasible-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.1">Adventure</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.1">Fighting</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.1">Puzzle</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.1">Platformer</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.1">RPG</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.1">Shooter</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.1">Simulation</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.1">Sports</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.1">Strategy</NavDropdown.Item>
+            <NavDropdown.Item onClick={(e) => searchGame(e, "&genres=4")}>
+              Action
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={(e) => searchGame(e, "&genres=6")}>
+              Fighting
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={(e) => searchGame(e, "&genres=7")}>
+              Puzzle
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={(e) => searchGame(e, "&genres=83")}>
+              Platformer
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={(e) => searchGame(e, "&genres=5")}>
+              RPG
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={(e) => searchGame(e, "&genres=2")}>
+              Shooter
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={(e) => searchGame(e, "&genres=14")}>
+              Simulation
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={(e) => searchGame(e, "&genres=15")}>
+              Sports
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={(e) => searchGame(e, "&genres=10")}>
+              Strategy
+            </NavDropdown.Item>
           </NavDropdown>
         </Nav>
         <Nav>
@@ -94,7 +119,7 @@ function NavBar(props) {
           )}
           {currentUser ? (
             <NavDropdown title={currentUser.name} id="basic-nav-dropdown">
-              <NavDropdown.Item onClick={(e) => goProfile(e)}>
+              <NavDropdown.Item onClick={(e) => goTo(e, "/profile")}>
                 Profile
               </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Wishlist</NavDropdown.Item>

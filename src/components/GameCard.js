@@ -27,7 +27,7 @@ export default function GameCard(props) {
           src={props.image}
         />
         <Card.Body>
-          <div className="d-flex mb-2 w-100 justify-content-between">
+          <div className="d-flex mb-4 w-100 justify-content-between">
             <Card.Title id="card-name-tile" className="font-weight-bolder mr-2">
               {props.name}
             </Card.Title>
@@ -35,7 +35,7 @@ export default function GameCard(props) {
               <FaKissWinkHeart size={20}></FaKissWinkHeart>
             </Badge>
           </div>
-          <div className="d-flex mt-2 mb-0 w-100 justify-content-between">
+          <div className="d-flex mt-1 mb-2 w-100 justify-content-between">
             <Card.Title id="price-number" className="mr-2">
               {props.price ? `At $${props.price}` : "Currently no sale"}
             </Card.Title>

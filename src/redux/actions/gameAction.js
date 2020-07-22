@@ -1,12 +1,15 @@
-export const getGames = (pageNumber) => async (dispatch) => {
+export const getGames = (pageNumber, searchQuery) => async (dispatch) => {
   try {
     dispatch({ type: "LOADING" });
     if (!pageNumber) {
       pageNumber = 1;
     }
+    if (!searchQuery) {
+      searchQuery=""
+    }
+    console.log(searchQuery)
     console.log("this is current Page Number", pageNumber);
-    console.log(process.env.REACT_APP_RAWG_URL);
-    let url = `${process.env.REACT_APP_RAWG_URL}&page=${pageNumber}`;
+    let url = `${process.env.REACT_APP_RAWG_URL}&page=${pageNumber}${searchQuery}`;
     console.log(url);
     let data = await fetch(url);
     let result = await data.json();

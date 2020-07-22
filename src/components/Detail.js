@@ -171,7 +171,7 @@ function Detail() {
                     >
                       Metacritic Score
                     </Link>
-                    : {currentGame.metacritic}
+                    : {currentGame.metacritic || "No rating available"}
                   </ListGroupItem>
                   <ListGroupItem>
                     Platforms:{" "}

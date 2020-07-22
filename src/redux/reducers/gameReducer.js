@@ -3,6 +3,7 @@ const initialstate = {
   currentGame: {},
   currentGameCount: 0,
   currentPage: 0,
+  currentSearch: "",
 };
 
 export default function reducer(state = initialstate, action) {
@@ -16,6 +17,11 @@ export default function reducer(state = initialstate, action) {
     case "LOAD-PAGE":
       return Object.assign({}, state, {
         currentPage: action.payload,
+      });
+    case "SEARCH-GAME":
+      return Object.assign({}, state, {
+        currentSearch: action.payload,
+        currentPage: 1,
       });
     case "LOAD-DETAIL-GAMES":
       return Object.assign({}, state, { currentGame: action.payload });

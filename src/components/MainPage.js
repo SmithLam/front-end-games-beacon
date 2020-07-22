@@ -1,9 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Jumbotron, Container, Button, Form, Col, Row } from "react-bootstrap";
-
 import GameCard from "./GameCard";
 
-export default function mainPage() {
+function MainPage() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  let [searchTerm, setSearchTerm] = useState("");
+  let { currentSearch } = useSelector((state) => state.game);
+
+  const handleSubmit = (e, searchTerm) => {
+    e.preventDefault();
+    let search = `&search=${searchTerm}`;
+    dispatch({ type: "SEARCH-GAME", payload: search });
+    setSearchTerm("")
+    history.push("/explore");
+  };
+
   return (
     <div>
       <Jumbotron className="jumbotron" fluid>
@@ -11,13 +25,16 @@ export default function mainPage() {
           <h2>Welcome to Games Beacon</h2>
           <p>
             Your one-stop place to find PC video games and buy them at the
-            cheapest price!
+            cheapest prices!
           </p>
           <p>
-            <Form>
-              <Form.Row>
-                <Form.Control placeholder="Find your favorite PC game!" />
-              </Form.Row>
+            <Form onSubmit={(e) => handleSubmit(e, searchTerm)}>
+              <Form.Control
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                type="text"
+                placeholder="Find your favorite PC game! Just press Enter!"
+              />
             </Form>
           </p>
         </Container>
@@ -38,3 +55,5 @@ export default function mainPage() {
     </div>
   );
 }
+
+export default MainPage;

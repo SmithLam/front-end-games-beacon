@@ -7,8 +7,8 @@ import {
   wishlistGame,
   unWishlistGame,
 } from "../redux/actions/gameAction";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import GameCard from "./GameCard.js";
+import { Button, Form, InputGroup, FormControl } from "react-bootstrap";
 
 export default function Explore() {
   let dispatch = useDispatch();
@@ -17,19 +17,31 @@ export default function Explore() {
   let { currentUser, currentWishlist, CurrentCart } = useSelector(
     (state) => state.user
   );
-  let { currentGameList, currentGameCount, currentPage } = useSelector(
-    (state) => state.game
-  );
+  let {
+    currentGameList,
+    currentGameCount,
+    currentPage,
+    currentSearch,
+  } = useSelector((state) => state.game);
+
+  let [searchTerm, setSearchTerm] = useState("");
+
+  const handleSubmit = (e, searchTerm) => {
+    e.preventDefault();
+    let search = `&search=${searchTerm}`;
+    dispatch({ type: "SEARCH-GAME", payload: search });
+    setSearchTerm("");
+  };
 
   const handlePageChange = async (pageNumber) => {
     console.log("This is page number on explore", pageNumber);
-    dispatch(getGames(pageNumber));
+    dispatch(getGames(pageNumber, currentSearch));
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    dispatch(getGames());
-  }, []);
+    dispatch(getGames(currentPage, currentSearch));
+  }, [currentPage, currentSearch]);
 
   //loading
   if (!loaded) {
@@ -41,6 +53,30 @@ export default function Explore() {
   }
   return (
     <div>
+      <div
+        id="search-box"
+        className="mx-2 my-4 text-left d-flex justify-content-center"
+      >
+        <Form onSubmit={(e) => handleSubmit(e, searchTerm)}>
+          <Form.Label>Search Your Game!</Form.Label>
+          <InputGroup className="mb-3">
+            <Form.Control
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              type="text"
+              placeholder="e.g Doom or Half-Life!"
+            />
+            <InputGroup.Append>
+              <Button type="submit" variant="outline-danger">
+                Button
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
+          <Form.Text className="text-muted">
+            Enter your desired game and Fire the Red Button!
+          </Form.Text>
+        </Form>
+      </div>
       <Pagination
         className="pagination"
         hideDisabled
