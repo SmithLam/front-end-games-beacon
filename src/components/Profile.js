@@ -1,11 +1,11 @@
 import React from "react";
-import { useSelector} from "react-redux";
-import {useHistory} from "react-router-dom"
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 function Profile() {
   let history = useHistory();
-  let { currentUser } = useSelector((s) => s.user);
+  let { currentUser, currentWishlist } = useSelector((s) => s.user);
 
   const goUpdate = (e) => {
     e.preventDefault();
@@ -14,25 +14,22 @@ function Profile() {
 
   return (
     <div>
-      <h1>This is Profile Page of {currentUser.name}</h1>
+      <h3>This is Profile Page of {currentUser.name}</h3>
       <div>
         This is our current Avatar:{" "}
         <img id="avatar-big" alt="avatar" src={currentUser.avatar}></img>
       </div>
       <div>
         This is the list of our Wishslist:{" "}
-        {currentUser.wishlistRawgId.length === 0
-          ? "Nothing"
-          : currentUser.wishlistRawgId}
+        {currentWishlist.length === 0 ? "Nothing" : currentWishlist}
       </div>
-      <div>
+      {/* <div>
         This is the list of our Owned Games:{" "}
         {currentUser.owned.length === 0 ? "Nothing" : currentUser.owned}
-      </div>
-      <div>We have spent this much: $ {currentUser.nPayment}</div>
-      <Button variant="danger" onClick={(e) => goUpdate(e)}>
+      </div> */}
+      {/* <Button variant="danger" onClick={(e) => goUpdate(e)}>
         Update Profile
-      </Button>
+      </Button> */}
     </div>
   );
 }
