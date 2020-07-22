@@ -102,7 +102,7 @@ function Register(props) {
     console.log(formData);
 
     axios
-      .post("http://localhost:5000/user/register", formData)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/user/register`, formData)
       .then((res) => {
         console.log(res);
         console.log(res.data);

@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import Pagination from "react-js-pagination";
-import {
-  getGames,
-  wishlistGame,
-  unWishlistGame,
-} from "../redux/actions/gameAction";
+import { getGames, fetchWishlist } from "../redux/actions/gameAction";
 import GameCard from "./GameCard.js";
 import { Button, Form, InputGroup, FormControl } from "react-bootstrap";
 
@@ -14,15 +10,14 @@ export default function Explore() {
   let dispatch = useDispatch();
   let history = useHistory();
   let { loaded } = useSelector((state) => state.app);
-  let { currentUser, currentWishlist, CurrentCart } = useSelector(
-    (state) => state.user
-  );
   let {
     currentGameList,
     currentGameCount,
     currentPage,
     currentSearch,
   } = useSelector((state) => state.game);
+
+  let { currentWishlistId } = useSelector((s) => s.user);
 
   let [searchTerm, setSearchTerm] = useState("");
 
@@ -42,6 +37,7 @@ export default function Explore() {
     window.scrollTo(0, 0);
     dispatch(getGames(currentPage, currentSearch));
   }, [currentPage, currentSearch]);
+
 
   //loading
   if (!loaded) {
@@ -125,75 +121,3 @@ export default function Explore() {
     </div>
   );
 }
-
-//  {
-//    currentGameList.map((game, index) => (
-//      <Card
-//        key={game.id}
-//        id={index}
-//        className="mb-3"
-//        style={{ width: "18rem" }}
-//      >
-//        <Card.Img variant="top" src={game.background_image} />
-//        <Card.Body>
-//          <Card.Title>
-//            {game.name}{" "}
-//            {currentUser ? (
-//              currentUser.wishlistRawgId &&
-//              currentUser.wishlistRawgId.includes(game.id) ? (
-//                <AiFillHeart id="heart-icon"></AiFillHeart>
-//              ) : (
-//                <AiOutlineHeart id="heart-icon"></AiOutlineHeart>
-//              )
-//            ) : (
-//              ""
-//            )}
-//          </Card.Title>
-//          <Card.Text>
-//            Available on
-//            {game.platforms.map((item) => {
-//              return (
-//                <Badge key={item.platform.name} pill variant="danger">
-//                  {item.platform.name}
-//                </Badge>
-//              );
-//            })}
-//          </Card.Text>
-//        </Card.Body>
-//        <ListGroup className="list-group-flush">
-//          <ListGroupItem>
-//            {" "}
-//            <Button
-//              variant="primary"
-//              onClick={(e) =>
-//                dispatch(
-//                  wishlistGame(
-//                    game.id,
-//                    game.cheapId,
-//                    game.name,
-//                    game.background_image,
-//                    index
-//                  )
-//                )
-//              }
-//            >
-//              Add to Wishlist
-//            </Button>
-//            <Button
-//              variant="danger"
-//              onClick={(e) => dispatch(unWishlistGame(game.id, index))}
-//            >
-//              Remove from Wishlist
-//            </Button>
-//          </ListGroupItem>
-//          <ListGroupItem>Release date: {game.released}</ListGroupItem>
-//          <ListGroupItem>
-//            Best price: {game.price ? `$${game.price}` : `Not Available Now`}
-//          </ListGroupItem>
-//        </ListGroup>
-//        <Button onClick={(e) => goDetail(e, game.id)} variant="danger">
-//          More detail
-//        </Button>
-//      </Card>
-//    ));
-//  }

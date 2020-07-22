@@ -5,9 +5,9 @@ export const getGames = (pageNumber, searchQuery) => async (dispatch) => {
       pageNumber = 1;
     }
     if (!searchQuery) {
-      searchQuery=""
+      searchQuery = "";
     }
-    console.log(searchQuery)
+    console.log(searchQuery);
     console.log("this is current Page Number", pageNumber);
     let url = `${process.env.REACT_APP_RAWG_URL}&page=${pageNumber}${searchQuery}`;
     console.log(url);
@@ -18,7 +18,6 @@ export const getGames = (pageNumber, searchQuery) => async (dispatch) => {
     let gamePrices = gameList.map(async (game) => {
       let price = await getPrice(game.name.replace(/ *\([^)]*\) */g, "")); //remove spaces between parantheses
       game["price"] = price.price === null ? null : price.price * 1;
-      game["cheapId"] = price.gameId === null ? null : price.gameId * 1;
       return game;
     });
     gameList = await Promise.all(gamePrices);
@@ -51,7 +50,6 @@ export const getGameDetail = (gameId) => async (dispatch) => {
   let price = await getPrice(game.name.replace(/ *\([^)]*\) */g, ""));
   console.log(price);
   game["price"] = price.price === null ? null : price.price * 1;
-  game["cheapId"] = price.gameId === null ? null : price.gameId * 1;
   console.log(game);
   dispatch({ type: "LOAD-DETAIL-GAMES", payload: game });
   dispatch({ type: "LOADED" });
@@ -67,48 +65,24 @@ const getPrice = async (name) => {
   };
 };
 
-export const wishlistGame = (rawgId, cheapId, rawgName, rawgCover) => async (
+export const wishlistGame = (e, rawgId, price, rawgName, rawgCover) => async (
   dispatch
 ) => {
   try {
-    console.log(rawgId, cheapId, rawgName, rawgCover);
+    e.preventDefault();
+    console.log(rawgId, price, rawgName, rawgCover);
     const token = localStorage.getItem("token");
     if (!token) {
       alert("You need to register/log in to add wishlist!");
     }
-    const findGame = await fetch(`http://localhost:5000/game/${rawgId}`, {
-      method: "GET",
-      headers: {
-        authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-    let game = await findGame.json();
-    if (!game.data) {
-      let gameData = {
-        rawgId: rawgId,
-        cheapId: cheapId,
-        rawgName: rawgName,
-        rawgCover: rawgCover,
-      };
-      console.log(gameData);
-      const createGame = await fetch(`http://localhost:5000/game/create`, {
-        method: "POST",
-        headers: {
-          authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(gameData),
-      });
-      game = await createGame.json();
-    }
-    console.log("this is found game", game.data);
-    console.log("this is found game id", game.data._id);
-    let gameLocalId = game.data._id;
-    console.log(gameLocalId);
-    let wishlistData = { rawgId: rawgId, name: rawgName, cover: rawgCover };
+    let wishlistData = {
+      rawgId: rawgId,
+      price: price,
+      name: rawgName,
+      cover: rawgCover,
+    };
     const createWishlist = await fetch(
-      `http://localhost:5000/wishlist/${gameLocalId}`,
+      `${process.env.REACT_APP_BACKEND_URL}/wishlist/${rawgId}`,
       {
         method: "POST",
         headers: {
@@ -123,20 +97,22 @@ export const wishlistGame = (rawgId, cheapId, rawgName, rawgCover) => async (
       return console.log("this wishlist is already created");
     }
     console.log("this is new wishlist", wishList.data);
+    dispatch(fetchWishlist());
   } catch (err) {
     console.log(err.message);
   }
 };
 
-export const unWishlistGame = (rawgId) => async (dispatch) => {
+export const unWishlistGame = (e, rawgId) => async (dispatch) => {
   try {
+    e.preventDefault();
     console.log(rawgId);
     const token = localStorage.getItem("token");
     if (!token) {
       alert("You need to register/log in to add wishlist!");
     }
     const deleteWishlist = await fetch(
-      `http://localhost:5000/wishlist/${rawgId}`,
+      `${process.env.REACT_APP_BACKEND_URL}/wishlist/${rawgId}`,
       {
         method: "DELETE",
         headers: {
@@ -145,11 +121,32 @@ export const unWishlistGame = (rawgId) => async (dispatch) => {
         },
       }
     );
-    const wishlistDeleted = await deleteWishlist.json();
-    if (!wishlistDeleted.data) {
-      return console.log("There is a problem in deleting wishlist");
-    }
-    console.log(wishlistDeleted);
+    dispatch(fetchWishlist());
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export const fetchWishlist = () => async (dispatch) => {
+  try {
+    const token = localStorage.getItem("token");
+    const findWishlist = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/wishlist/`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const result = await findWishlist.json();
+    console.log("this is wishlist", result.data);
+    const wishlistRawgId = result.data.map((e) => e.rawgId);
+    console.log("this is wishlist id", wishlistRawgId);
+    dispatch({
+      type: "RELOAD-WISHLIST",
+      payload: { wishlist: result.data, wishlistId: wishlistRawgId },
+    });
   } catch (err) {
     console.log(err.message);
   }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import "./styles/responsive.css"
+import "./styles/responsive.css";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Cart from "./components/Cart";
@@ -15,18 +15,18 @@ import ProfileUpdate from "./components/ProfileUpdate";
 import LoginModal from "./components/LoginModal";
 import Register from "./components/Register";
 import { fetchUser } from "./redux/actions/userAction";
+import { fetchWishlist } from "./redux/actions/gameAction";
 import ProtectedRoute from "./utils/ProtectedRoute";
 
 function App() {
   let dispatch = useDispatch();
-  let { currentUser } = useSelector((state) => state.user);
+  let { currentUser, currentWishlistId } = useSelector((state) => state.user);
   let loaded = useSelector((state) => state.app);
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
 
   const FourOhFourPage = () => {
     return (

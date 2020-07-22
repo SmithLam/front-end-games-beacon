@@ -2,16 +2,14 @@ export const loginFacebook = (data) => async (dispatch) => {
   if (data && data.accessToken) {
     console.log(data.accessToken);
     const res = await fetch(
-      `http://localhost:5000/auth/login/facebook?token=${data.accessToken}`
+      `${process.env.REACT_APP_BACKEND_URL}/auth/login/facebook?token=${data.accessToken}`
     );
     if (res.ok) {
       const dt = await res.json();
       const user = dt.data;
       const wishlist = dt.wishlist;
       const wishlistRawgId = wishlist.map((e) => e.rawgId);
-      user.wishlistRawgId = wishlistRawgId;
-      const cart = dt.cart;
-      const cartList = cart.items;
+      const cartList = dt.cart.items;
       const cartPrices = cartList.map((e) => e.price);
       const totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
       console.log(totalPrice);
@@ -21,8 +19,9 @@ export const loginFacebook = (data) => async (dispatch) => {
         payload: {
           user: user,
           wishlist: wishlist,
-          cart: cart,
-          totalPrice: totalPrice,
+          wishlistId: wishlistRawgId,
+          cart: cartList,
+          totalCartPrice: totalPrice,
         },
       });
       localStorage.setItem("token", dt.token);
@@ -39,17 +38,14 @@ export const loginGoogle = (data) => async (dispatch) => {
     console.log(data.accessToken);
     let token = data.accessToken;
     const res = await fetch(
-      `http://localhost:5000/auth/login/google?token=${token}`
+      `${process.env.REACT_APP_BACKEND_URL}/auth/login/google?token=${token}`
     );
     if (res.ok) {
       const dt = await res.json();
-      console.log(dt);
       const user = dt.data;
       const wishlist = dt.wishlist;
       const wishlistRawgId = wishlist.map((e) => e.rawgId);
-      user.wishlistRawgId = wishlistRawgId;
-      const cart = dt.cart;
-      const cartList = cart.items;
+      const cartList = dt.cart.items;
       const cartPrices = cartList.map((e) => e.price);
       const totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
       console.log(totalPrice);
@@ -59,8 +55,9 @@ export const loginGoogle = (data) => async (dispatch) => {
         payload: {
           user: user,
           wishlist: wishlist,
-          cart: cart,
-          totalPrice: totalPrice,
+          wishlistId: wishlistRawgId,
+          cart: cartList,
+          totalCartPrice: totalPrice,
         },
       });
       localStorage.setItem("token", dt.token);
@@ -77,7 +74,7 @@ export const loginEmail = (email, password, event) => async (dispatch) => {
   console.log(email, password);
   let loginData = { email: email, password: password };
   console.log(loginData);
-  const res = await fetch(`http://localhost:5000/auth/login`, {
+  const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -86,15 +83,12 @@ export const loginEmail = (email, password, event) => async (dispatch) => {
   });
   if (res.ok) {
     const dt = await res.json();
-    console.log(dt);
     const user = dt.data;
     const wishlist = dt.wishlist;
     const wishlistRawgId = wishlist.map((e) => e.rawgId);
-    user.wishlistRawgId = wishlistRawgId;
-    const cart = dt.cart;
-    const cartList = cart.items;
+    const cartList = dt.cart.items;
     const cartPrices = cartList.map((e) => e.price);
-    const totalPrice = cartPrices.reduce((a, b) => (a + b) * 1).toFixed(2);
+    const totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
     console.log(totalPrice);
     console.log("this is fetch user dt", user);
     dispatch({
@@ -102,8 +96,9 @@ export const loginEmail = (email, password, event) => async (dispatch) => {
       payload: {
         user: user,
         wishlist: wishlist,
-        cart: cart,
-        totalPrice: totalPrice,
+        wishlistId: wishlistRawgId,
+        cart: cartList,
+        totalCartPrice: totalPrice,
       },
     });
     localStorage.setItem("token", dt.token);
@@ -115,7 +110,7 @@ export const loginEmail = (email, password, event) => async (dispatch) => {
 };
 
 export const logOut = () => async (dispatch) => {
-  const res = await fetch(`http://localhost:5000/auth/logout`, {
+  const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/logout`, {
     headers: {
       authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
@@ -135,20 +130,21 @@ export const fetchUser = () => async (dispatch) => {
     dispatch({ type: "LOADED" });
     return;
   }
-  const findUser = await fetch(`http://localhost:5000/user/profile`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  });
+  const findUser = await fetch(
+    `${process.env.REACT_APP_BACKEND_URL}/user/profile`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
   if (findUser.ok) {
     const dt = await findUser.json();
     const user = dt.data;
     const wishlist = dt.wishlist;
     const wishlistRawgId = wishlist.map((e) => e.rawgId);
-    user.wishlistRawgId = wishlistRawgId;
-    const cart = dt.cart;
-    const cartList = cart.items;
+    const cartList = dt.cart.items;
     const cartPrices = cartList.map((e) => e.price);
     const totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
     console.log(totalPrice);
@@ -158,8 +154,9 @@ export const fetchUser = () => async (dispatch) => {
       payload: {
         user: user,
         wishlist: wishlist,
-        cart: cart,
-        totalPrice: totalPrice,
+        wishlistId: wishlistRawgId,
+        cart: cartList,
+        totalCartPrice: totalPrice,
       },
     });
     dispatch({ type: "LOADED" });
@@ -167,12 +164,3 @@ export const fetchUser = () => async (dispatch) => {
     localStorage.removeItem("token");
   }
 };
-
-// const findWishlist = await fetch(`http://localhost:5000/wishlist`, {
-//   headers: {
-//     authorization: `Bearer ${token}`,
-//     "Content-Type": "application/json",
-//   },
-// });
-// const wishlist = await findWishlist.json();
-// console.log(wishlist.data);

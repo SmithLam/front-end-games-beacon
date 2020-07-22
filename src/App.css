@@ -88,12 +88,16 @@ body {
   height: 375px;
 }
 
-#game-card:hover {
+#card-image {
+  height: 200px;
+}
+
+#card-image:hover {
   cursor: pointer;
 }
 
-#card-image {
-  height: 200px;
+.wishlist-icon {
+  cursor: pointer;
 }
 
 /* #price-number{

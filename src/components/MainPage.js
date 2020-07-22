@@ -14,7 +14,7 @@ function MainPage() {
     e.preventDefault();
     let search = `&search=${searchTerm}`;
     dispatch({ type: "SEARCH-GAME", payload: search });
-    setSearchTerm("")
+    setSearchTerm("");
     history.push("/explore");
   };
 
@@ -27,31 +27,16 @@ function MainPage() {
             Your one-stop place to find PC video games and buy them at the
             cheapest prices!
           </p>
-          <p>
-            <Form onSubmit={(e) => handleSubmit(e, searchTerm)}>
-              <Form.Control
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                type="text"
-                placeholder="Find your favorite PC game! Just press Enter!"
-              />
-            </Form>
-          </p>
+          <Form as="p" onSubmit={(e) => handleSubmit(e, searchTerm)}>
+            <Form.Control
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              type="text"
+              placeholder="Find your favorite PC game! Just press Enter!"
+            />
+          </Form>
         </Container>
       </Jumbotron>
-      <Container fluid>
-        <h3>Check out Latest PC Games</h3>
-        <Row className="d-flex flex-wrap justify-content-around">
-          <Col xs="12" md="3" className="my-2">
-            <GameCard
-              id="3498"
-              name="Grand Theft Auto V"
-              price="10"
-              image="https://i.ytimg.com/vi/kbQCHWUKoVw/maxresdefault.jpg"
-            ></GameCard>
-          </Col>
-        </Row>
-      </Container>
     </div>
   );
 }

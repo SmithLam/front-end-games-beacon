@@ -96,15 +96,6 @@ function NavBar(props) {
           </NavDropdown>
         </Nav>
         <Nav>
-          {/* {currentUser ? (
-            <LinkContainer to={`/cart`}>
-              <Nav.Link>
-                <GrCart className="cart-icon" size={20}></GrCart>
-              </Nav.Link>
-            </LinkContainer>
-          ) : (
-            ""
-          )} */}
           {currentUser ? (
             <Nav.Link variant="secondary" onClick={(e) => dispatch(logOut(e))}>
               Logout
