@@ -196,12 +196,10 @@ function Detail() {
             <Col xs={12} md={4}>
               <Card border="light" className="h-100">
                 <Card.Body>
-                  <Card.Text className="mt-2 mb-1 text-center">
-                    <h3>
-                      {currentGame.price
-                        ? `Best Price: $${currentGame.price}`
-                        : "Currently no sale"}
-                    </h3>
+                  <Card.Text as="h3" className="mt-2 mb-1 text-center">
+                    {currentGame.price
+                      ? `Best Price: $${currentGame.price}`
+                      : "Currently no sale"}
                   </Card.Text>
                 </Card.Body>
                 <ListGroup className="list-group-flush">
@@ -229,10 +227,7 @@ function Detail() {
           <Row>
             <Col xs={12} md={8} className="mt-2 mb-2 text-justify">
               <Card className="h-100">
-                <Card.Header as="h5">
-                  {" "}
-                  <h5>Game Description</h5>
-                </Card.Header>
+                <Card.Header as="h5"> Game Description</Card.Header>
                 <Card.Body>
                   <Card.Text
                     dangerouslySetInnerHTML={{
