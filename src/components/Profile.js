@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector} from "react-redux";
 import {useHistory} from "react-router-dom"
 import { Button } from "react-bootstrap";
 
@@ -17,7 +17,7 @@ function Profile() {
       <h1>This is Profile Page of {currentUser.name}</h1>
       <div>
         This is our current Avatar:{" "}
-        <img id="avatar-big" src={currentUser.avatar}></img>
+        <img id="avatar-big" alt="avatar" src={currentUser.avatar}></img>
       </div>
       <div>
         This is the list of our Wishslist:{" "}

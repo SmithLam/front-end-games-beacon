@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 function ProfileUpdate() {
   let { currentUser } = useSelector((s) => s.user);

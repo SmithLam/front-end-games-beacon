@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import "../styles/checkoutForm.css";
 
 function Checkout() {
-  let state = useSelector((state) => state);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -160,18 +158,18 @@ function Checkout() {
               </span>
             </h4>
             <p>
-              <a href="">Product 1</a> <span className="price">$15</span>
+              <button >Product 1</button> <span className="price">$15</span>
             </p>
             <p>
-              <a href="">Product 2</a> <span className="price">$5</span>
+              <button>Product 2</button> <span className="price">$5</span>
             </p>
             <p>
-              <a href="">Product 3</a> <span className="price">$8</span>
+              <button>Product 3</button> <span className="price">$8</span>
             </p>
             <p>
-              <a href="">Product 4</a> <span className="price">$2</span>
+              <button>Product 4</button> <span className="price">$2</span>
             </p>
-            <hr />
+            <hr/>
             <p>
               Total{" "}
               <span className="price" style={{ color: "black" }}>

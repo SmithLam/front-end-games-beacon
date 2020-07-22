@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
 import { Col, Form, Button } from "react-bootstrap";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 import axios from "axios";
@@ -11,7 +9,6 @@ import { openUploadWidget } from "../CloudinaryService";
 const GOOGLE_SEARCH_API = process.env.REACT_APP_APIKEY;
 
 function Register(props) {
-  let history = useHistory();
   let [images, setImages] = useState([]);
   let [publicID, setPublicID] = useState("");
 

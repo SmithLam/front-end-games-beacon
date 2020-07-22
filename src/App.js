@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import "./styles/responsive.css";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
@@ -15,7 +15,6 @@ import ProfileUpdate from "./components/ProfileUpdate";
 import LoginModal from "./components/LoginModal";
 import Register from "./components/Register";
 import { fetchUser } from "./redux/actions/userAction";
-import { fetchWishlist } from "./redux/actions/gameAction";
 import ProtectedRoute from "./utils/ProtectedRoute";
 
 function App() {
