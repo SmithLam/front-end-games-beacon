@@ -11,7 +11,6 @@ import Footer from "./components/Footer";
 import MainPage from "./components/MainPage";
 import NavBar from "./components/NavBar";
 import Profile from "./components/Profile";
-import ProfileUpdate from "./components/ProfileUpdate";
 import LoginModal from "./components/LoginModal";
 import Register from "./components/Register";
 import { fetchUser } from "./redux/actions/userAction";
@@ -48,12 +47,7 @@ function App() {
   if (!loaded)
     return (
       <div className="sweet-loading">
-        <PacmanLoader
-          css={override}
-          size={125}
-          color={"black"}
-        />
-        ;
+        <PacmanLoader css={override} size={125} color={"black"} />;
       </div>
     );
   else
@@ -71,11 +65,6 @@ function App() {
             <Route exact={true} path="/cart" component={Cart} />
             <Route exact={true} path="/games/:gameId" component={Detail} />
             <Route exact={true} path="/explore" component={Explore} />
-            <ProtectedRoute
-              exact={true}
-              path="/profile/update"
-              component={ProfileUpdate}
-            />
             <ProtectedRoute exact={true} path="/profile" component={Profile} />
             <Route exact={true} path="/register" component={Register} />
             <Route exact={true} path="/" component={MainPage} />
