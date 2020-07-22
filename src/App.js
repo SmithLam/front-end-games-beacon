@@ -8,7 +8,7 @@ import Checkout from "./components/Checkout";
 import Detail from "./components/Detail";
 import Explore from "./components/Explore.js";
 import Footer from "./components/Footer";
-import MainPage from "./components/mainPage";
+import MainPage from "./components/MainPage";
 import NavBar from "./components/NavBar";
 import Profile from "./components/Profile";
 import ProfileUpdate from "./components/ProfileUpdate";
