@@ -113,10 +113,9 @@ function NavBar(props) {
               <NavDropdown.Item onClick={(e) => goTo(e, "/profile")}>
                 Profile
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Wishlist</NavDropdown.Item>
-              <NavDropdown.Item onClick={(e) => goTo(e, "/cart")}>
+              {/* <NavDropdown.Item onClick={(e) => goTo(e, "/cart")}>
                 Cart
-              </NavDropdown.Item>
+              </NavDropdown.Item> */}
             </NavDropdown>
           ) : (
             <LinkContainer to={"/register"}>

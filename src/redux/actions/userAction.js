@@ -43,6 +43,7 @@ export const loginFacebook = (data) => async (dispatch) => {
       dispatch({ type: "LOADED" });
     } else {
       console.log(res);
+      alert("Cannot log in via Facebook!");
     }
   }
 };
@@ -93,6 +94,7 @@ export const loginGoogle = (data) => async (dispatch) => {
       dispatch({ type: "LOADED" });
     } else {
       console.log(res);
+      alert("Cannot log in via Google!");
     }
   }
 };
@@ -148,6 +150,7 @@ export const loginEmail = (email, password, event) => async (dispatch) => {
     dispatch({ type: "LOADED" });
   } else {
     console.log(res);
+    alert("Login Unsuccessful!");
   }
 };
 
