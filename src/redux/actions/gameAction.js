@@ -1,8 +1,12 @@
-export const getGames = () => async (dispatch) => {
+export const getGames = (pageNumber) => async (dispatch) => {
   try {
     dispatch({ type: "LOADING" });
+    if (!pageNumber) {
+      pageNumber = 1;
+    }
+    console.log("this is current Page Number", pageNumber);
     console.log(process.env.REACT_APP_RAWG_URL);
-    let url = `${process.env.REACT_APP_RAWG_URL}&dates=2020-06-01,2020-07-30&page=1`;
+    let url = `${process.env.REACT_APP_RAWG_URL}&page=${pageNumber}`;
     console.log(url);
     let data = await fetch(url);
     let result = await data.json();
@@ -18,7 +22,11 @@ export const getGames = () => async (dispatch) => {
     console.log(gameList);
     dispatch({
       type: "LOAD-GAMES",
-      payload: { gameList: gameList, gameCount: result.count, page: 1 },
+      payload: {
+        gameList: gameList,
+        gameCount: result.count,
+        page: pageNumber,
+      },
     });
     dispatch({ type: "LOADED" });
   } catch (err) {

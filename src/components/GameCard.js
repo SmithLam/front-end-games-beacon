@@ -17,7 +17,7 @@ export default function GameCard(props) {
     <div>
       <Card
         onClick={(e) => goDetail(e, props.id)}
-        className="h-100 shadow-sm bg-white rounded"
+        className="shadow-sm bg-white rounded"
         id="game-card"
       >
         <Card.Img
@@ -27,15 +27,15 @@ export default function GameCard(props) {
           src={props.image}
         />
         <Card.Body>
-          <div className="d-flex mb-0 justify-content-between">
-            <Card.Title id="card-name-tile" className="font-weight-bolder">
+          <div className="d-flex mb-2 w-100 justify-content-between">
+            <Card.Title id="card-name-tile" className="font-weight-bolder mr-2">
               {props.name}
             </Card.Title>
             <Badge pill className="mb-auto" variant="danger">
               <FaKissWinkHeart size={20}></FaKissWinkHeart>
             </Badge>
           </div>
-          <div className="d-flex mb-2 justify-content-between">
+          <div className="d-flex mt-2 mb-0 w-100 justify-content-between">
             <Card.Title id="price-number" className="mr-2">
               {props.price ? `At $${props.price}` : "Currently no sale"}
             </Card.Title>

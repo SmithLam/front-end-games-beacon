@@ -85,7 +85,7 @@ body {
 }
 
 #game-card {
-  height: 400px;
+  height: 375px;
 }
 
 #game-card:hover {
@@ -126,40 +126,38 @@ body {
   text-align: center;
 }
 
-
 /* Pagination */
 
 .pagination {
-    display: flex;
-    justify-content: center;
-    margin:10px;
+  display: flex;
+  justify-content: center;
+  margin: 10px;
 }
 
 .pagination ul {
-    display: inline-block;
-    padding-left: 15px;
-    padding-right: 15px;
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .pagination li {
-    display: inline-block;
-    margin-right: 15px;
+  display: inline-block;
+  margin-right: 15px;
 }
 
 .pagination li a {
-    outline: 0;
-    background-color: transparent;
-    color:black;
+  outline: 0;
+  background-color: transparent;
+  color: black;
 }
 
-
 .pagination .active {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    z-index:0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  z-index: 0;
 }
