@@ -7,15 +7,20 @@ export const loginFacebook = (data) => async (dispatch) => {
     if (res.ok) {
       const dt = await res.json();
       const user = dt.data;
-      const wishlist = dt.wishlist;
-      const wishlistRawgId = wishlist.map((e) => e.rawgId);
-      const cartList = dt.cart.items;
-      const cartPrices = cartList.map((e) => e.price);
-      let totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
-      if (!totalPrice) {
-        totalPrice = 0;
+      let wishlist = null;
+      let wishlistRawgId = null;
+      let cartList = null;
+      let cartPrices = null;
+      let totalPrice = null;
+      if (dt.wishlist) {
+        wishlist = dt.wishlist;
+        wishlistRawgId = wishlist.map((e) => e.rawgId);
       }
-      console.log(totalPrice);
+      if (dt.cart) {
+        cartList = dt.cart.items;
+        cartPrices = cartList.map((e) => e.price);
+        totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+      }
       console.log("this is fetch user dt", user);
       dispatch({
         type: "LOGIN",
@@ -46,15 +51,20 @@ export const loginGoogle = (data) => async (dispatch) => {
     if (res.ok) {
       const dt = await res.json();
       const user = dt.data;
-      const wishlist = dt.wishlist;
-      const wishlistRawgId = wishlist.map((e) => e.rawgId);
-      const cartList = dt.cart.items;
-      const cartPrices = cartList.map((e) => e.price);
-      let totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
-      if (!totalPrice) {
-        totalPrice = 0;
+      let wishlist = null;
+      let wishlistRawgId = null;
+      let cartList = null;
+      let cartPrices = null;
+      let totalPrice = null;
+      if (dt.wishlist) {
+        wishlist = dt.wishlist;
+        wishlistRawgId = wishlist.map((e) => e.rawgId);
       }
-      console.log(totalPrice);
+      if (dt.cart) {
+        cartList = dt.cart.items;
+        cartPrices = cartList.map((e) => e.price);
+        totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+      }
       console.log("this is fetch user dt", user);
       dispatch({
         type: "LOGIN",
@@ -90,15 +100,20 @@ export const loginEmail = (email, password, event) => async (dispatch) => {
   if (res.ok) {
     const dt = await res.json();
     const user = dt.data;
-    const wishlist = dt.wishlist;
-    const wishlistRawgId = wishlist.map((e) => e.rawgId);
-    const cartList = dt.cart.items;
-    const cartPrices = cartList.map((e) => e.price);
-    let totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
-    if (!totalPrice) {
-      totalPrice = 0;
+    let wishlist = null;
+    let wishlistRawgId = null;
+    let cartList = null;
+    let cartPrices = null;
+    let totalPrice = null;
+    if (dt.wishlist) {
+      wishlist = dt.wishlist;
+      wishlistRawgId = wishlist.map((e) => e.rawgId);
     }
-    console.log(totalPrice);
+    if (dt.cart) {
+      cartList = dt.cart.items;
+      cartPrices = cartList.map((e) => e.price);
+      totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+    }
     console.log("this is fetch user dt", user);
     dispatch({
       type: "LOGIN",
@@ -151,12 +166,20 @@ export const fetchUser = () => async (dispatch) => {
   if (findUser.ok) {
     const dt = await findUser.json();
     const user = dt.data;
-    const wishlist = dt.wishlist;
-    const wishlistRawgId = wishlist.map((e) => e.rawgId);
-    const cartList = dt.cart.items;
-    const cartPrices = cartList.map((e) => e.price);
-    const totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
-    console.log(totalPrice);
+    let wishlist = null;
+    let wishlistRawgId = null;
+    let cartList = null;
+    let cartPrices = null;
+    let totalPrice = null;
+    if (dt.wishlist) {
+      wishlist = dt.wishlist;
+      wishlistRawgId = wishlist.map((e) => e.rawgId);
+    }
+    if (dt.cart) {
+      cartList = dt.cart.items;
+      cartPrices = cartList.map((e) => e.price);
+      totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+    }
     console.log("this is fetch user dt", user);
     dispatch({
       type: "LOGIN",
