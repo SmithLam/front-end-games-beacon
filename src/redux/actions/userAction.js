@@ -13,13 +13,19 @@ export const loginFacebook = (data) => async (dispatch) => {
       let cartPrices = null;
       let totalPrice = null;
       if (dt.wishlist) {
+        console.log(dt.wishlist);
         wishlist = dt.wishlist;
         wishlistRawgId = wishlist.map((e) => e.rawgId);
       }
       if (dt.cart) {
+        console.log(dt.cart);
         cartList = dt.cart.items;
         cartPrices = cartList.map((e) => e.price);
-        totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+        if (cartPrices.length === 0) {
+          totalPrice = 0;
+        } else {
+          totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+        }
       }
       console.log("this is fetch user dt", user);
       dispatch({
@@ -57,13 +63,19 @@ export const loginGoogle = (data) => async (dispatch) => {
       let cartPrices = null;
       let totalPrice = null;
       if (dt.wishlist) {
+        console.log(dt.wishlist);
         wishlist = dt.wishlist;
         wishlistRawgId = wishlist.map((e) => e.rawgId);
       }
       if (dt.cart) {
+        console.log(dt.cart);
         cartList = dt.cart.items;
         cartPrices = cartList.map((e) => e.price);
-        totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+        if (cartPrices.length === 0) {
+          totalPrice = 0;
+        } else {
+          totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+        }
       }
       console.log("this is fetch user dt", user);
       dispatch({
@@ -106,13 +118,19 @@ export const loginEmail = (email, password, event) => async (dispatch) => {
     let cartPrices = null;
     let totalPrice = null;
     if (dt.wishlist) {
+      console.log(dt.wishlist);
       wishlist = dt.wishlist;
       wishlistRawgId = wishlist.map((e) => e.rawgId);
     }
     if (dt.cart) {
+      console.log(dt.cart);
       cartList = dt.cart.items;
       cartPrices = cartList.map((e) => e.price);
-      totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+      if (cartPrices.length === 0) {
+        totalPrice = 0;
+      } else {
+        totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+      }
     }
     console.log("this is fetch user dt", user);
     dispatch({
@@ -172,13 +190,19 @@ export const fetchUser = () => async (dispatch) => {
     let cartPrices = null;
     let totalPrice = null;
     if (dt.wishlist) {
+      console.log(dt.wishlist);
       wishlist = dt.wishlist;
       wishlistRawgId = wishlist.map((e) => e.rawgId);
     }
     if (dt.cart) {
+      console.log(dt.cart);
       cartList = dt.cart.items;
       cartPrices = cartList.map((e) => e.price);
-      totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+      if (cartPrices.length === 0) {
+        totalPrice = 0;
+      } else {
+        totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+      }
     }
     console.log("this is fetch user dt", user);
     dispatch({
