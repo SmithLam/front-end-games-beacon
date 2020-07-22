@@ -51,8 +51,7 @@ function App() {
         <PacmanLoader
           css={override}
           size={125}
-          color={"yellow"}
-          loading={dispatch({ type: "LOADING" })}
+          color={"black"}
         />
         ;
       </div>
