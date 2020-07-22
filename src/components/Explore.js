@@ -33,7 +33,7 @@ export default function Explore() {
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(getGames(currentPage, currentSearch));
-  }, [currentPage, currentSearch]);
+  }, [dispatch, currentPage, currentSearch]);
 
 
   //loading

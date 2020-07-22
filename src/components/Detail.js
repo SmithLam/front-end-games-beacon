@@ -9,7 +9,7 @@ import {
   Badge,
   Row,
 } from "react-bootstrap";
-import { useParams, Link} from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getGameDetail } from "../redux/actions/gameAction";
 import { FaKissWinkHeart } from "react-icons/fa";
@@ -25,12 +25,10 @@ function Detail() {
   let { loaded } = useSelector((s) => s.app);
   let { currentWishlistId } = useSelector((s) => s.user);
 
-
-
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(getGameDetail(gameId));
-  }, []);
+  }, [dispatch, gameId]);
 
   if (!loaded || !currentGame) {
     return (
@@ -41,7 +39,11 @@ function Detail() {
   } else
     return (
       <>
-        <img id="detail-image-top" alt="background" src={currentGame.background_image}></img>
+        <img
+          id="detail-image-top"
+          alt="background"
+          src={currentGame.background_image}
+        ></img>
         <Container fluid>
           <Row className="mt-2 mb-2">
             <Col xs={12} md={8}>
@@ -95,16 +97,15 @@ function Detail() {
                 </Card.Body>
                 <ListGroup className="list-group-flush">
                   {currentGame.price ? (
-                    <Button
-                      variant="success"
-                    >
+                    <Button variant="success">
                       <MdAddShoppingCart size={20}></MdAddShoppingCart>
                       Add to Cart
                     </Button>
                   ) : (
                     ""
                   )}
-                  {currentWishlistId.includes(currentGame.id) ? (
+                  {currentWishlistId &&
+                  currentWishlistId.includes(currentGame.id) ? (
                     <Button
                       className="mb-auto py-1 wishlist-icon"
                       variant="danger"

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import "./styles/responsive.css";
-import { Switch, Route} from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
@@ -19,9 +19,7 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 
 function App() {
   let dispatch = useDispatch();
-  let { currentUser, currentWishlistId } = useSelector((state) => state.user);
   let loaded = useSelector((state) => state.app);
-
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -38,7 +36,7 @@ function App() {
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchUser());
-  }, []);
+  }, [dispatch]);
 
   if (!loaded) return <h1>Loading...</h1>;
   else
