@@ -17,6 +17,13 @@ import { FiHeart } from "react-icons/fi";
 import { MdAddShoppingCart } from "react-icons/md";
 import Youtube from "react-youtube";
 import { wishlistGame, unWishlistGame } from "../redux/actions/gameAction";
+import PacmanLoader from "react-spinners/PacmanLoader";
+import { css } from "@emotion/core";
+
+const override = css`
+  display: block;
+  margin: 10% auto;
+`;
 
 function Detail() {
   const dispatch = useDispatch();
@@ -32,8 +39,8 @@ function Detail() {
 
   if (!loaded || !currentGame) {
     return (
-      <div>
-        <h1>Loading</h1>
+      <div className="d-flex flex-row justify-content-center">
+        <PacmanLoader css={override} size={125} color={"black"} />;
       </div>
     );
   } else

@@ -1,14 +1,18 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-// import "../styles/cart_styles.css";
-// import "../styles/cart_responsive.css";
+import "../styles/cart_styles.css";
+import "../styles/cart_responsive.css";
+import PacmanLoader from "react-spinners/PacmanLoader";
+import { css } from "@emotion/core";
+
+const override = css`
+  display: block;
+  margin: 10% auto;
+`;
 
 function Cart() {
   let { currentCart, totalPrice } = useSelector((s) => s.user);
   let { loaded } = useSelector((s) => s.app);
-  const currentCartList = currentCart.items;
-
-
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -16,14 +20,13 @@ function Cart() {
 
   if (!loaded || !currentCart) {
     return (
-      <div>
-        <h1>Loading</h1>
+      <div className="d-flex flex-row justify-content-center">
+        <PacmanLoader css={override} size={125} color={"black"} />;
       </div>
     );
   }
   return (
     <div>
-      <h1>This is Cart Page</h1>
       <div className="cart_section">
         <div className="container">
           <div className="row">
@@ -62,42 +65,23 @@ function Cart() {
                         </div>
                       </div>
                     </li>
-                    {currentCartList.map((game, index) => {
+                    {currentCart.map((game, index) => {
                       return (
                         <li key={index} className="cart_item clearfix">
                           <div className="cart_item_image">
-                            <img src={game.cover} alt="" />
+                            <img src={game.cover} id="cart-image" alt="" />
                           </div>
                           <div className="cart_item_info d-flex flex-md-row flex-column justify-content-between">
                             <div className="cart_item_name cart_info_col">
                               <div className="cart_item_title">Name</div>
                               <div className="cart_item_text">{game.name}</div>
                             </div>
-                            {/* <div className="cart_item_color cart_info_col">
-                              <div className="cart_item_title"></div>
-                              <div className="cart_item_text">
-                                <span
-                                  style={{
-                                    backgroundColor: "#999999",
-                                  }}
-                                />
-                                Silver
-                              </div>
-                            </div> */}
-                            {/* <div className="cart_item_quantity cart_info_col">
-                              <div className="cart_item_title">Quantity</div>
-                              <div className="cart_item_text">1</div>
-                            </div> */}
                             <div className="cart_item_price cart_info_col">
                               <div className="cart_item_title">Price</div>
                               <div className="cart_item_text">
                                 ${game.price}
                               </div>
                             </div>
-                            {/* <div className="cart_item_total cart_info_col">
-                              <div className="cart_item_title">Total</div>
-                              <div className="cart_item_text">$2000</div>
-                            </div> */}
                           </div>
                         </li>
                       );
@@ -113,10 +97,10 @@ function Cart() {
                 </div>
                 <div className="cart_buttons">
                   <button type="button" className="button cart_button_clear">
-                    Add to Cart
+                    Remove Cart List
                   </button>
                   <button type="button" className="button cart_button_checkout">
-                    Add to Cart
+                    Checkout
                   </button>
                 </div>
               </div>

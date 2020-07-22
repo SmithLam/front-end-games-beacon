@@ -2,15 +2,13 @@ import React, { useEffect } from "react";
 import "../styles/checkoutForm.css";
 
 function Checkout() {
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <div>
-      <h1>This is Checkout Page</h1>
-      <div className="row-checkout">
+      <div className="row-checkout mx-2 my-2">
         <div className="col-75">
           <div className="container-checkout">
             <form action="/action_page.php">
@@ -158,7 +156,7 @@ function Checkout() {
               </span>
             </h4>
             <p>
-              <button >Product 1</button> <span className="price">$15</span>
+              <button>Product 1</button> <span className="price">$15</span>
             </p>
             <p>
               <button>Product 2</button> <span className="price">$5</span>
@@ -169,7 +167,7 @@ function Checkout() {
             <p>
               <button>Product 4</button> <span className="price">$2</span>
             </p>
-            <hr/>
+            <hr />
             <p>
               Total{" "}
               <span className="price" style={{ color: "black" }}>

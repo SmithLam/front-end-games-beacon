@@ -16,6 +16,13 @@ import LoginModal from "./components/LoginModal";
 import Register from "./components/Register";
 import { fetchUser } from "./redux/actions/userAction";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import { css } from "@emotion/core";
+import PacmanLoader from "react-spinners/PacmanLoader";
+
+const override = css`
+  display: block;
+  margin: 10% auto;
+`;
 
 function App() {
   let dispatch = useDispatch();
@@ -38,7 +45,18 @@ function App() {
     dispatch(fetchUser());
   }, [dispatch]);
 
-  if (!loaded) return <h1>Loading...</h1>;
+  if (!loaded)
+    return (
+      <div className="sweet-loading">
+        <PacmanLoader
+          css={override}
+          size={125}
+          color={"yellow"}
+          loading={dispatch({ type: "LOADING" })}
+        />
+        ;
+      </div>
+    );
   else
     return (
       <div>

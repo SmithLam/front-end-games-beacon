@@ -9,6 +9,8 @@ import {
   loginGoogle,
   loginEmail,
 } from "../redux/actions/userAction";
+import facebookNew from "../images/facebookNew.png";
+import googleLogo from "../images/googleLogo.png";
 
 function LoginModal(props) {
   const dispatch = useDispatch();
@@ -23,13 +25,13 @@ function LoginModal(props) {
           show={showModal}
           onHide={(e) => dispatch({ type: "CLOSE-LOGIN-MODAL" })}
         >
-           <Modal.Header closeButton>
+          <Modal.Header closeButton>
             <Modal.Title>Login</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
               <Form.Row className="d-flex justify-content-between">
-                <Col>
+                <Col className="text-center">
                   <Form.Group controlId="faceBookLogin">
                     <Form.Label>Facebook Login</Form.Label>
                     <Form.Text className="text-muted">
@@ -41,7 +43,7 @@ function LoginModal(props) {
                         render={(renderProps) => (
                           <img
                             id="login-icon"
-                            src="https://img.icons8.com/plasticine/2x/facebook-new.png"
+                            src={facebookNew}
                             alt="facebook-icon"
                             onClick={renderProps.onClick}
                           ></img>
@@ -50,7 +52,7 @@ function LoginModal(props) {
                     </Form.Text>
                   </Form.Group>
                 </Col>
-                <Col>
+                <Col className="text-center">
                   <Form.Group controlId="googleLogin">
                     <Form.Label>Google Login</Form.Label>
                     <Form.Text className="text-muted">
@@ -60,7 +62,7 @@ function LoginModal(props) {
                           <img
                             id="login-icon"
                             alt="google-icon"
-                            src="https://img.icons8.com/plasticine/2x/google-logo.png"
+                            src={googleLogo}
                             onClick={renderProps.onClick}
                             disabled={renderProps.disabled}
                           ></img>
@@ -115,4 +117,3 @@ function LoginModal(props) {
 }
 
 export default LoginModal;
- 

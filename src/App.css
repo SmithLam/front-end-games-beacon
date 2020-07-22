@@ -61,7 +61,7 @@ body {
 /* main page */
 
 .jumbotron {
-  background-image: url("https://cdn.wallpapersafari.com/30/98/DmHeZJ.jpg");
+  background-image: url(./images/image-background.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -100,10 +100,6 @@ body {
   cursor: pointer;
 }
 
-/* #price-number{
-
-} */
-
 /* end main page */
 
 /* detail page */
@@ -121,14 +117,6 @@ body {
 }
 
 /* end detail page */
-
-/* footer */
-.footer {
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-}
 
 /* Pagination */
 
@@ -164,4 +152,18 @@ body {
   align-items: center;
   background-color: white;
   z-index: 0;
+}
+
+/* cart-page */
+#cart-image {
+  height: 100%;
+}
+
+/* footer */
+.footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  height: 100%;
 }

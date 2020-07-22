@@ -4,6 +4,13 @@ import Pagination from "react-js-pagination";
 import { getGames } from "../redux/actions/gameAction";
 import GameCard from "./GameCard.js";
 import { Button, Form, InputGroup } from "react-bootstrap";
+import { css } from "@emotion/core";
+import PacmanLoader from "react-spinners/PacmanLoader";
+
+const override = css`
+  display: block;
+  margin: 10% auto;
+`;
 
 export default function Explore() {
   let dispatch = useDispatch();
@@ -14,7 +21,6 @@ export default function Explore() {
     currentPage,
     currentSearch,
   } = useSelector((state) => state.game);
-
 
   let [searchTerm, setSearchTerm] = useState("");
 
@@ -35,12 +41,11 @@ export default function Explore() {
     dispatch(getGames(currentPage, currentSearch));
   }, [dispatch, currentPage, currentSearch]);
 
-
   //loading
-  if (!loaded) {
+  if (!loaded || !currentGameList) {
     return (
-      <div>
-        <h1>Loading</h1>
+      <div className="d-flex flex-row justify-content-center">
+        <PacmanLoader css={override} size={125} color={"black"} />;
       </div>
     );
   }

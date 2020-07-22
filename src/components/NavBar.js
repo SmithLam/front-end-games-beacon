@@ -4,13 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { logOut } from "../redux/actions/userAction";
-
+import Beacon from "../images/lighthouseBeacon.png";
 
 function NavBar(props) {
   let history = useHistory();
   let dispatch = useDispatch();
   let { currentUser } = useSelector((state) => state.user);
-
 
   const goTo = (e, location) => {
     e.preventDefault();
@@ -27,14 +26,15 @@ function NavBar(props) {
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <LinkContainer to="/">
         <Navbar.Brand>
+          Games
           <img
-            alt=""
-            src="https://cdn3.iconfinder.com/data/icons/lighthousix-2/128/lighthouse_nautical_building_beacon-02-512.png"
+            alt="brand"
+            src={Beacon}
             width="30"
             height="30"
             className="d-inline-block align-top"
           />{" "}
-          Games Beacon
+          Beacon
         </Navbar.Brand>
       </LinkContainer>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
