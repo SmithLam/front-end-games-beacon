@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "../styles/cart_styles.css";
-import "../styles/cart_responsive.css";
+// import "../styles/cart_styles.css";
+// import "../styles/cart_responsive.css";
 
 function Cart() {
   let { currentCart, totalPrice } = useSelector((s) => s.user);

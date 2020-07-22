@@ -17,6 +17,7 @@
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.1.21",
     "react-icons": "^3.10.0",
+    "react-js-pagination": "^3.0.3",
     "react-loading-skeleton": "^2.1.1",
     "react-rating": "^2.0.5",
     "react-redux": "^7.2.0",

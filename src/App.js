@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import "./styles/responsive.css"
 import { Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Cart from "./components/Cart";
@@ -26,15 +27,6 @@ function App() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // const ProtectedRoute = (props) => {
-  //   //if user is login, then show the detail page
-  //   //if user is not login then show the login page
-  //   if (currentUser) {
-  //     return <Route {...props} />;
-  //   } else {
-  //     return <Redirect to="/" />;
-  //   }
-  // };
 
   const FourOhFourPage = () => {
     return (

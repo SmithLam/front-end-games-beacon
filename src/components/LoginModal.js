@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../styles/loginModal.css"
 import { Modal, Button, Form, Col } from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GoogleLogin } from "react-google-login";

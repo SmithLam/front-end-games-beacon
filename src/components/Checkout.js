@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "../styles/checkoutForm.css"
+import "../styles/checkoutForm.css";
 
 function Checkout() {
   let state = useSelector((state) => state);
@@ -8,13 +8,13 @@ function Checkout() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   return (
     <div>
       <h1>This is Checkout Page</h1>
-      <div className="row">
+      <div className="row-checkout">
         <div className="col-75">
-          <div className="container">
+          <div className="container-checkout">
             <form action="/action_page.php">
               <div className="row">
                 <div className="col-50">

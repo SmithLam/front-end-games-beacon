@@ -197,17 +197,25 @@ function Detail() {
               <Card border="light" className="h-100">
                 <Card.Body>
                   <Card.Text className="mt-2 mb-1 text-center">
-                    <h3>Best Price: ${currentGame.price}</h3>
+                    <h3>
+                      {currentGame.price
+                        ? `Best Price: $${currentGame.price}`
+                        : "Free"}
+                    </h3>
                   </Card.Text>
                 </Card.Body>
                 <ListGroup className="list-group-flush">
-                  <Button
-                    onClick={(e) => addtoCart(e, currentGame.id)}
-                    variant="success"
-                  >
-                    <MdAddShoppingCart size={20}></MdAddShoppingCart>
-                    Add to Cart
-                  </Button>
+                  {currentGame.price ? (
+                    <Button
+                      onClick={(e) => addtoCart(e, currentGame.id)}
+                      variant="success"
+                    >
+                      <MdAddShoppingCart size={20}></MdAddShoppingCart>
+                      Add to Cart
+                    </Button>
+                  ) : (
+                    ""
+                  )}
                   <Button variant="danger">
                     <FaKissWinkHeart size={20}></FaKissWinkHeart>
                     Wishlisted
@@ -285,11 +293,7 @@ function Detail() {
                 <ListGroup className="list-group-flush">
                   <ListGroupItem>
                     <Youtube
-                      videoId={
-                        currentGame.clip
-                          ? currentGame.clip.video
-                          : ""
-                      }
+                      videoId={currentGame.clip ? currentGame.clip.video : ""}
                       className="Youtube-player"
                     ></Youtube>
                   </ListGroupItem>
