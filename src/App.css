@@ -48,11 +48,55 @@ body {
   cursor: pointer;
 }
 
-/* detail page */
-#game-screenshot {
-  height: 400px;
-  width: 400px;
+
+/* main page */
+
+.jumbotron {
+  background-image: url("https://cdn.wallpapersafari.com/30/98/DmHeZJ.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100%;
+  height: 750px;
+  max-height: 100vh;
+  z-index: -1000;
 }
+
+.jumbotron-inside {
+  z-index: 1;
+  color: white;
+  background-color: black;
+  border-radius: 30px;
+  opacity: 6;
+}
+
+.section {
+  min-height: 100vh;
+  max-height: 100%;
+}
+
+#card-image {
+  height: 200px;
+}
+/* end main page */
+
+
+/* detail page */
+
+#detail-image-top {
+  min-height: 100%;
+  max-height: 600px;
+  width: 100%;
+}
+
+.Youtube-player {
+  min-height: 100%;
+  max-height: 200px;
+  width: 100%;
+}
+
+
+/* end detail page */
+
 
 /* footer */
 .footer {

@@ -119,7 +119,7 @@ function Checkout() {
                         type="text"
                         id="expyear"
                         name="expyear"
-                        placeholder={2018}
+                        placeholder={2020}
                       />
                     </div>
                     <div className="col-50">
@@ -145,7 +145,7 @@ function Checkout() {
               <input
                 type="submit"
                 defaultValue="Continue to checkout"
-                className="btn"
+                className="checkout-button"
               />
             </form>
           </div>

@@ -16,6 +16,11 @@ function NavBar(props) {
     history.push("/profile");
   };
 
+  const goTo = (e, location) => {
+    e.preventDefault();
+    history.push(location);
+  };
+
   // const goRegister = (e) => {
   //   e.preventDefault();
   //   history.push("/register");
@@ -29,30 +34,44 @@ function NavBar(props) {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <LinkContainer to="/">
-        <Navbar.Brand>Games Beacon</Navbar.Brand>
+        <Navbar.Brand>
+          <img
+            alt=""
+            src="https://cdn3.iconfinder.com/data/icons/lighthousix-2/128/lighthouse_nautical_building_beacon-02-512.png"
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+          />{" "}
+          Games Beacon
+        </Navbar.Brand>
       </LinkContainer>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <LinkContainer to={`/`}>
-            <Nav.Link>Home</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to={`/explore`}>
-            <Nav.Link>Explore</Nav.Link>
-          </LinkContainer>
-          <Nav.Link>Search</Nav.Link>
-          <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">
-              Another action
+          <Nav.Link onClick={(e) => goTo(e, "/")}>Home</Nav.Link>
+          <Nav.Link onClick={(e) => goTo(e, "/explore")}>Explore</Nav.Link>
+          <NavDropdown title="Store" id="collasible-nav-dropdown">
+            <NavDropdown.Item>
+              Just Released
             </NavDropdown.Item>
-            <NavDropdown.Item>Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item>Separated link</NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.1">Top Upcoming</NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.1">Top Rated</NavDropdown.Item>
+          </NavDropdown>
+          <NavDropdown title="Genres" id="collasible-nav-dropdown">
+            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.1">Adventure</NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.1">Fighting</NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.1">Puzzle</NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.1">Platformer</NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.1">RPG</NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.1">Shooter</NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.1">Simulation</NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.1">Sports</NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.1">Strategy</NavDropdown.Item>
           </NavDropdown>
         </Nav>
         <Nav>
-          {currentUser ? (
+          {/* {currentUser ? (
             <LinkContainer to={`/cart`}>
               <Nav.Link>
                 <GrCart className="cart-icon" size={20}></GrCart>
@@ -60,7 +79,7 @@ function NavBar(props) {
             </LinkContainer>
           ) : (
             ""
-          )}
+          )} */}
           {currentUser ? (
             <Nav.Link variant="secondary" onClick={(e) => dispatch(logOut(e))}>
               Logout
@@ -74,16 +93,14 @@ function NavBar(props) {
             </Nav.Link>
           )}
           {currentUser ? (
-            // <LinkContainer to={"/profile"}>
-            //   <Nav.Link>Profile</Nav.Link>
-            // </LinkContainer>
             <NavDropdown title={currentUser.name} id="basic-nav-dropdown">
               <NavDropdown.Item onClick={(e) => goProfile(e)}>
                 Profile
               </NavDropdown.Item>
-              {/* <NavDropdown.Item onClick={props.logOut()}>
-                Logout
-              </NavDropdown.Item> */}
+              <NavDropdown.Item href="#action/3.2">Wishlist</NavDropdown.Item>
+              <NavDropdown.Item onClick={(e) => goTo(e, "/cart")}>
+                Cart
+              </NavDropdown.Item>
             </NavDropdown>
           ) : (
             <LinkContainer to={"/register"}>

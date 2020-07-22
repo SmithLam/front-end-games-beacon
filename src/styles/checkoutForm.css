@@ -53,7 +53,7 @@ label {
   font-size: 24px;
 }
 
-.btn {
+.checkout-button {
   background-color: #4caf50;
   color: white;
   padding: 12px;
@@ -65,7 +65,7 @@ label {
   font-size: 17px;
 }
 
-.btn:hover {
+.checkout-button:hover {
   background-color: #45a049;
 }
 

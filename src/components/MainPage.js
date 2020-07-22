@@ -1,148 +1,184 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
-import { Card, ListGroup, ListGroupItem, Button, Badge } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import React, { useEffect } from "react";
 import {
-  getGames,
-  wishlistGame,
-  unWishlistGame,
-} from "../redux/actions/gameAction";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+  Jumbotron,
+  Container,
+  Button,
+  Form,
+  Col,
+  Row,
+  Card,
+  CardDeck,
+  ListGroup,
+  ListGroupItem,
+  Badge,
+} from "react-bootstrap";
 
-function MainPage({ currentUser }) {
-  let dispatch = useDispatch();
-  let history = useHistory();
-  let { loaded } = useSelector((state) => state.app);
-  currentUser = useSelector((state) => state.user.currentUser);
-  let { currentWishlist, CurrentCart } = useSelector((state) => state.user);
+import { FaKissWinkHeart } from "react-icons/fa";
+import { fiHeart, FiHeart } from "react-icons/fi";
+import { MdAddShoppingCart } from "react-icons/md";
 
-  let { currentGameList } = useSelector((state) => state.game);
-  console.log("Main Page", currentUser);
-  // let wishlistRawgId = useSelector( (state) => state.user.wishlistRawgId)
-  let [liked, setLiked] = useState(false);
-
-  const goDetail = (e, gameId) => {
-    e.preventDefault();
-    history.push(`/games/${gameId}`);
-  };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    dispatch(getGames());
-  }, []);
-
-  //loading
-  if (!loaded || !currentGameList) {
-    return (
-      <div>
-        <h1>Loading</h1>
-      </div>
-    );
-  }
+export default function mainPage() {
   return (
     <div>
-      <h1>This is Main Page</h1>
-      <Card style={{ width: "18rem" }}>
-        <Card.Img
-          variant="top"
-          src="https://i.ytimg.com/vi/07w-ITS91_M/maxresdefault.jpg"
-        />
-        <Card.Body>
-          <Card.Title>
-            Cyberpunk 2077
-            {/* {liked === true ? (
-              <AiFillHeart onClick={() => setLiked(false)}></AiFillHeart>
-            ) : (
-              <AiOutlineHeart onClick={() => setLiked(true)}></AiOutlineHeart>
-            )} */}
-            <AiOutlineHeart></AiOutlineHeart>
-          </Card.Title>
-          <Card.Text>Available on PC, PS4, Xbox One</Card.Text>
-        </Card.Body>
-        <ListGroup className="list-group-flush">
-          <ListGroupItem>Release date: </ListGroupItem>
-          <ListGroupItem>Best price: </ListGroupItem>
-        </ListGroup>
-        <Button variant="danger">More detail</Button>
-      </Card>
-      <div className="container-fluid">
-        <div className="Row"></div>
-        <div className="col-md-12 d-flex flex-wrap justify-content-around">
-          {currentGameList.map((game, index) => (
-            <Card
-              key={game.id}
-              id={index}
-              className="mb-3"
-              style={{ width: "18rem" }}
+      <Jumbotron className="jumbotron" fluid>
+        <Container className="jumbotron-inside py-3">
+          <h2>Welcome to Games Beacon</h2>
+          <p>
+            Your one-stop place to find video games and buy (most) of them at
+            the cheapest price!
+          </p>
+          <p>
+            <Form>
+              <Form.Row>
+                <Form.Control placeholder="Find your favorite game!" />
+              </Form.Row>
+            </Form>
+          </p>
+        </Container>
+      </Jumbotron>
+      <Container fluid>
+        <Container className="px-2 py-2">
+          <h3>Check out Upcoming Games</h3>
+          <Row>
+            <Col
+              xs="12"
+              md="3"
+              className="d-flex flex-wrap justify-content-around"
             >
-              <Card.Img variant="top" src={game.background_image} />
-              <Card.Body>
-                <Card.Title>
-                  {game.name}{" "}
-                  {currentUser ? (
-                    currentUser.wishlistRawgId &&
-                    currentUser.wishlistRawgId.includes(game.id) ? (
-                      <AiFillHeart id="heart-icon"></AiFillHeart>
-                    ) : (
-                      <AiOutlineHeart id="heart-icon"></AiOutlineHeart>
-                    )
-                  ) : (
-                    ""
-                  )}
-                </Card.Title>
-                <Card.Text>
-                  Available on
-                  {game.platforms.map((item) => {
-                    return (
-                      <Badge key={item.platform.name} pill variant="danger">
-                        {item.platform.name}
-                      </Badge>
-                    );
-                  })}
-                </Card.Text>
-              </Card.Body>
-              <ListGroup className="list-group-flush">
-                <ListGroupItem>
-                  {" "}
-                  <Button
-                    variant="primary"
-                    onClick={(e) =>
-                      dispatch(
-                        wishlistGame(
-                          game.id,
-                          game.cheapId,
-                          game.name,
-                          game.background_image,
-                          index
-                        )
-                      )
-                    }
-                  >
-                    Add to Wishlist
-                  </Button>
-                  <Button
-                    variant="danger"
-                    onClick={(e) => dispatch(unWishlistGame(game.id, index))}
-                  >
-                    Remove from Wishlist
-                  </Button>
-                </ListGroupItem>
-                <ListGroupItem>Release date: {game.released}</ListGroupItem>
-                <ListGroupItem>
-                  Best price:{" "}
-                  {game.price ? `$${game.price}` : `Not Available Now`}
-                </ListGroupItem>
-              </ListGroup>
-              <Button onClick={(e) => goDetail(e, game.id)} variant="danger">
-                More detail
-              </Button>
-            </Card>
-          ))}
-        </div>
-      </div>
+              <Card
+                className="h-100 shadow-sm bg-white rounded"
+                style={{ width: "18rem" }}
+              >
+                <Card.Img
+                  id="card-image"
+                  variant="top"
+                  src="https://i.ytimg.com/vi/kbQCHWUKoVw/maxresdefault.jpg"
+                />
+                <Card.Body>
+                  <div className="d-flex mb-2 justify-content-between">
+                    <Card.Title className="font-weight-bold">
+                      Grand Theft Auto V
+                    </Card.Title>
+                    <Badge pill className="mb-auto" variant="danger">
+                      <FaKissWinkHeart size={20}></FaKissWinkHeart>
+                    </Badge>
+                  </div>
+                  <div className="d-flex mb-2 justify-content-between">
+                    <Card.Text id="price-number" className="ml-2">
+                      Price: $10
+                    </Card.Text>
+                    <Button variant="success" href="#">
+                      <MdAddShoppingCart size={20}></MdAddShoppingCart>
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col
+              xs="12"
+              md="3"
+              className="d-flex flex-wrap justify-content-around"
+            >
+              <Card
+                className="h-100 shadow-sm bg-white rounded"
+                style={{ width: "18rem" }}
+              >
+                <Card.Img
+                  variant="top"
+                  id="card-image"
+                  src="http://cdn.wccftech.com/wp-content/uploads/2015/04/Grand-Theft-Auto-5-PC-Defenitive.jpg"
+                />
+                <Card.Body>
+                  <div className="d-flex mb-2 justify-content-between">
+                    <Card.Title className="font-weight-bold">
+                      Grand Theft Auto V
+                    </Card.Title>
+                    <Badge pill className="mb-auto" variant="danger">
+                      <FaKissWinkHeart size={20}></FaKissWinkHeart>
+                    </Badge>
+                  </div>
+                  <div className="d-flex mb-2 justify-content-between">
+                    <Card.Text id="price-number" className="ml-2">
+                      Price: $10
+                    </Card.Text>
+                    <Button variant="success" href="#">
+                      <MdAddShoppingCart size={20}></MdAddShoppingCart>
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col
+              xs="12"
+              md="3"
+              className="d-flex flex-wrap justify-content-around"
+            >
+              <Card
+                className="h-100 shadow-sm bg-white rounded"
+                style={{ width: "18rem" }}
+              >
+                <Card.Img
+                  variant="top"
+                  id="card-image"
+                  src="http://cdn.wccftech.com/wp-content/uploads/2015/04/Grand-Theft-Auto-5-PC-Defenitive.jpg"
+                />
+                <Card.Body>
+                  <div className="d-flex mb-2 justify-content-between">
+                    <Card.Title className="font-weight-bold">
+                      Grand Theft Auto V
+                    </Card.Title>
+                    <Badge pill className="mb-auto" variant="danger">
+                      <FaKissWinkHeart size={20}></FaKissWinkHeart>
+                    </Badge>
+                  </div>
+                  <div className="d-flex mb-2 justify-content-between">
+                    <Card.Text id="price-number" className="ml-2">
+                      Price: $10
+                    </Card.Text>
+                    <Button variant="success" href="#">
+                      <MdAddShoppingCart size={20}></MdAddShoppingCart>
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col
+              xs="12"
+              md="3"
+              className="d-flex flex-wrap justify-content-around"
+            >
+              <Card
+                className="h-100 shadow-sm bg-white rounded"
+                style={{ width: "18rem" }}
+              >
+                <Card.Img
+                  variant="top"
+                  id="card-image"
+                  src="http://cdn.wccftech.com/wp-content/uploads/2015/04/Grand-Theft-Auto-5-PC-Defenitive.jpg"
+                />
+                <Card.Body>
+                  <div className="d-flex mb-2 justify-content-between">
+                    <Card.Title className="font-weight-bold">
+                      Grand Theft Auto V
+                    </Card.Title>
+                    <Badge pill className="mb-auto" variant="danger">
+                      <FaKissWinkHeart size={20}></FaKissWinkHeart>
+                    </Badge>
+                  </div>
+                  <div className="d-flex mb-2 justify-content-between">
+                    <Card.Text id="price-number" className="ml-2">
+                      Price: $10
+                    </Card.Text>
+                    <Button variant="success" href="#">
+                      <MdAddShoppingCart size={20}></MdAddShoppingCart>
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </Container>
     </div>
   );
 }
-
-export default MainPage;
