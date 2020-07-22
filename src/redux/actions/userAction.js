@@ -49,9 +49,11 @@ export const loginFacebook = (data) => async (dispatch) => {
 };
 
 export const loginGoogle = (data) => async (dispatch) => {
+  console.log("log into Google, before logging in");
   if (data && data.accessToken) {
     console.log(data.accessToken);
     let token = data.accessToken;
+    console.log("log into Google, before logging in", data.accessToken);
     const res = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/auth/login/google?token=${token}`
     );

@@ -57,7 +57,7 @@ function LoginModal(props) {
                     <Form.Label>Google Login</Form.Label>
                     <Form.Text className="text-muted">
                       <GoogleLogin
-                        clientId="208444202424-l087ammsaiv65o248gubddi1c02sqbpo.apps.googleusercontent.com"
+                        clientId="208444202424-n9c1v4mqgpiul0l08rte73i9j8l8l5kp.apps.googleusercontent.com"
                         render={(renderProps) => (
                           <img
                             id="login-icon"
