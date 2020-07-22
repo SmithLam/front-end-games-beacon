@@ -11,7 +11,10 @@ export const loginFacebook = (data) => async (dispatch) => {
       const wishlistRawgId = wishlist.map((e) => e.rawgId);
       const cartList = dt.cart.items;
       const cartPrices = cartList.map((e) => e.price);
-      const totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+      let totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+      if (!totalPrice) {
+        totalPrice = 0;
+      }
       console.log(totalPrice);
       console.log("this is fetch user dt", user);
       dispatch({
@@ -47,7 +50,10 @@ export const loginGoogle = (data) => async (dispatch) => {
       const wishlistRawgId = wishlist.map((e) => e.rawgId);
       const cartList = dt.cart.items;
       const cartPrices = cartList.map((e) => e.price);
-      const totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+      let totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+      if (!totalPrice) {
+        totalPrice = 0;
+      }
       console.log(totalPrice);
       console.log("this is fetch user dt", user);
       dispatch({
@@ -88,7 +94,10 @@ export const loginEmail = (email, password, event) => async (dispatch) => {
     const wishlistRawgId = wishlist.map((e) => e.rawgId);
     const cartList = dt.cart.items;
     const cartPrices = cartList.map((e) => e.price);
-    const totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+    let totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
+    if (!totalPrice) {
+      totalPrice = 0;
+    }
     console.log(totalPrice);
     console.log("this is fetch user dt", user);
     dispatch({
