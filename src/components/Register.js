@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Col, Form, Button } from "react-bootstrap";
+import { Col, Form, Button, Container } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 import axios from "axios";
 import { openUploadWidget } from "../CloudinaryService";
 
-// let cloudinaryPostURL = process.env.CLOUDINARY_CLOUD_NAME;
-
 const GOOGLE_SEARCH_API = process.env.REACT_APP_GOOGLE_SEARCH_API;
 
 function Register(props) {
+  const history = useHistory();
   let [images, setImages] = useState([]);
   let [publicID, setPublicID] = useState("");
 
@@ -79,13 +79,6 @@ function Register(props) {
   let [avatar, setAvatar] = useState("");
   const [validated, setValidated] = useState(false);
 
-  const clearForm = () => {
-    setName("");
-    setEmail("");
-    setPassword("");
-    setAvatar("");
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -97,14 +90,13 @@ function Register(props) {
     console.log(name, email, password, avatar);
     let formData = { name, email, password, avatar };
     console.log(formData);
-
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/user/register`, formData)
       .then((res) => {
         console.log(res);
         console.log(res.data);
         alert("A new user has been added");
-        clearForm();
+        history.push("/");
       })
       .catch((err) => {
         console.log(err);
@@ -113,85 +105,88 @@ function Register(props) {
 
   return (
     <div>
-      <h1>This is Register Page</h1>
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <Form.Row>
-          <Col xs="auto" md="5">
-            <Form.Group controlId="formGridName">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Enter name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please choose a username.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-          <Col xs="auto" md="5">
-            <Form.Group controlId="formGridEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                required
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide an email.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-        </Form.Row>
-        <Form.Row>
-          <Col xs="auto" md="4">
-            <Form.Group controlId="formGridPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                required
-                type="password"
-                placeholder="Enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <Form.Text id="passwordHelpBlock" muted>
-                Must be 8-10 characters long.
-              </Form.Text>
-              <Form.Control.Feedback type="invalid">
-                Please put a password
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-        </Form.Row>
-        <Form.Row>
-          <Col xs="auto" md="3">
-            <Button onClick={() => beginUpload()}>Upload Avatar Image</Button>
-          </Col>
-          <Col xs="auto" md="9">
-            <CloudinaryContext cloudName="smithlam">
-              <Image publicId={publicID || "c9gsnzmd52jlcuprq6nz"}>
-                <Transformation height="100" crop="scale" angle="0" />
-              </Image>
-            </CloudinaryContext>
-          </Col>
-        </Form.Row>
-        <Form.Group>
-          <Form.Check
-            required
-            label="Agree to terms and conditions"
-            feedback="You must agree before submitting."
-          />
-        </Form.Group>
-        <center>
-          <Button variant="primary" className="mt-5 mb-3" type="submit">
-            Register!
-          </Button>
-        </center>
-      </Form>
+      <Container className="d-flex mt-3 justify-content-center">
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Form.Row>
+            <Col xs="12" md="12">
+              <Form.Group controlId="formGridName">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Enter name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please choose a username.
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col xs="12" md="12">
+              <Form.Group controlId="formGridEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  required
+                  type="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please provide an email.
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col xs="12" md="12">
+              <Form.Group controlId="formGridPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  required
+                  type="password"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <Form.Text id="passwordHelpBlock" muted>
+                  Must be 8-10 characters long.
+                </Form.Text>
+                <Form.Control.Feedback type="invalid">
+                  Please put a password
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+          </Form.Row>
+          <Form.Row className="mb-3">
+            <Col xs="6" md="6">
+              <Button onClick={() => beginUpload()}>Upload Avatar Image</Button>
+            </Col>
+            <Col xs="6" md="6">
+              <CloudinaryContext cloudName="smithlam">
+                <Image publicId={publicID || "c9gsnzmd52jlcuprq6nz"}>
+                  <Transformation height="100" crop="scale" angle="0" />
+                </Image>
+              </CloudinaryContext>
+            </Col>
+          </Form.Row>
+          <Form.Group>
+            <Form.Check
+              required
+              label="Agree to terms and conditions"
+              feedback="You must agree before submitting."
+            />
+          </Form.Group>
+          <center>
+            <Button variant="primary" className="mt-5 mb-3" type="submit">
+              Register!
+            </Button>
+          </center>
+        </Form>
+      </Container>
     </div>
   );
 }
