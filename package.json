@@ -7,15 +7,30 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
+    "beauty-stars": "^1.1.0",
+    "cloudinary-core": "^2.10.3",
+    "cloudinary-react": "^1.6.1",
+    "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-bootstrap": "^1.2.2",
     "react-dom": "^16.13.1",
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.1.21",
+    "react-icons": "^3.10.0",
+    "react-js-pagination": "^3.0.3",
+    "react-loading-skeleton": "^2.1.1",
+    "react-rating": "^2.0.5",
     "react-redux": "^7.2.0",
+    "react-render-html": "^0.6.0",
+    "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "redux": "^4.0.5"
+    "react-spinners": "^0.9.0",
+    "react-youtube": "^7.11.2",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
+    "typescript": "^3.9.6"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -37,5 +52,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "pretty-quick": "^2.0.1"
   }
 }

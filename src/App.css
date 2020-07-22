@@ -1,8 +1,167 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900|Rubik:300,400,500,700,900");
+
+/* body */
+body {
+  margin: 0 auto;
+  padding: 0 auto;
+  width: 100%;
+  font-family: "Rubik", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  background: #ffffff;
+  color: #000000;
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+}
+
+#section {
+  min-height: 100vh;
+  max-height: 100%;
+}
+
+#avatar-image {
+  height: 32px;
+  width: 32px;
+  border-radius: 100%;
+}
+
+#avatar-big {
+  height: 200px;
+  border-radius: 100%;
+}
+
+#heart-icon:hover {
+  cursor: pointer;
+}
+
+.google-facebook-login {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.react-icons {
+  color: black;
+  border: 5px solid blue;
+}
+
+.react-icons:hover {
+  cursor: pointer;
+}
+
+#login-icon {
+  height: 70px;
+}
+
+#login-icon:hover {
+  cursor: pointer;
+}
+
+/* main page */
+
+.jumbotron {
+  background-image: url("https://cdn.wallpapersafari.com/30/98/DmHeZJ.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100%;
+  height: 750px;
+  z-index: -1000;
+}
+
+.jumbotron-inside {
+  z-index: 1;
+  color: white;
+  background-color: black;
+  border-radius: 30px;
+  opacity: 6;
+  opacity: 0.9;
+}
+
+.section {
+  min-height: 100vh;
+  max-height: 100%;
+}
+
+#game-card {
+  height: 375px;
+}
+
+#card-image {
+  height: 200px;
+}
+
+#card-image:hover {
+  cursor: pointer;
+}
+
+.wishlist-icon {
+  cursor: pointer;
+}
+
+/* #price-number{
+
+} */
+
+/* end main page */
+
+/* detail page */
+
+#detail-image-top {
+  min-height: 100%;
+  max-height: 600px;
+  width: 100%;
+}
+
+.Youtube-player {
+  min-height: 100%;
+  max-height: 200px;
+  width: 100%;
+}
+
+/* end detail page */
+
 /* footer */
 .footer {
-  position: fixed;
-  left: 0;
+  position: relative;
   bottom: 0;
   width: 100%;
   text-align: center;
+}
+
+/* Pagination */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+.pagination ul {
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.pagination li {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.pagination li a {
+  outline: 0;
+  background-color: transparent;
+  color: black;
+}
+
+.pagination .active {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  z-index: 0;
 }
