@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
 import Pagination from "react-js-pagination";
-import { getGames, fetchWishlist } from "../redux/actions/gameAction";
+import { getGames } from "../redux/actions/gameAction";
 import GameCard from "./GameCard.js";
-import { Button, Form, InputGroup, FormControl } from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
 
 export default function Explore() {
   let dispatch = useDispatch();
-  let history = useHistory();
   let { loaded } = useSelector((state) => state.app);
   let {
     currentGameList,
@@ -17,7 +15,6 @@ export default function Explore() {
     currentSearch,
   } = useSelector((state) => state.game);
 
-  let { currentWishlistId } = useSelector((s) => s.user);
 
   let [searchTerm, setSearchTerm] = useState("");
 

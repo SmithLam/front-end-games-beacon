@@ -121,6 +121,7 @@ export const unWishlistGame = (e, rawgId) => async (dispatch) => {
         },
       }
     );
+    console.log(deleteWishlist);
     dispatch(fetchWishlist());
   } catch (err) {
     console.log(err.message);

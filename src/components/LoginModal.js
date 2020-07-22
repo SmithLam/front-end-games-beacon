@@ -12,7 +12,6 @@ import {
 
 function LoginModal(props) {
   const dispatch = useDispatch();
-  let { currentUser } = useSelector((state) => state.user);
   let { showModal } = useSelector((state) => state.modal);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

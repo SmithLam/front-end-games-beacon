@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 // import "../styles/cart_styles.css";
 // import "../styles/cart_responsive.css";
 
@@ -8,8 +8,7 @@ function Cart() {
   let { loaded } = useSelector((s) => s.app);
   const currentCartList = currentCart.items;
 
-  // const priceList = currentCartList.map((item) => item.price)
-  // console.log(priceList)
+
 
   useEffect(() => {
     window.scrollTo(0, 0);

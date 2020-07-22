@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { Jumbotron, Container, Button, Form, Col, Row } from "react-bootstrap";
-import GameCard from "./GameCard";
+import { useDispatch} from "react-redux";
+import { Jumbotron, Container, Form} from "react-bootstrap";
+
 
 function MainPage() {
   const history = useHistory();
   const dispatch = useDispatch();
   let [searchTerm, setSearchTerm] = useState("");
-  let { currentSearch } = useSelector((state) => state.game);
+
 
   const handleSubmit = (e, searchTerm) => {
     e.preventDefault();

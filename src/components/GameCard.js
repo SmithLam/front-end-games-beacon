@@ -1,9 +1,9 @@
 import React from "react";
-import { Badge, Button, Card, Col } from "react-bootstrap";
+import { Badge, Button, Card } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaKissWinkHeart } from "react-icons/fa";
-import { fiHeart, FiHeart } from "react-icons/fi";
+import { FiHeart } from "react-icons/fi";
 import { MdAddShoppingCart } from "react-icons/md";
 import { wishlistGame, unWishlistGame } from "../redux/actions/gameAction";
 

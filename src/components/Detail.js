@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
-  Form,
   Button,
   Container,
   Col,
@@ -10,11 +9,9 @@ import {
   Badge,
   Row,
 } from "react-bootstrap";
-import { useParams, Link, useHistory } from "react-router-dom";
+import { useParams, Link} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getGameDetail } from "../redux/actions/gameAction";
-import Rating from "react-rating";
-import { GoThumbsup, GoThumbsdown } from "react-icons/go";
 import { FaKissWinkHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { MdAddShoppingCart } from "react-icons/md";
@@ -23,134 +20,12 @@ import { wishlistGame, unWishlistGame } from "../redux/actions/gameAction";
 
 function Detail() {
   const dispatch = useDispatch();
-  const history = useHistory();
   const { gameId } = useParams();
   let { currentGame } = useSelector((s) => s.game);
   let { loaded } = useSelector((s) => s.app);
   let { currentUser, currentWishlistId } = useSelector((s) => s.user);
 
-  const [starValue, setStarValue] = useState(0);
-  const [description, setDescription] = useState("");
 
-  const handleClick = (rate) => {
-    setStarValue(rate);
-  };
-
-  const submitReview = async (e, rating, rawgId, description) => {
-    try {
-      e.preventDefault();
-      console.log(rating, rawgId, description);
-      const token = localStorage.getItem("token");
-      if (!token) {
-        alert("You need to register/log in to add wishlist!");
-      }
-      const findGame = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/game/${rawgId}`,
-        {
-          method: "GET",
-          headers: {
-            authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      let game = await findGame.json();
-      if (!game.data) {
-        let gameData = {
-          rawgId: rawgId,
-          cheapId: currentGame.cheapId,
-          rawgName: currentGame.name,
-          rawgCover: currentGame.background_image,
-        };
-        console.log(gameData);
-        const createGame = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/game/create`,
-          {
-            method: "POST",
-            headers: {
-              authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(gameData),
-          }
-        );
-        game = await createGame.json();
-      }
-      console.log("this is found game", game.data);
-      console.log("this is found game id", game.data._id);
-      let gameLocalId = game.data._id;
-      console.log(gameLocalId);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
-  const addtoCart = async (e, rawgId) => {
-    try {
-      e.preventDefault();
-      console.log(rawgId);
-      const token = localStorage.getItem("token");
-      if (!token) {
-        alert("You need to register/log in to add wishlist!");
-      }
-      const findGame = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/game/${rawgId}`,
-        {
-          method: "GET",
-          headers: {
-            authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      let game = await findGame.json();
-      if (!game.data) {
-        let gameData = {
-          rawgId: rawgId,
-          cheapId: currentGame.cheapId,
-          rawgName: currentGame.name,
-          rawgCover: currentGame.background_image,
-        };
-        console.log(gameData);
-        const createGame = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/game/create`,
-          {
-            method: "POST",
-            headers: {
-              authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(gameData),
-          }
-        );
-        game = await createGame.json();
-      }
-      console.log("this is found game", game.data);
-      console.log("this is found game id", game.data._id);
-      let gameLocalId = game.data._id;
-      console.log(gameLocalId);
-      let cartData = {
-        price: currentGame.price,
-        name: currentGame.name,
-        cover: currentGame.background_image,
-      };
-      const addCart = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/cart/${gameLocalId}`,
-        {
-          method: "PATCH",
-          headers: {
-            authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(cartData),
-        }
-      );
-      let cart = await addCart.json();
-      console.log(cart);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -166,7 +41,7 @@ function Detail() {
   } else
     return (
       <>
-        <img id="detail-image-top" src={currentGame.background_image}></img>
+        <img id="detail-image-top" alt="background" src={currentGame.background_image}></img>
         <Container fluid>
           <Row className="mt-2 mb-2">
             <Col xs={12} md={8}>
@@ -221,7 +96,6 @@ function Detail() {
                 <ListGroup className="list-group-flush">
                   {currentGame.price ? (
                     <Button
-                      onClick={(e) => addtoCart(e, currentGame.id)}
                       variant="success"
                     >
                       <MdAddShoppingCart size={20}></MdAddShoppingCart>

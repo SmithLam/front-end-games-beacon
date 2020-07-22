@@ -1,16 +1,16 @@
 import React from "react";
-import { Nav, Navbar, NavDropdown, Button } from "react-bootstrap";
+import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { logOut } from "../redux/actions/userAction";
-import { GrCart } from "react-icons/gr";
+
 
 function NavBar(props) {
   let history = useHistory();
   let dispatch = useDispatch();
   let { currentUser } = useSelector((state) => state.user);
-  let { currentSearch } = useSelector((state) => state.game);
+
 
   const goTo = (e, location) => {
     e.preventDefault();
