@@ -23,7 +23,7 @@ function Detail() {
   const { gameId } = useParams();
   let { currentGame } = useSelector((s) => s.game);
   let { loaded } = useSelector((s) => s.app);
-  let { currentUser, currentWishlistId } = useSelector((s) => s.user);
+  let { currentWishlistId } = useSelector((s) => s.user);
 
 
 
