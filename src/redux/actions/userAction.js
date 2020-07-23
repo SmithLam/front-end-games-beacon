@@ -1,3 +1,5 @@
+import { fetchWishlist, fetchCart } from "./gameAction";
+
 export const loginFacebook = (data) => async (dispatch) => {
   if (data && data.accessToken) {
     console.log(data.accessToken);
@@ -7,38 +9,16 @@ export const loginFacebook = (data) => async (dispatch) => {
     if (res.ok) {
       const dt = await res.json();
       const user = dt.data;
-      let wishlist = null;
-      let wishlistRawgId = null;
-      let cartList = null;
-      let cartPrices = null;
-      let totalPrice = null;
-      if (dt.wishlist) {
-        console.log(dt.wishlist);
-        wishlist = dt.wishlist;
-        wishlistRawgId = wishlist.map((e) => e.rawgId);
-      }
-      if (dt.cart) {
-        console.log(dt.cart);
-        cartList = dt.cart.items;
-        cartPrices = cartList.map((e) => e.price);
-        if (cartPrices.length === 0) {
-          totalPrice = 0;
-        } else {
-          totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
-        }
-      }
       console.log("this is fetch user dt", user);
+      localStorage.setItem("token", dt.token);
       dispatch({
         type: "LOGIN",
         payload: {
           user: user,
-          wishlist: wishlist,
-          wishlistId: wishlistRawgId,
-          cart: cartList,
-          totalCartPrice: totalPrice,
         },
       });
-      localStorage.setItem("token", dt.token);
+      dispatch(fetchWishlist());
+      dispatch(fetchCart());
       dispatch({ type: "CLOSE-LOGIN-MODAL" });
       dispatch({ type: "LOADED" });
     } else {
@@ -58,38 +38,16 @@ export const loginGoogle = (data) => async (dispatch) => {
     if (res.ok) {
       const dt = await res.json();
       const user = dt.data;
-      let wishlist = null;
-      let wishlistRawgId = null;
-      let cartList = null;
-      let cartPrices = null;
-      let totalPrice = null;
-      if (dt.wishlist) {
-        console.log(dt.wishlist);
-        wishlist = dt.wishlist;
-        wishlistRawgId = wishlist.map((e) => e.rawgId);
-      }
-      if (dt.cart) {
-        console.log(dt.cart);
-        cartList = dt.cart.items;
-        cartPrices = cartList.map((e) => e.price);
-        if (cartPrices.length === 0) {
-          totalPrice = 0;
-        } else {
-          totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
-        }
-      }
       console.log("this is fetch user dt", user);
+      localStorage.setItem("token", dt.token);
       dispatch({
         type: "LOGIN",
         payload: {
           user: user,
-          wishlist: wishlist,
-          wishlistId: wishlistRawgId,
-          cart: cartList,
-          totalCartPrice: totalPrice,
         },
       });
-      localStorage.setItem("token", dt.token);
+      dispatch(fetchWishlist());
+      dispatch(fetchCart());
       dispatch({ type: "CLOSE-LOGIN-MODAL" });
       dispatch({ type: "LOADED" });
     } else {
@@ -114,38 +72,16 @@ export const loginEmail = (email, password, event) => async (dispatch) => {
   if (res.ok) {
     const dt = await res.json();
     const user = dt.data;
-    let wishlist = null;
-    let wishlistRawgId = null;
-    let cartList = null;
-    let cartPrices = null;
-    let totalPrice = null;
-    if (dt.wishlist) {
-      console.log(dt.wishlist);
-      wishlist = dt.wishlist;
-      wishlistRawgId = wishlist.map((e) => e.rawgId);
-    }
-    if (dt.cart) {
-      console.log(dt.cart);
-      cartList = dt.cart.items;
-      cartPrices = cartList.map((e) => e.price);
-      if (cartPrices.length === 0) {
-        totalPrice = 0;
-      } else {
-        totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
-      }
-    }
     console.log("this is fetch user dt", user);
+    localStorage.setItem("token", dt.token);
     dispatch({
       type: "LOGIN",
       payload: {
         user: user,
-        wishlist: wishlist,
-        wishlistId: wishlistRawgId,
-        cart: cartList,
-        totalCartPrice: totalPrice,
       },
     });
-    localStorage.setItem("token", dt.token);
+    dispatch(fetchWishlist());
+    dispatch(fetchCart());
     dispatch({ type: "CLOSE-LOGIN-MODAL" });
     dispatch({ type: "LOADED" });
   } else {
@@ -187,37 +123,15 @@ export const fetchUser = () => async (dispatch) => {
   if (findUser.ok) {
     const dt = await findUser.json();
     const user = dt.data;
-    let wishlist = null;
-    let wishlistRawgId = null;
-    let cartList = null;
-    let cartPrices = null;
-    let totalPrice = null;
-    if (dt.wishlist) {
-      console.log(dt.wishlist);
-      wishlist = dt.wishlist;
-      wishlistRawgId = wishlist.map((e) => e.rawgId);
-    }
-    if (dt.cart) {
-      console.log(dt.cart);
-      cartList = dt.cart.items;
-      cartPrices = cartList.map((e) => e.price);
-      if (cartPrices.length === 0) {
-        totalPrice = 0;
-      } else {
-        totalPrice = cartPrices.reduce((a, b) => a + b).toFixed(2);
-      }
-    }
     console.log("this is fetch user dt", user);
     dispatch({
       type: "LOGIN",
       payload: {
         user: user,
-        wishlist: wishlist,
-        wishlistId: wishlistRawgId,
-        cart: cartList,
-        totalCartPrice: totalPrice,
       },
     });
+    dispatch(fetchWishlist());
+    dispatch(fetchCart());
     dispatch({ type: "LOADED" });
   } else {
     localStorage.removeItem("token");

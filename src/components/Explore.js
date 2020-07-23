@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Pagination from "react-js-pagination";
-import { getGames } from "../redux/actions/gameAction";
 import GameCard from "./GameCard.js";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { css } from "@emotion/core";
 import PacmanLoader from "react-spinners/PacmanLoader";
+import { getGames } from "../redux/actions/gameAction";
 
 const override = css`
   display: block;

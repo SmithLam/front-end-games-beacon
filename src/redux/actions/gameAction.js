@@ -94,7 +94,7 @@ export const wishlistGame = (e, rawgId, price, rawgName, rawgCover) => async (
     );
     const wishList = await createWishlist.json();
     if (!wishList.data) {
-      return console.log("this wishlist is already created");
+      return console.log("this wishlist is already created or cannot be added");
     }
     console.log("this is new wishlist", wishList.data);
     dispatch(fetchWishlist());
@@ -121,7 +121,8 @@ export const unWishlistGame = (e, rawgId) => async (dispatch) => {
         },
       }
     );
-    console.log(deleteWishlist);
+    const wishlist = deleteWishlist.json();
+    console.log(wishlist.data);
     dispatch(fetchWishlist());
   } catch (err) {
     console.log(err.message);
@@ -147,6 +148,123 @@ export const fetchWishlist = () => async (dispatch) => {
     dispatch({
       type: "RELOAD-WISHLIST",
       payload: { wishlist: result.data, wishlistId: wishlistRawgId },
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export const addToCart = (e, rawgId, price, rawgName, rawgCover) => async (
+  dispatch
+) => {
+  try {
+    e.preventDefault();
+    console.log(rawgId, price, rawgName, rawgCover);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("You need to register/log in to add to cart!");
+    }
+    let cartData = {
+      rawgId: rawgId,
+      price: price,
+      name: rawgName,
+      cover: rawgCover,
+    };
+    const createCart = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/cart/${rawgId}`,
+      {
+        method: "PATCH",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cartData),
+      }
+    );
+    const result = await createCart.json();
+    if (!result.data) {
+      return console.log("this game is already in cart or cannot be added");
+    }
+    console.log("this is Cart in Fetch Cart", result.data);
+    const cartIdList = result.data.items.map((e) => e.rawgId);
+    console.log("this is cart id from adding", cartIdList);
+    const totalCartPrice = result.data.total;
+    console.log("this is total price from adding", totalCartPrice);
+    dispatch({
+      type: "RELOAD-CART",
+      payload: {
+        cart: result.data,
+        cartIdList: cartIdList,
+        totalCartPrice: totalCartPrice,
+      },
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export const removeFromCart = (e, rawgId) => async (dispatch) => {
+  try {
+    e.preventDefault();
+    console.log(rawgId);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("You need to register/log in to add cart!");
+    }
+    const deleteCart = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/cart/${rawgId}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const result = await deleteCart.json();
+    console.log("this is Cart in Fetch Cart", result.data);
+    const cartIdList = result.data.items.map((e) => e.rawgId);
+    console.log("this is cart id from removing", cartIdList);
+    const totalCartPrice = result.data.total;
+    console.log("this is total price from removing", totalCartPrice);
+    dispatch({
+      type: "RELOAD-CART",
+      payload: {
+        cart: result.data,
+        cartIdList: cartIdList,
+        totalCartPrice: totalCartPrice,
+      },
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export const fetchCart = () => async (dispatch) => {
+  try {
+    const token = localStorage.getItem("token");
+    const findCart = await fetch(`${process.env.REACT_APP_BACKEND_URL}/cart/`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await findCart.json();
+    console.log("this is Cart in Fetch Cart", result.data);
+    const cartIdList = result.data.items.map((e) => e.rawgId);
+    console.log("this is cart id from fetching", cartIdList);
+    const totalCartPrice = result.data.total;
+    console.log("this is total price from fetching", totalCartPrice);
+    // currentCart: action.payload.cart,
+    // currentCartId: action.payload.cartIdList,
+    // currentTotalCartPrice: action.payload.totalCartPrice,
+    dispatch({
+      type: "RELOAD-CART",
+      payload: {
+        cart: result.data,
+        cartIdList: cartIdList,
+        totalCartPrice: totalCartPrice,
+      },
     });
   } catch (err) {
     console.log(err.message);

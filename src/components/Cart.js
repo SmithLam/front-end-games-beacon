@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import "../styles/cart_styles.css";
 import "../styles/cart_responsive.css";
 import PacmanLoader from "react-spinners/PacmanLoader";
 import { css } from "@emotion/core";
+import { Button } from "react-bootstrap";
+import { fetchCart, removeFromCart } from "../redux/actions/gameAction";
 
 const override = css`
   display: block;
@@ -11,12 +13,14 @@ const override = css`
 `;
 
 function Cart() {
-  let { currentCart, totalPrice } = useSelector((s) => s.user);
+  const dispatch = useDispatch();
+  let { currentCart, currentTotalCartPrice } = useSelector((s) => s.user);
   let { loaded } = useSelector((s) => s.app);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    dispatch(fetchCart());
+  }, [dispatch]);
 
   if (!loaded || !currentCart) {
     return (
@@ -35,64 +39,53 @@ function Cart() {
                 <div className="cart_title">Shopping Cart</div>
                 <div className="cart_items">
                   <ul className="cart_list">
-                    <li className="cart_item clearfix">
-                      <div className="cart_item_image">
-                        <img src="images/shopping_cart.jpg" alt="" />
-                      </div>
-                      <div className="cart_item_info d-flex flex-md-row flex-column justify-content-between">
-                        <div className="cart_item_name cart_info_col">
-                          <div className="cart_item_title">Name</div>
-                          <div className="cart_item_text">MacBook Air 13</div>
-                        </div>
-                        <div className="cart_item_color cart_info_col">
-                          <div className="cart_item_title">Color</div>
-                          <div className="cart_item_text">
-                            <span style={{ backgroundColor: "#999999" }} />
-                            Silver
-                          </div>
-                        </div>
-                        <div className="cart_item_quantity cart_info_col">
-                          <div className="cart_item_title">Quantity</div>
-                          <div className="cart_item_text">1</div>
-                        </div>
-                        <div className="cart_item_price cart_info_col">
-                          <div className="cart_item_title">Price</div>
-                          <div className="cart_item_text">$2000</div>
-                        </div>
-                        <div className="cart_item_total cart_info_col">
-                          <div className="cart_item_title">Total</div>
-                          <div className="cart_item_text">$2000</div>
-                        </div>
-                      </div>
-                    </li>
-                    {currentCart.map((game, index) => {
-                      return (
-                        <li key={index} className="cart_item clearfix">
-                          <div className="cart_item_image">
-                            <img src={game.cover} id="cart-image" alt="" />
-                          </div>
-                          <div className="cart_item_info d-flex flex-md-row flex-column justify-content-between">
-                            <div className="cart_item_name cart_info_col">
-                              <div className="cart_item_title">Name</div>
-                              <div className="cart_item_text">{game.name}</div>
+                    {currentCart &&
+                      currentCart.items &&
+                      currentCart.items.map((game, index) => {
+                        return (
+                          <li key={index} className="cart_item clearfix">
+                            <div className="cart_item_image">
+                              <img src={game.cover} id="cart-image" alt="" />
                             </div>
-                            <div className="cart_item_price cart_info_col">
-                              <div className="cart_item_title">Price</div>
-                              <div className="cart_item_text">
-                                ${game.price}
+                            <div className="cart_item_info d-flex flex-md-row">
+                              <div className="cart_item_name cart_info_col col-4">
+                                <div className="cart_item_title">Game</div>
+                                <div className="cart_item_text">
+                                  {game.name}
+                                </div>
+                              </div>
+                              <div className="cart_item_price cart_info_col col-4">
+                                <div className="cart_item_title">Price</div>
+                                <div className="cart_item_text">
+                                  ${game.price}
+                                </div>
+                              </div>
+                              <div className="cart_item_price cart_info_col col-4">
+                                <div className="cart_item_title">In Cart</div>
+                                <div className="cart_item_text">
+                                  <Button
+                                    variant="danger"
+                                    onClick={(e) =>
+                                      dispatch(removeFromCart(e, game.rawgId))
+                                    }
+                                  >
+                                    Remove
+                                  </Button>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </li>
-                      );
-                    })}
+                          </li>
+                        );
+                      })}
                   </ul>
                 </div>
                 {/* Order Total */}
                 <div className="order_total">
                   <div className="order_total_content text-md-right">
                     <div className="order_total_title">Order Total:</div>
-                    <div className="order_total_amount">${totalPrice}</div>
+                    <div className="order_total_amount">
+                      ${currentTotalCartPrice || 0}
+                    </div>
                   </div>
                 </div>
                 <div className="cart_buttons">

@@ -4,15 +4,20 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaKissWinkHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
-import { MdAddShoppingCart } from "react-icons/md";
-import { wishlistGame, unWishlistGame } from "../redux/actions/gameAction";
+import { MdAddShoppingCart, MdRemoveShoppingCart } from "react-icons/md";
+import {
+  wishlistGame,
+  unWishlistGame,
+  addToCart,
+  removeFromCart,
+} from "../redux/actions/gameAction";
 import genericCover from "../images/imageNotAvailable.jpg";
 
 export default function GameCard(props) {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  let { currentWishlistId } = useSelector((s) => s.user);
+  let { currentWishlistId, currentCartIdList } = useSelector((s) => s.user);
 
   const goDetail = (e, gameId) => {
     e.preventDefault();
@@ -69,10 +74,35 @@ export default function GameCard(props) {
               {props.price ? `At $${props.price}` : "Currently not on Sale"}
             </Card.Title>
             {props.price ? (
-              <Button variant="success" className="px-2 py-1">
-                <MdAddShoppingCart size={20}></MdAddShoppingCart>
-                Add to Cart
-              </Button>
+              currentCartIdList && currentCartIdList.includes(props.id) ? (
+                <Button
+                  variant="danger"
+                  className="px-2 py-1"
+                  onClick={(e) => dispatch(removeFromCart(e, props.id))}
+                >
+                  <MdRemoveShoppingCart size={20}></MdRemoveShoppingCart>
+                  Remove From Cart
+                </Button>
+              ) : (
+                <Button
+                  variant="success"
+                  className="px-2 py-1"
+                  onClick={(e) =>
+                    dispatch(
+                      addToCart(
+                        e,
+                        props.id,
+                        props.price,
+                        props.name,
+                        props.image
+                      )
+                    )
+                  }
+                >
+                  <MdAddShoppingCart size={20}></MdAddShoppingCart>
+                  Add to Cart
+                </Button>
+              )
             ) : (
               ""
             )}
