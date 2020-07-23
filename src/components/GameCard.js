@@ -30,7 +30,7 @@ export default function GameCard(props) {
         />
         <Card.Body>
           <div className="d-flex mb-4 w-100 justify-content-between">
-            <Card.Title id="card-name-tile" className="font-weight-bolder mr-2">
+            <Card.Title id="card-name-tile" className="font-weight-bolder">
               {props.name}
             </Card.Title>
             {currentWishlistId && currentWishlistId.includes(props.id) ? (
