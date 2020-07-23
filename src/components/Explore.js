@@ -66,7 +66,7 @@ export default function Explore() {
             />
             <InputGroup.Append>
               <Button type="submit" variant="outline-danger">
-                Button
+                Search
               </Button>
             </InputGroup.Append>
           </InputGroup>
