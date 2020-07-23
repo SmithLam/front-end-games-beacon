@@ -17,6 +17,9 @@ function LoginModal(props) {
   let { showModal } = useSelector((state) => state.modal);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isRemembered, setRemember] = useState(false);
+
+  console.log(isRemembered);
 
   return (
     <div>
@@ -39,7 +42,9 @@ function LoginModal(props) {
                         appId="1751990751605847"
                         autoLoad={false}
                         fields="name,email,picture"
-                        callback={(data) => dispatch(loginFacebook(data))}
+                        callback={(data) =>
+                          dispatch(loginFacebook(data, isRemembered))
+                        }
                         render={(renderProps) => (
                           <img
                             id="login-icon"
@@ -67,8 +72,12 @@ function LoginModal(props) {
                             disabled={renderProps.disabled}
                           ></img>
                         )}
-                        onSuccess={(data) => dispatch(loginGoogle(data))}
-                        onFailure={(data) => dispatch(loginGoogle(data))}
+                        onSuccess={(data) =>
+                          dispatch(loginGoogle(data, isRemembered))
+                        }
+                        onFailure={(data) =>
+                          dispatch(loginGoogle(data, isRemembered))
+                        }
                         cookiePolicy={"single_host_origin"}
                       />
                     </Form.Text>
@@ -78,7 +87,11 @@ function LoginModal(props) {
             </Form>
           </Modal.Body>
           <Modal.Body>
-            <Form onSubmit={(e) => dispatch(loginEmail(email, password, e))}>
+            <Form
+              onSubmit={(e) =>
+                dispatch(loginEmail(e, email, password, isRemembered))
+              }
+            >
               <Form.Label>Or if you want to sign in via Email</Form.Label>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
@@ -103,7 +116,12 @@ function LoginModal(props) {
                 />
               </Form.Group>
               <Form.Group controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Remember me" />
+                <Form.Check
+                  type="checkbox"
+                  checked={isRemembered}
+                  onChange={(e) => setRemember(!isRemembered)}
+                  label="Remember me"
+                />
               </Form.Group>
               <Button variant="primary" type="submit">
                 Login
