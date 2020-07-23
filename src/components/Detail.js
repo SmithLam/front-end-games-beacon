@@ -14,9 +14,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { getGameDetail } from "../redux/actions/gameAction";
 import { FaKissWinkHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
-import { MdAddShoppingCart } from "react-icons/md";
+import { MdAddShoppingCart, MdRemoveShoppingCart } from "react-icons/md";
 import Youtube from "react-youtube";
-import { wishlistGame, unWishlistGame } from "../redux/actions/gameAction";
+import {
+  wishlistGame,
+  unWishlistGame,
+  addToCart,
+  removeFromCart,
+} from "../redux/actions/gameAction";
 import PacmanLoader from "react-spinners/PacmanLoader";
 import { css } from "@emotion/core";
 
@@ -30,7 +35,7 @@ function Detail() {
   const { gameId } = useParams();
   let { currentGame } = useSelector((s) => s.game);
   let { loaded } = useSelector((s) => s.app);
-  let { currentWishlistId } = useSelector((s) => s.user);
+  let { currentWishlistId, currentCartIdList } = useSelector((s) => s.user);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -104,10 +109,36 @@ function Detail() {
                 </Card.Body>
                 <ListGroup className="list-group-flush">
                   {currentGame.price ? (
-                    <Button variant="success">
-                      <MdAddShoppingCart size={20}></MdAddShoppingCart>
-                      Add to Cart
-                    </Button>
+                    currentCartIdList &&
+                    currentCartIdList.includes(currentGame.id) ? (
+                      <Button
+                        variant="danger"
+                        onClick={(e) =>
+                          dispatch(removeFromCart(e, currentGame.id))
+                        }
+                      >
+                        <MdRemoveShoppingCart size={20}></MdRemoveShoppingCart>
+                        Remove From Cart
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="success"
+                        onClick={(e) =>
+                          dispatch(
+                            addToCart(
+                              e,
+                              currentGame.id,
+                              currentGame.price,
+                              currentGame.name,
+                              currentGame.background_image
+                            )
+                          )
+                        }
+                      >
+                        <MdAddShoppingCart size={20}></MdAddShoppingCart>
+                        Add to Cart
+                      </Button>
+                    )
                   ) : (
                     ""
                   )}
@@ -115,7 +146,7 @@ function Detail() {
                   currentWishlistId.includes(currentGame.id) ? (
                     <Button
                       className="mb-auto py-1 wishlist-icon"
-                      variant="danger"
+                      variant="success"
                       onClick={(e) =>
                         dispatch(unWishlistGame(e, currentGame.id))
                       }
