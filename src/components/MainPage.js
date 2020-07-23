@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch} from "react-redux";
-import { Jumbotron, Container, Form} from "react-bootstrap";
-
+import { useDispatch } from "react-redux";
+import { Jumbotron, Container, Form } from "react-bootstrap";
 
 function MainPage() {
   const history = useHistory();
   const dispatch = useDispatch();
   let [searchTerm, setSearchTerm] = useState("");
-
 
   const handleSubmit = (e, searchTerm) => {
     e.preventDefault();
@@ -24,8 +22,8 @@ function MainPage() {
         <Container className="jumbotron-inside py-3">
           <h2>Welcome to Games Beacon</h2>
           <p>
-            Your one-stop place to find PC video games and buy them at the
-            cheapest prices!
+            Your one-stop place to find PC video games and get them at the best
+            prices!
           </p>
           <Form as="p" onSubmit={(e) => handleSubmit(e, searchTerm)}>
             <Form.Control
