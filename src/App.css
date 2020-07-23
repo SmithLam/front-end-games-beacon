@@ -58,7 +58,6 @@ body {
   cursor: pointer;
 }
 
-
 /* main page */
 
 .jumbotron {
@@ -68,11 +67,10 @@ body {
   background-repeat: no-repeat;
   min-height: 100%;
   height: 750px;
-  z-index: -1000;
 }
 
 .jumbotron-inside {
-  z-index: 1;
+  z-index: 11111;
   color: white;
   background-color: black;
   border-radius: 30px;

@@ -10,6 +10,7 @@ function MainPage() {
 
   const handleSubmit = (e, searchTerm) => {
     e.preventDefault();
+    console.log(searchTerm);
     let search = `&search=${searchTerm}`;
     dispatch({ type: "SEARCH-GAME", payload: search });
     setSearchTerm("");
@@ -25,7 +26,7 @@ function MainPage() {
             Your one-stop place to find PC video games and get them at the best
             prices!
           </p>
-          <Form as="p" onSubmit={(e) => handleSubmit(e, searchTerm)}>
+          <Form onSubmit={(e) => handleSubmit(e, searchTerm)}>
             <Form.Control
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
