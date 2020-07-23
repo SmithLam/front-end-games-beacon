@@ -66,11 +66,12 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100%;
+  z-index: -2;
   height: 750px;
 }
 
 .jumbotron-inside {
-  z-index: 11111;
+  z-index: -1;
   color: white;
   background-color: black;
   border-radius: 30px;
