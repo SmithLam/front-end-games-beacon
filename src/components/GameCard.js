@@ -6,6 +6,7 @@ import { FaKissWinkHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { MdAddShoppingCart } from "react-icons/md";
 import { wishlistGame, unWishlistGame } from "../redux/actions/gameAction";
+import genericCover from "../images/imageNotAvailable.jpg";
 
 export default function GameCard(props) {
   const history = useHistory();
@@ -25,7 +26,7 @@ export default function GameCard(props) {
           id="card-image"
           variant="top"
           alt="See More Detail"
-          src={props.image}
+          src={props.image || genericCover}
           onClick={(e) => goDetail(e, props.id)}
         />
         <Card.Body>
