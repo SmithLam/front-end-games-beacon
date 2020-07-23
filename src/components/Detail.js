@@ -108,7 +108,7 @@ function Detail() {
             <Col xs={12} md={4}>
               <Card border="light" className="h-100">
                 <Card.Body>
-                  <Card.Text as="h3" className="mt-2 mb-1 text-center">
+                  <Card.Text as="h2" id="detail-price-number" className="mt-2 mb-1 text-center">
                     {currentGame.price
                       ? `Best Price: $${currentGame.price}`
                       : "Currently not on Sale"}

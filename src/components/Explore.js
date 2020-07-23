@@ -90,11 +90,11 @@ export default function Explore() {
         linkClass="page-link"
       ></Pagination>
       <div className="container-fluid">
-        <div className="row d-flex flex-wrap justify-content-around">
+        <div className="row">
           {!currentGameList
             ? ""
             : currentGameList.map((game, index) => (
-                <div key={game.id} className="col-xs-12 col-md-3 my-2">
+                <div key={game.id} className="col-12 col-md-3 my-2">
                   <GameCard
                     key={game.id}
                     id={game.id}

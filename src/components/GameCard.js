@@ -26,7 +26,7 @@ export default function GameCard(props) {
 
   return (
     <div>
-      <Card className="shadow-sm bg-white rounded" id="game-card">
+      <Card className="shadow-sm bg-white rounded h-auto" id="game-card">
         <Card.Img
           id="card-image"
           variant="top"
@@ -35,14 +35,12 @@ export default function GameCard(props) {
           onClick={(e) => goDetail(e, props.id)}
         />
         <Card.Body>
-          <div className="d-flex mb-4 w-100 justify-content-between">
-            <Card.Title id="card-name-tile" className="font-weight-bolder">
-              {props.name}
-            </Card.Title>
+          <div className="d-flex flex-row mb-3 h-100 w-100 justify-content-between">
+            <Card.Text id="card-name-title">{props.name}</Card.Text>
             {currentWishlistId && currentWishlistId.includes(props.id) ? (
               <Badge
                 pill
-                className="mb-auto py-1 wishlist-icon"
+                className="py-1 mb-auto wishlist-icon"
                 variant="danger"
                 onClick={(e) => dispatch(unWishlistGame(e, props.id))}
               >
@@ -51,7 +49,7 @@ export default function GameCard(props) {
             ) : (
               <Badge
                 pill
-                className="mb-auto py-1 wishlist-icon"
+                className="py-1 mb-auto wishlist-icon"
                 onClick={(e) =>
                   dispatch(
                     wishlistGame(
@@ -70,9 +68,9 @@ export default function GameCard(props) {
             )}
           </div>
           <div className="d-flex mt-1 mb-2 w-100 justify-content-between">
-            <Card.Title id="price-number" className="mr-2">
+            <Card.Text id="price-number" className="mr-2 mb-2">
               {props.price ? `At $${props.price}` : "Currently not on Sale"}
-            </Card.Title>
+            </Card.Text>
             {props.price ? (
               currentCartIdList && currentCartIdList.includes(props.id) ? (
                 <Button

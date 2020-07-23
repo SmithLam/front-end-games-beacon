@@ -67,7 +67,7 @@ body {
   background-repeat: no-repeat;
   min-height: 100%;
   z-index: -2;
-  height: 750px;
+  height: 800px;
 }
 
 .jumbotron-inside {
@@ -91,6 +91,17 @@ body {
 
 #card-image {
   height: 200px;
+  width: auto;
+}
+
+#card-name-title {
+  font-size: large;
+  color: black;
+  font-weight: bold;
+}
+
+#price-number {
+  font-size: large;
 }
 
 #card-image:hover {
@@ -119,6 +130,10 @@ body {
   min-height: 100%;
   max-height: 200px;
   width: 100%;
+}
+
+#detail-price-number {
+  color: #828282!important;
 }
 
 /* end detail page */
@@ -171,5 +186,4 @@ body {
   bottom: 0;
   width: 100%;
   text-align: center;
-  height: 100%;
 }

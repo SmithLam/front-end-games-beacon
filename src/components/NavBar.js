@@ -124,10 +124,7 @@ function NavBar(props) {
               >
                 Wishlist
                 {currentWishlistId ? (
-                  <Badge
-                    className="px-2"
-                    variant="success"
-                  >
+                  <Badge className="py-1 mb-auto" variant="success">
                     {currentWishlistId.length}
                   </Badge>
                 ) : (
@@ -140,7 +137,7 @@ function NavBar(props) {
               >
                 Cart
                 {currentCartIdList ? (
-                  <Badge className="px-2" variant="danger">
+                  <Badge className="py-1 mb-auto" variant="danger">
                     {currentCartIdList.length}
                   </Badge>
                 ) : (

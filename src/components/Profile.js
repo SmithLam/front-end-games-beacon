@@ -120,7 +120,7 @@ function Profile() {
   return (
     <div>
       <div className="row mx-3 my-2 d-flex flex-wrap justify-content-around">
-        <div className="col-xs-12 col-md-3 my-2">
+        <div className="col-sm-12 col-md-3 my-2">
           <Card style={{ width: "18rem" }} className="shadow">
             <Card.Header>Current User Profile</Card.Header>
             <Card.Img variant="top" src={currentUser.avatar} />
@@ -129,7 +129,7 @@ function Profile() {
             </Card.Body>
           </Card>
         </div>
-        <div className="col-xs-12 col-md-3 my-2">
+        <div className="col-sm-12 col-md-3 my-2">
           <Card style={{ width: "18rem" }} className="shadow">
             <Card.Header>Update Your Profile</Card.Header>
             <Form.Row className="mb-1 mt-2 text-center">
@@ -180,14 +180,14 @@ function Profile() {
           </Card>
         </div>
       </div>
-      <div className="d-flex mx-3 mt-2 mb-2">
+      <div className="d-flex mx-4 mt-2 mb-2">
         <h3>Our Current Wishlist:</h3>
       </div>
-      <div className="row mx-3 my-2 d-flex flex-wrap justify-content-around">
+      <div className="row mx-4 mt-2 mb-2">
         {!currentWishlist
           ? ""
           : currentWishlist.map((game, index) => (
-              <div key={game.rawgId} className="col-xs-12 col-md-3 my-2">
+              <div key={game.rawgId} className="col-12 col-md-3 my-2">
                 <GameCard
                   key={game.rawgId}
                   id={game.rawgId}
