@@ -101,6 +101,10 @@ body {
   cursor: pointer;
 }
 
+#badge-click:hover {
+  cursor: pointer;
+}
+
 /* end main page */
 
 /* detail page */

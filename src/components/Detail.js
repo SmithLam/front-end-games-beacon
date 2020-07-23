@@ -9,7 +9,7 @@ import {
   Badge,
   Row,
 } from "react-bootstrap";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getGameDetail } from "../redux/actions/gameAction";
 import { FaKissWinkHeart } from "react-icons/fa";
@@ -32,10 +32,17 @@ const override = css`
 
 function Detail() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { gameId } = useParams();
   let { currentGame } = useSelector((s) => s.game);
   let { loaded } = useSelector((s) => s.app);
   let { currentWishlistId, currentCartIdList } = useSelector((s) => s.user);
+
+  const searchGame = (e, searchTerm) => {
+    e.preventDefault();
+    dispatch({ type: "SEARCH-GAME", payload: searchTerm });
+    history.push("/explore");
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -146,7 +153,7 @@ function Detail() {
                   currentWishlistId.includes(currentGame.id) ? (
                     <Button
                       className="mb-auto py-1 wishlist-icon"
-                      variant="success"
+                      variant="danger"
                       onClick={(e) =>
                         dispatch(unWishlistGame(e, currentGame.id))
                       }
@@ -218,6 +225,10 @@ function Detail() {
                               key={item.id}
                               className="mr-1 mb-1"
                               variant="info"
+                              id="badge-click"
+                              onClick={(e) =>
+                                searchGame(e, `&developers=${item.id}`)
+                              }
                             >
                               {item.name}
                             </Badge>
@@ -234,6 +245,10 @@ function Detail() {
                               key={item.id}
                               className="mr-1 mb-1"
                               variant="secondary"
+                              id="badge-click"
+                              onClick={(e) =>
+                                searchGame(e, `&publishers=${item.id}`)
+                              }
                             >
                               {item.name}
                             </Badge>
@@ -250,6 +265,10 @@ function Detail() {
                               key={item.id}
                               className="mr-1 mb-1"
                               variant="dark"
+                              id="badge-click"
+                              onClick={(e) =>
+                                searchGame(e, `&genres=${item.id}`)
+                              }
                             >
                               {item.name}
                             </Badge>
@@ -266,6 +285,10 @@ function Detail() {
                               key={item.id}
                               className="mr-1 mb-1"
                               variant="success"
+                              id="badge-click"
+                              onClick={(e) =>
+                                searchGame(e, `&tags=${item.id}`)
+                              }
                             >
                               {item.name}
                             </Badge>

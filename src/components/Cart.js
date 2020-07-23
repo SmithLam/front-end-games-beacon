@@ -31,71 +31,67 @@ function Cart() {
   }
   return (
     <div>
-      <div className="cart_section">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-10 offset-lg-1">
-              <div className="cart_container">
-                <div className="cart_title">Shopping Cart</div>
-                <div className="cart_items">
-                  <ul className="cart_list">
-                    {currentCart &&
-                      currentCart.items &&
-                      currentCart.items.map((game, index) => {
-                        return (
-                          <li key={index} className="cart_item clearfix">
-                            <div className="cart_item_image">
-                              <img src={game.cover} id="cart-image" alt="" />
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-10 offset-lg-1 mt-2">
+            <div className="cart_container">
+              <div className="cart_title">Shopping Cart</div>
+              <div className="cart_items">
+                <ul className="cart_list">
+                  {currentCart &&
+                    currentCart.items &&
+                    currentCart.items.map((game, index) => {
+                      return (
+                        <li key={index} className="cart_item clearfix">
+                          <div className="cart_item_image">
+                            <img src={game.cover} id="cart-image" alt="" />
+                          </div>
+                          <div className="cart_item_info d-flex flex-md-row">
+                            <div className="cart_item_name cart_info_col col-4">
+                              <div className="cart_item_title">Game</div>
+                              <div className="cart_item_text">{game.name}</div>
                             </div>
-                            <div className="cart_item_info d-flex flex-md-row">
-                              <div className="cart_item_name cart_info_col col-4">
-                                <div className="cart_item_title">Game</div>
-                                <div className="cart_item_text">
-                                  {game.name}
-                                </div>
-                              </div>
-                              <div className="cart_item_price cart_info_col col-4">
-                                <div className="cart_item_title">Price</div>
-                                <div className="cart_item_text">
-                                  ${game.price}
-                                </div>
-                              </div>
-                              <div className="cart_item_price cart_info_col col-4">
-                                <div className="cart_item_title">In Cart</div>
-                                <div className="cart_item_text">
-                                  <Button
-                                    variant="danger"
-                                    onClick={(e) =>
-                                      dispatch(removeFromCart(e, game.rawgId))
-                                    }
-                                  >
-                                    Remove
-                                  </Button>
-                                </div>
+                            <div className="cart_item_price cart_info_col col-4">
+                              <div className="cart_item_title">Price</div>
+                              <div className="cart_item_text">
+                                ${game.price}
                               </div>
                             </div>
-                          </li>
-                        );
-                      })}
-                  </ul>
-                </div>
-                {/* Order Total */}
-                <div className="order_total">
-                  <div className="order_total_content text-md-right">
-                    <div className="order_total_title">Order Total:</div>
-                    <div className="order_total_amount">
-                      ${currentTotalCartPrice || 0}
-                    </div>
+                            <div className="cart_item_price cart_info_col col-4">
+                              <div className="cart_item_title">In Cart</div>
+                              <div className="cart_item_text">
+                                <Button
+                                  variant="danger"
+                                  onClick={(e) =>
+                                    dispatch(removeFromCart(e, game.rawgId))
+                                  }
+                                >
+                                  Remove
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      );
+                    })}
+                </ul>
+              </div>
+              {/* Order Total */}
+              <div className="order_total">
+                <div className="order_total_content text-md-right">
+                  <div className="order_total_title">Order Total:</div>
+                  <div className="order_total_amount">
+                    ${currentTotalCartPrice ? currentTotalCartPrice : 0}
                   </div>
                 </div>
-                <div className="cart_buttons">
-                  <button type="button" className="button cart_button_clear">
-                    Remove Cart List
-                  </button>
-                  <button type="button" className="button cart_button_checkout">
-                    Checkout
-                  </button>
-                </div>
+              </div>
+              <div className="cart_buttons">
+                <button type="button" className="button cart_button_clear">
+                  Remove Cart List
+                </button>
+                <button type="button" className="button cart_button_checkout">
+                  Checkout
+                </button>
               </div>
             </div>
           </div>
