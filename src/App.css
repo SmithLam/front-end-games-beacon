@@ -85,7 +85,8 @@ body {
 }
 
 #game-card {
-  height: 375px;
+  height: fit-content;
+  width: auto;
 }
 
 #card-image {
