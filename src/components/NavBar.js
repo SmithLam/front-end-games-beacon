@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Nav, Navbar, NavDropdown, Badge } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
@@ -9,7 +9,9 @@ import Beacon from "../images/lighthouseBeacon.png";
 function NavBar(props) {
   let history = useHistory();
   let dispatch = useDispatch();
-  let { currentUser } = useSelector((state) => state.user);
+  let { currentUser, currentWishlistId, currentCartIdList } = useSelector(
+    (state) => state.user
+  );
 
   const goTo = (e, location) => {
     e.preventDefault();
@@ -110,11 +112,40 @@ function NavBar(props) {
           )}
           {currentUser ? (
             <NavDropdown title={currentUser.name} id="basic-nav-dropdown">
-              <NavDropdown.Item onClick={(e) => goTo(e, "/profile")}>
-                Profile
+              <NavDropdown.Item
+                className="d-flex justify-content-start"
+                onClick={(e) => goTo(e, "/profile")}
+              >
+                Profile{" "}
               </NavDropdown.Item>
-              <NavDropdown.Item onClick={(e) => goTo(e, "/cart")}>
+              <NavDropdown.Item
+                className="d-flex justify-content-between"
+                onClick={(e) => goTo(e, "/profile")}
+              >
+                Wishlist
+                {currentWishlistId ? (
+                  <Badge
+                    className="px-2"
+                    variant="success"
+                  >
+                    {currentWishlistId.length}
+                  </Badge>
+                ) : (
+                  ""
+                )}
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                className="d-flex justify-content-between"
+                onClick={(e) => goTo(e, "/cart")}
+              >
                 Cart
+                {currentCartIdList ? (
+                  <Badge className="px-2" variant="danger">
+                    {currentCartIdList.length}
+                  </Badge>
+                ) : (
+                  ""
+                )}
               </NavDropdown.Item>
             </NavDropdown>
           ) : (
