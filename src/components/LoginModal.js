@@ -17,9 +17,8 @@ function LoginModal(props) {
   let { showModal } = useSelector((state) => state.modal);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isRemembered, setRemember] = useState(false);
+  // const [isRemembered, setRemember] = useState(false);
 
-  console.log(isRemembered);
 
   return (
     <div>
@@ -43,7 +42,7 @@ function LoginModal(props) {
                         autoLoad={false}
                         fields="name,email,picture"
                         callback={(data) =>
-                          dispatch(loginFacebook(data, isRemembered))
+                          dispatch(loginFacebook(data))
                         }
                         render={(renderProps) => (
                           <img
@@ -73,10 +72,10 @@ function LoginModal(props) {
                           ></img>
                         )}
                         onSuccess={(data) =>
-                          dispatch(loginGoogle(data, isRemembered))
+                          dispatch(loginGoogle(data))
                         }
                         onFailure={(data) =>
-                          dispatch(loginGoogle(data, isRemembered))
+                          dispatch(loginGoogle(data))
                         }
                         cookiePolicy={"single_host_origin"}
                       />
@@ -89,7 +88,7 @@ function LoginModal(props) {
           <Modal.Body>
             <Form
               onSubmit={(e) =>
-                dispatch(loginEmail(e, email, password, isRemembered))
+                dispatch(loginEmail(e, email, password))
               }
             >
               <Form.Label>Or if you want to sign in via Email</Form.Label>
@@ -115,14 +114,14 @@ function LoginModal(props) {
                   placeholder="Password"
                 />
               </Form.Group>
-              <Form.Group controlId="formBasicCheckbox">
+              {/* <Form.Group controlId="formBasicCheckbox">
                 <Form.Check
                   type="checkbox"
                   checked={isRemembered}
                   onChange={(e) => setRemember(!isRemembered)}
                   label="Remember me"
                 />
-              </Form.Group>
+              </Form.Group> */}
               <Button variant="primary" type="submit">
                 Login
               </Button>

@@ -1,7 +1,6 @@
 import { fetchWishlist, fetchCart } from "./gameAction";
 
-//  callback={(data) => dispatch(loginFacebook(data, isRemembered))}
-export const loginFacebook = (data, isRemembered) => async (dispatch) => {
+export const loginFacebook = (data) => async (dispatch) => {
   if (data && data.accessToken) {
     console.log(data.accessToken);
     const res = await fetch(
@@ -11,12 +10,8 @@ export const loginFacebook = (data, isRemembered) => async (dispatch) => {
       const dt = await res.json();
       const user = dt.data;
       console.log("this is fetch user dt", user);
-      console.log("this is whether you want to remember or not", isRemembered);
-      if (isRemembered === true) {
-        localStorage.setItem("token", dt.token);
-      } else {
-        localStorage.removeItem("token");
-      }
+      // console.log("this is whether you want to remember or not", isRemembered);
+      localStorage.setItem("token", dt.token);
       dispatch({
         type: "LOGIN",
         payload: {
@@ -35,7 +30,7 @@ export const loginFacebook = (data, isRemembered) => async (dispatch) => {
 };
 
 // onSuccess={(data) => dispatch(loginGoogle(data, isRemembered))}
-export const loginGoogle = (data, isRemembered) => async (dispatch) => {
+export const loginGoogle = (data) => async (dispatch) => {
   if (data && data.accessToken) {
     console.log(data.accessToken);
     let token = data.accessToken;
@@ -46,12 +41,13 @@ export const loginGoogle = (data, isRemembered) => async (dispatch) => {
       const dt = await res.json();
       const user = dt.data;
       console.log("this is fetch user dt", user);
-      console.log("this is whether you want to remember or not", isRemembered);
-      if (isRemembered === true) {
-        localStorage.setItem("token", dt.token);
-      } else {
-        localStorage.removeItem("token");
-      }
+      // console.log("this is whether you want to remember or not", isRemembered);
+      // if (isRemembered === true) {
+      //   localStorage.setItem("token", dt.token);
+      // } else {
+      //   localStorage.removeItem("token");
+      // }
+      localStorage.setItem("token", dt.token);
       dispatch({
         type: "LOGIN",
         payload: {
@@ -69,10 +65,7 @@ export const loginGoogle = (data, isRemembered) => async (dispatch) => {
   }
 };
 
-// <Form onSubmit={(e) => dispatch(loginEmail(e, email, password, isRemembered))}></Form>
-export const loginEmail = (event, email, password, isRemembered) => async (
-  dispatch
-) => {
+export const loginEmail = (event, email, password) => async (dispatch) => {
   event.preventDefault();
   console.log(email, password);
   let loginData = { email: email, password: password };
@@ -88,12 +81,13 @@ export const loginEmail = (event, email, password, isRemembered) => async (
     const dt = await res.json();
     const user = dt.data;
     console.log("this is fetch user dt", user);
-    console.log("this is whether you want to remember or not", isRemembered);
-    if (isRemembered === true) {
-      localStorage.setItem("token", dt.token);
-    } else {
-      localStorage.removeItem("token");
-    }
+    // console.log("this is whether you want to remember or not", isRemembered);
+    // if (isRemembered === true) {
+    //   localStorage.setItem("token", dt.token);
+    // } else {
+    //   localStorage.removeItem("token");
+    // }
+    localStorage.setItem("token", dt.token);
     dispatch({
       type: "LOGIN",
       payload: {
@@ -144,6 +138,7 @@ export const fetchUser = () => async (dispatch) => {
     const dt = await findUser.json();
     const user = dt.data;
     console.log("this is fetch user dt", user);
+    localStorage.setItem("token", dt.token);
     dispatch({
       type: "LOGIN",
       payload: {

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import "../styles/cart_styles.css";
 import "../styles/cart_responsive.css";
 import PacmanLoader from "react-spinners/PacmanLoader";
@@ -14,8 +15,14 @@ const override = css`
 
 function Cart() {
   const dispatch = useDispatch();
+  const history = useHistory();
   let { currentCart, currentTotalCartPrice } = useSelector((s) => s.user);
   let { loaded } = useSelector((s) => s.app);
+
+  const goTo = (e, location) => {
+    e.preventDefault();
+    history.push(location);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -86,8 +93,12 @@ function Cart() {
                 </div>
               </div>
               <div className="cart_buttons">
-                <button type="button" className="button cart_button_clear">
-                  Remove Cart List
+                <button
+                  type="button"
+                  className="button cart_button_clear"
+                  onCLick={(e) => goTo(e, "/profile")}
+                >
+                  Back
                 </button>
                 <button type="button" className="button cart_button_checkout">
                   Checkout
