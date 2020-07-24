@@ -24,12 +24,20 @@ function Cart() {
   //   history.push(location);
   // };
 
-    const searchGame = (e, searchTerm) => {
-      e.preventDefault();
-      dispatch({ type: "SEARCH-GAME", payload: searchTerm });
-      history.push("/explore");
+  const searchGame = (e, searchTerm) => {
+    e.preventDefault();
+    dispatch({ type: "SEARCH-GAME", payload: searchTerm });
+    history.push("/explore");
   };
-  
+
+  const handleCheckout = (e) => {
+    e.preventDefault();
+    alert(
+      "We are processing your cart and will contact your email in 1 or 2 working days!"
+    );
+    history.push("/");
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchCart());
@@ -106,7 +114,11 @@ function Cart() {
                 >
                   Back
                 </button>
-                <button type="button" className="button cart_button_checkout">
+                <button
+                  type="button"
+                  className="button cart_button_checkout"
+                  onClick={(e) => handleCheckout(e)}
+                >
                   Checkout
                 </button>
               </div>
