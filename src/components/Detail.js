@@ -63,7 +63,7 @@ function Detail() {
           alt="background"
           src={currentGame.background_image}
         ></img>
-        <Container fluid>
+        <Container fluid id="detail-page">
           <Row className="mt-2 mb-2">
             <Col xs={12} md={8}>
               <Card className="h-100 shadow bg-dark text-white">
@@ -108,7 +108,11 @@ function Detail() {
             <Col xs={12} md={4}>
               <Card border="light" className="h-100">
                 <Card.Body>
-                  <Card.Text as="h2" id="detail-price-number" className="mt-2 mb-1 text-center">
+                  <Card.Text
+                    as="h2"
+                    id="detail-price-number"
+                    className="mt-2 mb-1 text-center"
+                  >
                     {currentGame.price
                       ? `Best Price: $${currentGame.price}`
                       : "Currently not on Sale"}
@@ -286,9 +290,7 @@ function Detail() {
                               className="mr-1 mb-1"
                               variant="success"
                               id="badge-click"
-                              onClick={(e) =>
-                                searchGame(e, `&tags=${item.id}`)
-                              }
+                              onClick={(e) => searchGame(e, `&tags=${item.id}`)}
                             >
                               {item.name}
                             </Badge>
