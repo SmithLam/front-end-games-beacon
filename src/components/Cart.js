@@ -15,15 +15,21 @@ const override = css`
 
 function Cart() {
   const dispatch = useDispatch();
-  const history = useHistory();
+  let history = useHistory();
   let { currentCart, currentTotalCartPrice } = useSelector((s) => s.user);
   let { loaded } = useSelector((s) => s.app);
 
-  const goTo = (e, location) => {
-    e.preventDefault();
-    history.push(location);
-  };
+  // const goTo = (e, location) => {
+  //   // e.preventDefault();
+  //   history.push(location);
+  // };
 
+    const searchGame = (e, searchTerm) => {
+      e.preventDefault();
+      dispatch({ type: "SEARCH-GAME", payload: searchTerm });
+      history.push("/explore");
+  };
+  
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchCart());
@@ -96,7 +102,7 @@ function Cart() {
                 <button
                   type="button"
                   className="button cart_button_clear"
-                  onCLick={(e) => goTo(e, "/profile")}
+                  onClick={(e) => searchGame(e, "")}
                 >
                   Back
                 </button>
