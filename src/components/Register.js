@@ -95,7 +95,7 @@ function Register(props) {
       .then((res) => {
         console.log(res);
         console.log(res.data);
-        alert("A new user has been added");
+        alert("A new User is registered!");
         history.push("/");
       })
       .catch((err) => {
