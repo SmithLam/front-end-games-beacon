@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Card, Container, Form, Col } from "react-bootstrap";
-import { fetchUser } from "../redux/actions/userAction";
-import { fetchWishlist } from "../redux/actions/gameAction";
+import { fetchWishlist, fetchCart } from "../redux/actions/gameAction";
 import GameCard from "./GameCard";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 import { openUploadWidget } from "../CloudinaryService";
@@ -102,10 +101,18 @@ function Profile() {
         }
       );
       const result = await updateProfile.json();
-      console.log(result);
+      console.log(result.data);
       alert("Your Profile has been updated!");
       setName("");
-      dispatch(fetchUser());
+      let user = result.data;
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          user: user,
+        },
+      });
+      dispatch(fetchWishlist());
+      dispatch(fetchCart());
     } catch (err) {
       console.log(err);
       alert("Your Profile is not updated!");
