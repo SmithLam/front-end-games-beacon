@@ -60,18 +60,19 @@ body {
 
 /* main page */
 
+
 .jumbotron {
   background-image: url(./images/image-background.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100%;
-  z-index: -2;
+  z-index: 1;
   height: 800px;
 }
 
 .jumbotron-inside {
-  z-index: -1;
+  z-index: 2222;
   color: white;
   background-color: black;
   border-radius: 30px;
@@ -82,6 +83,7 @@ body {
 .section {
   min-height: 100vh;
   max-height: 100%;
+  background-color: black !important;
 }
 
 #game-card {
@@ -133,7 +135,7 @@ body {
 }
 
 #detail-price-number {
-  color: #828282!important;
+  color: #828282 !important;
 }
 
 /* end detail page */
@@ -185,5 +187,11 @@ body {
   position: relative;
   bottom: 0;
   width: 100%;
+  background-color: black;
+  height: 100%;
   text-align: center;
+}
+
+.navbar {
+  background-color: black;
 }

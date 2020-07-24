@@ -18,8 +18,8 @@ function MainPage() {
   };
 
   return (
-    <div>
-      <Jumbotron className="jumbotron" fluid>
+    <div className="main-page">
+      <Jumbotron className="jumbotron mb-0" fluid>
         <Container className="jumbotron-inside py-3">
           <h2>Welcome to Games Beacon</h2>
           <p>

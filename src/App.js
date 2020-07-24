@@ -33,7 +33,7 @@ function App() {
 
   const FourOhFourPage = () => {
     return (
-      <div id="404page">
+      <div id="404page" className="text-center">
         <h1>404 Not Found</h1>
       </div>
     );

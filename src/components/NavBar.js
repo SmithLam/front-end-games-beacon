@@ -25,7 +25,7 @@ function NavBar(props) {
   };
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" id="navbar" variant="dark">
       <LinkContainer to="/">
         <Navbar.Brand>
           Games
