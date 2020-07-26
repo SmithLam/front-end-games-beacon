@@ -137,8 +137,6 @@ export const fetchUser = () => async (dispatch) => {
   if (findUser.ok) {
     const dt = await findUser.json();
     const user = dt.data;
-    console.log("this is fetch user dt", user);
-    localStorage.setItem("token", dt.token);
     dispatch({
       type: "LOGIN",
       payload: {

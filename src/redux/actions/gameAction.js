@@ -131,7 +131,9 @@ export const unWishlistGame = (e, rawgId) => async (dispatch) => {
 
 export const fetchWishlist = () => async (dispatch) => {
   try {
+    console.log("I am here");
     const token = localStorage.getItem("token");
+    console.log("I am here with token", token);
     const findWishlist = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/wishlist/`,
       {
