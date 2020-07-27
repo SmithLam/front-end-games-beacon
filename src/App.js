@@ -13,6 +13,8 @@ import NavBar from "./components/NavBar";
 import Profile from "./components/Profile";
 import LoginModal from "./components/LoginModal";
 import Register from "./components/Register";
+import Email from "./components/Email";
+import Password from "./components/Password";
 import { fetchUser } from "./redux/actions/userAction";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import { css } from "@emotion/core";
@@ -66,6 +68,12 @@ function App() {
             <Route exact={true} path="/games/:gameId" component={Detail} />
             <Route exact={true} path="/explore" component={Explore} />
             <ProtectedRoute exact={true} path="/profile" component={Profile} />
+            <Route
+              exact={true}
+              path="/resetpassword/:token"
+              component={Password}
+            />
+            <Route exact={true} path="/email" component={Email} />
             <Route exact={true} path="/register" component={Register} />
             <Route exact={true} path="/" component={MainPage} />
             <Route path="*" component={FourOhFourPage} />

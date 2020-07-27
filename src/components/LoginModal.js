@@ -4,6 +4,7 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { GoogleLogin } from "react-google-login";
 import { IconContext } from "react-icons";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory, Link } from "react-router-dom";
 import {
   loginFacebook,
   loginGoogle,
@@ -14,11 +15,17 @@ import googleLogo from "../images/googleLogo.png";
 
 function LoginModal(props) {
   const dispatch = useDispatch();
+  const history = useHistory();
   let { showModal } = useSelector((state) => state.modal);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const [isRemembered, setRemember] = useState(false);
 
+  const goTo = (e, location) => {
+    e.preventDefault();
+    dispatch({ type: "CLOSE-LOGIN-MODAL" });
+    history.push(location);
+  };
 
   return (
     <div>
@@ -41,9 +48,7 @@ function LoginModal(props) {
                         appId="1751990751605847"
                         autoLoad={false}
                         fields="name,email,picture"
-                        callback={(data) =>
-                          dispatch(loginFacebook(data))
-                        }
+                        callback={(data) => dispatch(loginFacebook(data))}
                         render={(renderProps) => (
                           <img
                             id="login-icon"
@@ -71,12 +76,8 @@ function LoginModal(props) {
                             disabled={renderProps.disabled}
                           ></img>
                         )}
-                        onSuccess={(data) =>
-                          dispatch(loginGoogle(data))
-                        }
-                        onFailure={(data) =>
-                          dispatch(loginGoogle(data))
-                        }
+                        onSuccess={(data) => dispatch(loginGoogle(data))}
+                        onFailure={(data) => dispatch(loginGoogle(data))}
                         cookiePolicy={"single_host_origin"}
                       />
                     </Form.Text>
@@ -86,11 +87,7 @@ function LoginModal(props) {
             </Form>
           </Modal.Body>
           <Modal.Body>
-            <Form
-              onSubmit={(e) =>
-                dispatch(loginEmail(e, email, password))
-              }
-            >
+            <Form onSubmit={(e) => dispatch(loginEmail(e, email, password))}>
               <Form.Label>Or if you want to sign in via Email</Form.Label>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
@@ -125,6 +122,17 @@ function LoginModal(props) {
               <Button variant="primary" type="submit">
                 Login
               </Button>
+              <div className="d-flex flex-row justify-content-center">
+                <Link
+                  variant="danger"
+                  type="submit"
+                  onClick={(e) => {
+                    goTo(e, "/email");
+                  }}
+                >
+                  Forget password? Reset password
+                </Link>
+              </div>
             </Form>
           </Modal.Body>
         </Modal>
