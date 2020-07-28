@@ -30,8 +30,18 @@ function Cart() {
     history.push("/explore");
   };
 
-  const handleCheckout = (e) => {
+  const handleCheckout = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("token");
+    const checkOut = await fetch(`${process.env.REACT_APP_BACKEND_URL}/order`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${token}`,
+        "content-type": "application/json",
+      },
+    });
+    const result = await checkOut.json();
+    console.log("this is the checkout", result.data);
     alert(
       "We are processing your cart and will contact your email in 1 or 2 working days!"
     );

@@ -5,6 +5,8 @@ const initialstate = {
   currentCart: [],
   currentCartIdList: [],
   currentTotalCartPrice: "",
+  currentOwned: [],
+  currentOwnedIdList: [],
 };
 
 export default function reducer(state = initialstate, action) {
@@ -23,6 +25,11 @@ export default function reducer(state = initialstate, action) {
         currentCart: action.payload.cart,
         currentCartIdList: action.payload.cartIdList,
         currentTotalCartPrice: action.payload.totalCartPrice,
+      });
+    case "RELOAD-OWNED":
+      return Object.assign({}, state, {
+        currentOwned: action.payload.owned,
+        currentOwnedIdList: action.payload.ownedIdList,
       });
     case "LOGOUT":
       return Object.assign({}, state, initialstate);

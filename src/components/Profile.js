@@ -3,14 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button, Card, Container, Form, Col } from "react-bootstrap";
 import { fetchWishlist, fetchCart } from "../redux/actions/gameAction";
 import GameCard from "./GameCard";
+import OwnedCard from "./ownedCard";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 import { openUploadWidget } from "../CloudinaryService";
+
 
 const GOOGLE_SEARCH_API = process.env.REACT_APP_GOOGLE_SEARCH_API;
 
 function Profile() {
   const dispatch = useDispatch();
-  let { currentUser, currentWishlist } = useSelector((s) => s.user);
+  let { currentUser, currentWishlist, currentOwned } = useSelector(
+    (s) => s.user
+  );
 
   let [images, setImages] = useState([]);
   let [publicID, setPublicID] = useState("");
@@ -186,6 +190,23 @@ function Profile() {
             </Card.Body>
           </Card>
         </div>
+      </div>
+      <div className="d-flex mx-4 mt-2 mb-2">
+        <h3>{currentUser.name} has purchased:</h3>
+      </div>
+      <div className="row mx-4 mt-2 mb-2">
+        {!currentOwned
+          ? ""
+          : currentOwned.map((game, index) => (
+              <div key={game.rawgId} className="col-12 col-md-3 my-2">
+                <OwnedCard
+                  key={game.rawgId}
+                  id={game.rawgId}
+                  name={game.name}
+                  image={game.cover}
+                />
+              </div>
+            ))}
       </div>
       <div className="d-flex mx-4 mt-2 mb-2">
         <h3>Our Current Wishlist:</h3>

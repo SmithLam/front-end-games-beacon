@@ -1,4 +1,4 @@
-import { fetchWishlist, fetchCart } from "./gameAction";
+import { fetchWishlist, fetchCart, fetchOwned } from "./gameAction";
 
 export const loginFacebook = (data) => async (dispatch) => {
   if (data && data.accessToken) {
@@ -20,6 +20,7 @@ export const loginFacebook = (data) => async (dispatch) => {
       });
       dispatch(fetchWishlist());
       dispatch(fetchCart());
+      dispatch(fetchOwned());
       dispatch({ type: "CLOSE-LOGIN-MODAL" });
       dispatch({ type: "LOADED" });
     } else {
@@ -56,6 +57,7 @@ export const loginGoogle = (data) => async (dispatch) => {
       });
       dispatch(fetchWishlist());
       dispatch(fetchCart());
+      dispatch(fetchOwned());
       dispatch({ type: "CLOSE-LOGIN-MODAL" });
       dispatch({ type: "LOADED" });
     } else {
@@ -96,6 +98,7 @@ export const loginEmail = (event, email, password) => async (dispatch) => {
     });
     dispatch(fetchWishlist());
     dispatch(fetchCart());
+    dispatch(fetchOwned());
     dispatch({ type: "CLOSE-LOGIN-MODAL" });
     dispatch({ type: "LOADED" });
   } else {
@@ -145,6 +148,7 @@ export const fetchUser = () => async (dispatch) => {
     });
     dispatch(fetchWishlist());
     dispatch(fetchCart());
+    dispatch(fetchOwned());
     dispatch({ type: "LOADED" });
   } else {
     localStorage.removeItem("token");

@@ -272,3 +272,36 @@ export const fetchCart = () => async (dispatch) => {
     console.log(err.message);
   }
 };
+
+export const fetchOwned = () => async (dispatch) => {
+  try {
+    const token = localStorage.getItem("token");
+    const findOwned = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/order/owned`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const result = await findOwned.json();
+    console.log("this is the order", result.data);
+    const owned = result.data.owned;
+    const ownedIdList = result.data.ownedRawgId;
+    // case "RELOAD-ORDER":
+    //   return Object.assign({}, state, {
+    //     currentOrder: action.payload.order,
+    //     currentOrderIdList: action.payload.orderIdList,
+    //   });
+    dispatch({
+      type: "RELOAD-OWNED",
+      payload: {
+        owned: owned,
+        ownedIdList: ownedIdList,
+      },
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
