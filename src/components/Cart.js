@@ -7,6 +7,7 @@ import PacmanLoader from "react-spinners/PacmanLoader";
 import { css } from "@emotion/core";
 import { Button } from "react-bootstrap";
 import { fetchCart, removeFromCart } from "../redux/actions/gameAction";
+import { fetchUser } from "../redux/actions/userAction";
 
 const override = css`
   display: block;
@@ -42,8 +43,9 @@ function Cart() {
     });
     const result = await checkOut.json();
     console.log("this is the checkout", result.data);
+    dispatch(fetchUser());
     alert(
-      "We are processing your cart and will contact your email in 1 or 2 working days!"
+      "Congratulations! Purchased completed. Please check your profile!"
     );
     history.push("/");
   };
