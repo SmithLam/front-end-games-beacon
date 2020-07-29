@@ -156,7 +156,7 @@ function NavBar(props) {
               alt="avatar"
               src={
                 currentUser.avatar ||
-                "https://res.cloudinary.com/smithlam/image/upload/a_0,c_scale,h_100/c9gsnzmd52jlcuprq6nz"
+                "https://res.cloudinary.com/smithlam/image/upload/v1596011853/pqotmzg3qfl1z68m0nzx.png"
               }
             />
           ) : (
