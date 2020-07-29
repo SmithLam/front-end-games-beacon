@@ -146,7 +146,7 @@ function Profile() {
             <Form.Row className="mb-1 mt-2 text-center">
               <Col xs="12" md="12">
                 <CloudinaryContext cloudName="smithlam">
-                  <Image publicId={publicID || "c9gsnzmd52jlcuprq6nz"}>
+                  <Image publicId={publicID || "pqotmzg3qfl1z68m0nzx"}>
                     <Transformation
                       height="200"
                       width="260"

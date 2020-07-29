@@ -167,7 +167,7 @@ function Register(props) {
             </Col>
             <Col xs="6" md="6">
               <CloudinaryContext cloudName="smithlam">
-                <Image publicId={publicID || "c9gsnzmd52jlcuprq6nz"}>
+                <Image publicId={publicID || "pqotmzg3qfl1z68m0nzx"}>
                   <Transformation height="100" crop="scale" angle="0" />
                 </Image>
               </CloudinaryContext>
