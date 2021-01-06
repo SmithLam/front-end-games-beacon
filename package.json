@@ -7,7 +7,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/youtube": "0.0.39",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "beauty-stars": "^1.1.0",
     "cloudinary-core": "^2.10.3",
     "cloudinary-react": "^1.6.1",
